@@ -3,771 +3,768 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#6b4f3a">
+<meta name="theme-color" content="#6b4f3a" id="themeMetaColor">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Serena">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>Serena — Paix Intérieure</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ===== TOKENS ===== */
+/* ===================== DESIGN TOKENS ===================== */
 :root {
-  --cream: #f5f0e8; --warm: #e8ddd0; --sage: #8a9e8a; --sage-l: #b5c5b5;
-  --terra: #c4785a; --brown: #6b4f3a; --ink: #2d2520; --muted: #9e8e82;
-  --white: #ffffff; --card: #ffffff;
-  --font-display: 'Cormorant Garamond', serif;
-  --font-body: 'Jost', sans-serif;
-  --r: 16px; --shadow: 0 2px 24px rgba(107,79,58,.08);
+  --cream:#f5f0e8; --warm:#e8ddd0; --sage:#8a9e8a; --sage-l:#b5c5b5;
+  --terra:#c4785a; --brown:#6b4f3a; --ink:#2d2520; --muted:#9e8e82;
+  --card:#ffffff; --nav:#ffffff;
+  --fd:'Cormorant Garamond',serif; --fb:'Jost',sans-serif;
+  --r:16px; --sh:0 2px 24px rgba(107,79,58,.08);
 }
-[data-theme="dark"] {
-  --cream: #1a1714; --warm: #2a2420; --sage: #7a9a7a; --sage-l: #5a7a5a;
-  --terra: #c4785a; --brown: #d4a882; --ink: #ede8e0; --muted: #8a7a72;
-  --white: #242018; --card: #242018;
-  --shadow: 0 2px 24px rgba(0,0,0,.3);
+[data-theme=dark]{
+  --cream:#1a1714; --warm:#2a2420; --sage:#7a9a7a; --sage-l:#4a6a4a;
+  --terra:#c4785a; --brown:#d4a882; --ink:#ede8e0; --muted:#7a6a62;
+  --card:#242018; --nav:#1e1a16;
 }
-[data-theme="nature"] {
-  --cream: #eef4ee; --warm: #d8ecd8; --sage: #5a8a5a; --sage-l: #8ab88a;
-  --terra: #7ab87a; --brown: #3a6a3a; --ink: #1a2e1a; --muted: #6a8a6a;
-  --white: #f4f9f4; --card: #f4f9f4;
+[data-theme=nature]{
+  --cream:#eef4ee; --warm:#cce4cc; --sage:#4a7a4a; --sage-l:#7aaa7a;
+  --terra:#6aaa6a; --brown:#2a5a2a; --ink:#1a2e1a; --muted:#5a7a5a;
+  --card:#f4faf4; --nav:#f4faf4;
 }
-[data-theme="minimal"] {
-  --cream: #fafafa; --warm: #ebebeb; --sage: #555; --sage-l: #aaa;
-  --terra: #222; --brown: #111; --ink: #111; --muted: #888;
-  --white: #fff; --card: #fff;
+[data-theme=minimal]{
+  --cream:#fafafa; --warm:#e8e8e8; --sage:#555; --sage-l:#aaa;
+  --terra:#222; --brown:#111; --ink:#111; --muted:#777;
+  --card:#fff; --nav:#fff;
 }
-
+[data-theme=coachdivin]{
+  --cream:#f5f0ec; --warm:#e8ddd4; --sage:#c9a96e; --sage-l:#d4b98a;
+  --terra:#9b2335; --brown:#4a1428; --ink:#1e0a12; --muted:#7a5a62;
+  --card:#fdf8f5; --nav:#fdf8f5;
+}
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html { scroll-behavior: smooth; }
-
+html { scroll-behavior:smooth; }
 body {
-  background: var(--cream);
-  font-family: var(--font-body);
-  color: var(--ink);
-  min-height: 100vh;
-  transition: background 0.4s, color 0.4s;
-  overflow-x: hidden;
+  background:var(--cream); font-family:var(--fb); color:var(--ink);
+  min-height:100vh; transition:background .35s,color .35s; overflow-x:hidden;
 }
-
 body::before {
   content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
 }
-
-/* ===== SCREENS ===== */
+/* ===================== SCREENS ===================== */
 .screen { display:none; min-height:100vh; position:relative; z-index:1; }
 .screen.active { display:block; }
 
-/* ===== ONBOARDING ===== */
+/* ===================== ONBOARDING ===================== */
 #onboarding {
-  background: linear-gradient(160deg, var(--brown) 0%, #3a2a1e 100%);
-  color: var(--cream);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 40px 28px; text-align: center;
+  background:linear-gradient(155deg,var(--brown) 0%,color-mix(in srgb,var(--brown) 50%,#000) 100%);
+  color:var(--cream); min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; overflow-y:auto;
 }
 #onboarding.active { display:flex; }
-
-.ob-logo { font-family: var(--font-display); font-size: 3.5rem; font-weight:300; margin-bottom:4px; }
-.ob-tagline { font-size:12px; letter-spacing:3px; text-transform:uppercase; opacity:.6; margin-bottom:48px; }
-
-.ob-step { display:none; width:100%; max-width:400px; animation: fadeUp .5s ease both; }
-.ob-step.active { display:block; }
-
-.ob-question { font-family: var(--font-display); font-size:1.6rem; font-weight:300; line-height:1.4; margin-bottom:28px; color:var(--cream); }
-
-.ob-options { display:flex; flex-direction:column; gap:10px; }
+.ob-page { display:none; width:100%; max-width:460px; padding:48px 28px 50px; flex-direction:column; min-height:100vh; }
+.ob-page.active { display:flex; animation:fadeUp .5s ease both; }
+.ob-header { text-align:center; margin-bottom:32px; }
+.ob-logo { font-family:var(--fd); font-size:3.4rem; font-weight:300; letter-spacing:3px; display:block; margin-bottom:4px; }
+.ob-tag { font-size:10px; letter-spacing:4px; text-transform:uppercase; opacity:.45; }
+.ob-prefs { display:flex; flex-direction:column; gap:16px; margin-bottom:24px; }
+.ob-pref-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:.5; margin-bottom:8px; display:block; }
+.ob-lang-row,.ob-theme-row { display:flex; gap:8px; }
+.ob-lang-btn {
+  flex:1; padding:11px 8px; border-radius:11px; border:1.5px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.07); color:var(--cream); font-family:var(--fb);
+  font-size:13px; cursor:pointer; transition:all .2s; text-align:center;
+}
+.ob-lang-btn:hover { background:rgba(255,255,255,.14); }
+.ob-lang-btn.sel { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.65); font-weight:600; }
+.ob-theme-btn {
+  flex:1; padding:10px 6px; border-radius:11px; border:1.5px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.07); cursor:pointer; transition:all .2s; text-align:center;
+}
+.ob-theme-btn:hover { background:rgba(255,255,255,.14); }
+.ob-theme-btn.sel { border-color:rgba(255,255,255,.7); background:rgba(255,255,255,.2); }
+.ob-t-swatch { width:22px; height:22px; border-radius:50%; margin:0 auto 5px; }
+.ob-t-name { font-size:10px; color:rgba(255,255,255,.7); display:block; }
+.ob-theme-btn.sel .ob-t-name { color:#fff; font-weight:600; }
+.ob-name-wrap { position:relative; margin-bottom:24px; }
+.ob-name-input {
+  width:100%; padding:16px 18px; border-radius:13px;
+  border:1.5px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1);
+  color:var(--cream); font-family:var(--fd); font-size:1.3rem;
+  outline:none; transition:all .3s; letter-spacing:.5px;
+}
+.ob-name-input::placeholder { color:rgba(255,255,255,.3); font-style:italic; }
+.ob-name-input:focus { border-color:rgba(255,255,255,.6); background:rgba(255,255,255,.15); }
+.ob-name-float { position:absolute; top:-10px; left:14px; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.5); pointer-events:none; }
+.ob-divider { height:1px; background:rgba(255,255,255,.12); margin:20px 0; }
+.ob-q { font-family:var(--fd); font-size:1.55rem; font-weight:300; line-height:1.45; margin-bottom:18px; }
+.ob-opts { display:flex; flex-direction:column; gap:9px; }
 .ob-opt {
-  padding:14px 20px; border-radius:12px;
-  border:1.5px solid rgba(255,255,255,.2);
-  background:rgba(255,255,255,.07);
-  color:var(--cream); font-family:var(--font-body); font-size:14px;
-  cursor:pointer; text-align:left; transition:all .2s;
+  padding:14px 16px; border-radius:13px; border:1.5px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.07); color:var(--cream); font-family:var(--fb);
+  font-size:14px; cursor:pointer; text-align:left; transition:all .25s;
+  display:flex; align-items:center; gap:10px;
 }
-.ob-opt:hover, .ob-opt.selected { background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.5); }
-
-.ob-progress { display:flex; gap:6px; justify-content:center; margin:32px 0 20px; }
-.ob-dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.3); transition:background .3s; }
-.ob-dot.active { background:var(--cream); }
-
+.ob-opt:hover { background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.4); transform:translateX(3px); }
+.ob-opt.sel { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.65); transform:translateX(3px); }
+.ob-opt-emoji { font-size:18px; flex-shrink:0; }
+.ob-opt-check { width:18px; height:18px; border-radius:50%; border:1.5px solid rgba(255,255,255,.3); flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; margin-left:auto; }
+.ob-opt.sel .ob-opt-check { background:rgba(255,255,255,.9); border-color:transparent; }
+.ob-opt.sel .ob-opt-check::after { content:'✓'; color:var(--brown); font-size:10px; font-weight:700; }
+.ob-prog { display:flex; gap:6px; justify-content:center; margin:auto 0 20px; padding-top:28px; }
+.ob-dot { width:28px; height:4px; border-radius:2px; background:rgba(255,255,255,.2); transition:all .4s; }
+.ob-dot.active { background:var(--cream); width:44px; }
+.ob-dot.done { background:rgba(255,255,255,.5); }
 .ob-next {
-  width:100%; padding:15px; border-radius:12px;
-  background:var(--cream); color:var(--brown);
-  border:none; font-family:var(--font-body); font-size:13px;
-  font-weight:500; letter-spacing:1.5px; text-transform:uppercase;
-  cursor:pointer; transition:all .2s; margin-top:8px;
+  width:100%; padding:16px; border-radius:13px; background:var(--cream); color:var(--brown);
+  border:none; font-family:var(--fb); font-size:13px; font-weight:600;
+  letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all .25s;
+  display:flex; align-items:center; justify-content:center; gap:8px;
 }
-.ob-next:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.25); }
-.ob-next:disabled { opacity:.4; cursor:default; transform:none; }
+.ob-next:not(:disabled):hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.35); }
+.ob-next:disabled { opacity:.3; cursor:default; }
+.ob-greeting { font-family:var(--fd); font-size:1.05rem; opacity:.65; margin-bottom:26px; font-style:italic; }
+.ob-section-label { font-size:10px; letter-spacing:2.5px; text-transform:uppercase; opacity:.45; margin-bottom:12px; display:block; }
 
-/* ===== MAIN APP ===== */
-#app { padding-bottom: 80px; }
-
-/* Top nav */
-.top-nav {
+/* ===================== APP SHELL ===================== */
+#app { padding-bottom:80px; }
+.top-bar {
   display:flex; align-items:center; justify-content:space-between;
-  padding:20px 20px 0; position:sticky; top:0; z-index:50;
-  background: var(--cream); transition: background .4s;
+  padding:16px 20px 0; position:sticky; top:0; z-index:60;
+  background:var(--cream); transition:background .35s;
 }
-.app-logo { font-family:var(--font-display); font-size:1.6rem; color:var(--brown); font-weight:300; }
-.nav-actions { display:flex; gap:8px; }
+.app-logo { font-family:var(--fd); font-size:1.7rem; color:var(--brown); font-weight:300; letter-spacing:1px; }
+.top-actions { display:flex; gap:8px; }
 .icon-btn {
-  width:38px; height:38px; border-radius:50%;
-  border:1.5px solid var(--warm); background:var(--card);
-  cursor:pointer; display:flex; align-items:center; justify-content:center;
-  font-size:15px; transition:all .2s; color:var(--ink);
+  width:38px; height:38px; border-radius:50%; border:1.5px solid var(--warm);
+  background:var(--card); cursor:pointer; display:flex; align-items:center;
+  justify-content:center; font-size:15px; transition:all .2s; color:var(--ink);
 }
-.icon-btn:hover { border-color:var(--sage); background:var(--cream); }
+.icon-btn:hover { border-color:var(--sage); }
 
-/* Page tabs */
-.page-tabs {
-  display:flex; gap:4px; padding:16px 20px 0; overflow-x:auto;
-  scrollbar-width:none; -ms-overflow-style:none;
+/* ===================== TABS ===================== */
+.tabs {
+  display:flex; gap:4px; padding:14px 20px 0;
+  overflow-x:auto; scrollbar-width:none;
 }
-.page-tabs::-webkit-scrollbar { display:none; }
-.tab-btn {
-  padding:8px 16px; border-radius:20px; white-space:nowrap;
+.tabs::-webkit-scrollbar { display:none; }
+.tab {
+  padding:8px 16px; border-radius:20px; white-space:nowrap; flex-shrink:0;
   border:1.5px solid var(--warm); background:transparent;
-  font-family:var(--font-body); font-size:12px; color:var(--muted);
-  cursor:pointer; transition:all .2s; flex-shrink:0;
+  font-family:var(--fb); font-size:12px; color:var(--muted);
+  cursor:pointer; transition:all .2s;
 }
-.tab-btn.active { background:var(--brown); border-color:var(--brown); color:var(--cream); }
+.tab.active { background:var(--brown); border-color:var(--brown); color:var(--cream); }
 
-/* Page content */
-.page { display:none; padding:20px 20px 0; animation:fadeUp .4s ease both; }
+/* ===================== PAGES ===================== */
+.page { display:none; padding:16px 20px 0; animation:fadeUp .4s ease both; }
 .page.active { display:block; }
 
-/* Cards */
+/* ===================== CARDS ===================== */
 .card {
-  background:var(--card); border-radius:var(--r);
-  border:1px solid var(--warm); box-shadow:var(--shadow);
-  padding:24px; margin-bottom:14px; transition:box-shadow .2s;
+  background:var(--card); border-radius:var(--r); border:1px solid var(--warm);
+  box-shadow:var(--sh); padding:22px; margin-bottom:14px; transition:box-shadow .2s, background .35s;
 }
-.card:hover { box-shadow:0 4px 32px rgba(107,79,58,.13); }
+.card:hover { box-shadow:0 4px 32px rgba(107,79,58,.12); }
+.card-hd { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+.c-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+.ci-m{background:#fef3e8;} .ci-d{background:#eef3ee;} .ci-e{background:#f0eaf5;}
+.ci-mood{background:#fdecea;} .ci-br{background:#e8f4fd;} .ci-st{background:#fdf8e8;}
+.ci-ai{background:#f0f0ff;} .ci-med{background:#fef5e8;}
+.c-title { font-family:var(--fd); font-size:1.15rem; color:var(--brown); }
+.c-sub { font-size:10px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+.divider { height:1px; background:var(--warm); margin:14px 0; }
 
-.card-header { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
-.card-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
-.ci-morning { background:#fef3e8; } .ci-day { background:#eef3ee; }
-.ci-evening { background:#f0eaf5; } .ci-mood { background:#fdecea; }
-.ci-breath { background:#e8f4fd; } .ci-stats { background:#fdf8e8; }
-
-.card-title { font-family:var(--font-display); font-size:1.15rem; color:var(--brown); }
-.card-sub { font-size:11px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
-
-/* Day nav */
-.day-row { display:flex; gap:6px; justify-content:center; padding:14px 20px 0; flex-wrap:wrap; }
-.day-btn {
-  width:38px; height:38px; border-radius:50%; border:1.5px solid var(--warm);
-  background:transparent; font-size:11px; color:var(--muted);
-  cursor:pointer; transition:all .2s; font-family:var(--font-body);
-  display:flex; align-items:center; justify-content:center;
-}
-.day-btn:hover { border-color:var(--sage); color:var(--sage); }
-.day-btn.active { background:var(--sage); border-color:var(--sage); color:white; }
-.day-btn.has-entry { border-color:var(--terra); color:var(--terra); }
-.day-btn.active.has-entry { background:var(--terra); border-color:var(--terra); color:white; }
-.day-date { text-align:center; font-size:11px; color:var(--muted); padding:8px 0 0; letter-spacing:.5px; }
-
-/* Task list */
-.task-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+/* ===================== TASKS ===================== */
+.task-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
 .task-item {
-  display:flex; align-items:flex-start; gap:12px;
-  padding:10px 10px; border-radius:10px; cursor:pointer; transition:background .15s;
+  display:flex; align-items:flex-start; gap:12px; padding:9px 10px;
+  border-radius:10px; cursor:pointer; transition:background .15s; user-select:none;
 }
 .task-item:hover { background:var(--cream); }
-.task-item input[type=checkbox] { display:none; }
 .chk {
   width:20px; height:20px; border-radius:6px; border:1.5px solid var(--warm);
   flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center;
   transition:all .2s;
 }
 .task-item.done .chk { background:var(--sage); border-color:var(--sage); }
-.task-item.done .chk::after { content:'✓'; color:white; font-size:10px; font-weight:600; }
-.task-lbl { font-size:14px; color:var(--ink); line-height:1.4; transition:color .2s; }
-.task-sub { font-size:11px; color:var(--muted); display:block; margin-top:2px; }
-.task-item.done .task-lbl { color:var(--muted); text-decoration:line-through; text-decoration-color:var(--sage-l); }
+.task-item.done .chk::after { content:'✓'; color:#fff; font-size:10px; font-weight:700; }
+.t-lbl { font-size:14px; color:var(--ink); line-height:1.4; transition:color .2s; }
+.t-sub { font-size:11px; color:var(--muted); display:block; margin-top:2px; }
+.task-item.done .t-lbl { color:var(--muted); text-decoration:line-through; text-decoration-color:var(--sage-l); }
 
-/* Inputs */
-.field-lbl { font-size:11px; color:var(--muted); letter-spacing:.5px; margin-bottom:7px; display:block; text-transform:uppercase; }
+/* ===================== INPUTS ===================== */
+.fl { font-size:11px; color:var(--muted); letter-spacing:.5px; margin-bottom:7px; display:block; text-transform:uppercase; }
 textarea, input[type=text] {
-  width:100%; border:1px solid var(--warm); border-radius:10px;
-  padding:13px 15px; font-family:var(--font-display); font-size:15px;
-  color:var(--ink); background:var(--cream); resize:none; outline:none;
-  transition:border-color .2s, background .2s; line-height:1.6;
-  margin-bottom:14px;
+  width:100%; border:1px solid var(--warm); border-radius:10px; padding:13px 15px;
+  font-family:var(--fd); font-size:15px; color:var(--ink); background:var(--cream);
+  resize:none; outline:none; transition:border-color .2s,background .2s; line-height:1.6; margin-bottom:12px;
 }
-textarea:focus, input[type=text]:focus { border-color:var(--sage); background:var(--white); }
+textarea:focus, input[type=text]:focus { border-color:var(--sage); background:var(--card); }
 textarea::placeholder, input[type=text]::placeholder { color:var(--muted); font-style:italic; }
 
-.divider { height:1px; background:var(--warm); margin:16px 0; }
-
-/* Mood */
-.mood-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+/* ===================== MOOD ===================== */
+.mood-row { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px; }
 .mood-btn {
-  padding:8px 15px; border-radius:20px; border:1.5px solid var(--warm);
+  padding:8px 14px; border-radius:20px; border:1.5px solid var(--warm);
   background:transparent; font-size:12px; color:var(--muted);
-  cursor:pointer; transition:all .2s; font-family:var(--font-body);
+  cursor:pointer; transition:all .2s; font-family:var(--fb);
 }
 .mood-btn:hover { border-color:var(--sage); color:var(--sage); }
-.mood-btn.sel { background:var(--sage); border-color:var(--sage); color:white; }
+.mood-btn.sel { background:var(--sage); border-color:var(--sage); color:#fff; }
 
-/* Slider */
-.slider-wrap { margin-bottom:6px; }
-.slider-top { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-bottom:8px; }
+/* ===================== SLIDER ===================== */
+.sld-top { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-bottom:8px; }
 input[type=range] {
   width:100%; -webkit-appearance:none; height:4px; border-radius:2px;
-  background:linear-gradient(to right, var(--sage) 0%, var(--terra) 100%);
-  outline:none;
+  background:linear-gradient(to right,var(--sage) 0%,var(--terra) 100%); outline:none;
 }
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
-  background:var(--white); border:2px solid var(--terra); cursor:pointer;
+  background:var(--card); border:2px solid var(--terra); cursor:pointer;
   box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
-.slider-labels { display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-top:4px; }
+.sld-lbls { display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-top:3px; }
 
-/* Save btn */
+/* ===================== SAVE BTN ===================== */
 .save-btn {
   width:100%; padding:15px; background:var(--brown); color:var(--cream);
-  border:none; border-radius:12px; font-family:var(--font-body); font-size:12px;
-  letter-spacing:2px; text-transform:uppercase; cursor:pointer;
-  transition:all .2s; margin-top:4px;
+  border:none; border-radius:12px; font-family:var(--fb); font-size:12px;
+  letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all .2s; margin-top:4px;
 }
 .save-btn:hover { background:var(--terra); transform:translateY(-2px); box-shadow:0 8px 24px rgba(196,120,90,.3); }
 
-/* ===== BREATHING PAGE ===== */
-.breath-selector { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
-.breath-opt {
-  flex:1; min-width:120px; padding:12px 10px; border-radius:12px;
-  border:1.5px solid var(--warm); background:transparent; text-align:center;
-  cursor:pointer; transition:all .2s; font-family:var(--font-body);
-}
-.breath-opt:hover { border-color:var(--sage); }
-.breath-opt.sel { background:var(--sage); border-color:var(--sage); color:white; }
-.breath-opt .b-name { font-size:13px; color:var(--ink); display:block; font-weight:500; }
-.breath-opt.sel .b-name { color:white; }
-.breath-opt .b-desc { font-size:10px; color:var(--muted); margin-top:2px; display:block; }
-.breath-opt.sel .b-desc { color:rgba(255,255,255,.8); }
-
-.breath-arena {
-  display:flex; flex-direction:column; align-items:center;
-  padding:30px 0; position:relative;
-}
-.breath-circle-wrap { position:relative; width:180px; height:180px; margin-bottom:28px; }
-.breath-ring {
-  position:absolute; inset:0; border-radius:50%;
-  border:2px solid var(--sage-l); opacity:.3;
-}
-.breath-circle {
-  position:absolute; inset:16px; border-radius:50%;
-  background:radial-gradient(circle at 40% 35%, var(--sage-l), var(--sage));
-  transform:scale(.6); transition:transform 0s;
-  box-shadow:0 0 40px rgba(138,158,138,.4);
-  display:flex; align-items:center; justify-content:center;
-}
-.breath-count { font-family:var(--font-display); font-size:2.5rem; color:white; font-weight:300; }
-.breath-phase { font-size:13px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
-.breath-controls { display:flex; gap:12px; }
-.breath-btn {
-  padding:12px 28px; border-radius:10px; border:1.5px solid var(--sage);
-  font-family:var(--font-body); font-size:13px; cursor:pointer; transition:all .2s;
-}
-.breath-btn.primary { background:var(--sage); color:white; border-color:var(--sage); }
-.breath-btn.primary:hover { background:var(--brown); border-color:var(--brown); }
-.breath-btn.secondary { background:transparent; color:var(--sage); }
-.breath-btn.secondary:hover { background:var(--sage); color:white; }
-.breath-cycles { font-size:12px; color:var(--muted); margin-top:16px; }
-
-/* ===== STATS PAGE ===== */
-.stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
-.stat-card {
-  background:var(--card); border:1px solid var(--warm); border-radius:var(--r);
-  padding:18px; text-align:center; box-shadow:var(--shadow);
-}
-.stat-num { font-family:var(--font-display); font-size:2.2rem; color:var(--brown); display:block; }
-.stat-lbl { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-top:4px; display:block; }
-
-.bar-chart { display:flex; gap:8px; align-items:flex-end; height:80px; margin:16px 0 8px; }
-.bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end; }
-.bar-fill { width:100%; border-radius:4px 4px 0 0; background:var(--sage-l); transition:height .6s cubic-bezier(.34,1.56,.64,1); min-height:3px; }
-.bar-lbl { font-size:10px; color:var(--muted); }
-
-.stress-history { margin-top:16px; }
-.stress-line { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-.stress-day { font-size:11px; color:var(--muted); width:28px; flex-shrink:0; }
-.stress-bar-bg { flex:1; height:6px; background:var(--warm); border-radius:3px; overflow:hidden; }
-.stress-bar-fill { height:100%; border-radius:3px; background:linear-gradient(to right, var(--sage), var(--terra)); transition:width .5s ease; }
-.stress-val { font-size:11px; color:var(--muted); width:16px; text-align:right; flex-shrink:0; }
-
-/* ===== QUOTES ===== */
+/* ===================== QUOTE ===================== */
 .quote-card {
-  background:linear-gradient(135deg, var(--brown), #3a2a1e);
-  color:var(--cream); border-radius:var(--r); padding:28px 24px; margin-bottom:14px;
-  position:relative; overflow:hidden;
+  background:linear-gradient(135deg,var(--brown),color-mix(in srgb,var(--brown) 60%,#000));
+  color:var(--cream); border-radius:var(--r); padding:26px 22px; margin-bottom:14px; position:relative; overflow:hidden;
 }
 .quote-card::before {
-  content:'"'; position:absolute; top:-10px; left:14px;
-  font-family:var(--font-display); font-size:8rem; color:rgba(255,255,255,.08); line-height:1;
+  content:'"'; position:absolute; top:-14px; left:12px;
+  font-family:var(--fd); font-size:9rem; color:rgba(255,255,255,.07); line-height:1; pointer-events:none;
 }
-.quote-text { font-family:var(--font-display); font-size:1.2rem; font-style:italic; line-height:1.6; margin-bottom:14px; position:relative; }
-.quote-author { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; opacity:.6; }
-.quote-refresh { position:absolute; bottom:16px; right:16px; background:rgba(255,255,255,.15); border:none; border-radius:8px; padding:7px 12px; color:var(--cream); font-size:12px; cursor:pointer; transition:background .2s; font-family:var(--font-body); }
-.quote-refresh:hover { background:rgba(255,255,255,.25); }
+.q-text { font-family:var(--fd); font-size:1.2rem; font-style:italic; line-height:1.65; margin-bottom:12px; position:relative; }
+.q-auth { font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:.55; }
+.q-refresh { position:absolute; bottom:14px; right:14px; background:rgba(255,255,255,.13); border:none; border-radius:8px; padding:7px 12px; color:var(--cream); font-size:11px; cursor:pointer; transition:background .2s; font-family:var(--fb); }
+.q-refresh:hover { background:rgba(255,255,255,.25); }
 
-/* ===== SETTINGS PAGE ===== */
-.setting-group { margin-bottom:24px; }
-.setting-group-title { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; display:block; }
-
-.theme-row { display:flex; gap:10px; flex-wrap:wrap; }
-.theme-opt {
-  flex:1; min-width:80px; padding:12px 8px; border-radius:12px;
-  border:2px solid var(--warm); cursor:pointer; text-align:center;
-  transition:all .2s; background:var(--card);
+/* ===================== DAY NAV ===================== */
+.day-row { display:flex; gap:5px; justify-content:center; flex-wrap:wrap; padding:12px 0 0; }
+.day-btn {
+  width:38px; height:38px; border-radius:50%; border:1.5px solid var(--warm);
+  background:transparent; font-size:11px; color:var(--muted); cursor:pointer;
+  transition:all .2s; font-family:var(--fb); display:flex; align-items:center; justify-content:center;
 }
+.day-btn:hover { border-color:var(--sage); color:var(--sage); }
+.day-btn.active { background:var(--sage); border-color:var(--sage); color:#fff; }
+.day-btn.has-entry { border-color:var(--terra); color:var(--terra); }
+.day-btn.active.has-entry { background:var(--terra); border-color:var(--terra); color:#fff; }
+.day-date { text-align:center; font-size:11px; color:var(--muted); padding:7px 0 0; letter-spacing:.5px; }
+
+/* ===================== BREATHING ===================== */
+.br-selector { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+.br-opt {
+  flex:1; min-width:110px; padding:12px 10px; border-radius:12px;
+  border:1.5px solid var(--warm); background:transparent; text-align:center; cursor:pointer; transition:all .2s;
+}
+.br-opt:hover { border-color:var(--sage); }
+.br-opt.sel { background:var(--sage); border-color:var(--sage); }
+.br-name { font-size:13px; color:var(--ink); display:block; font-weight:500; }
+.br-opt.sel .br-name { color:#fff; }
+.br-desc { font-size:10px; color:var(--muted); margin-top:2px; display:block; }
+.br-opt.sel .br-desc { color:rgba(255,255,255,.8); }
+.br-arena { display:flex; flex-direction:column; align-items:center; padding:20px 0; }
+.br-wrap { position:relative; width:180px; height:180px; margin-bottom:24px; }
+.br-ring { position:absolute; inset:0; border-radius:50%; border:2px solid var(--sage-l); opacity:.3; }
+.br-circle {
+  position:absolute; inset:16px; border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,var(--sage-l),var(--sage));
+  transform:scale(.6); box-shadow:0 0 40px rgba(138,158,138,.35);
+  display:flex; align-items:center; justify-content:center;
+}
+.br-count { font-family:var(--fd); font-size:2.5rem; color:#fff; font-weight:300; }
+.br-phase { font-size:12px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:18px; }
+.br-btns { display:flex; gap:10px; }
+.br-btn { padding:12px 26px; border-radius:10px; border:1.5px solid var(--sage); font-family:var(--fb); font-size:12px; cursor:pointer; transition:all .2s; }
+.br-btn.primary { background:var(--sage); color:#fff; }
+.br-btn.primary:hover { background:var(--brown); border-color:var(--brown); }
+.br-btn.sec { background:transparent; color:var(--sage); }
+.br-btn.sec:hover { background:var(--sage); color:#fff; }
+.br-cycles { font-size:12px; color:var(--muted); margin-top:14px; min-height:18px; }
+.br-ambient { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
+.amb-btn {
+  padding:7px 14px; border-radius:20px; border:1.5px solid var(--warm);
+  background:transparent; font-size:12px; color:var(--muted); cursor:pointer; transition:all .2s; font-family:var(--fb);
+}
+.amb-btn:hover { border-color:var(--sage); color:var(--sage); }
+.amb-btn.playing { background:var(--sage); border-color:var(--sage); color:#fff; }
+
+/* ===================== MEDITATION ===================== */
+.med-list { display:flex; flex-direction:column; gap:10px; }
+.med-item {
+  display:flex; align-items:center; gap:14px; padding:14px 16px;
+  border-radius:12px; border:1.5px solid var(--warm); background:var(--cream);
+  cursor:pointer; transition:all .2s;
+}
+.med-item:hover { border-color:var(--sage); }
+.med-item.active { border-color:var(--terra); background:rgba(196,120,90,.06); }
+.med-icon { font-size:22px; flex-shrink:0; }
+.med-info { flex:1; }
+.med-title { font-size:14px; color:var(--ink); font-weight:500; }
+.med-dur { font-size:11px; color:var(--muted); margin-top:2px; }
+.med-play { width:34px; height:34px; border-radius:50%; background:var(--sage); border:none; color:#fff; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s; }
+.med-play:hover { background:var(--brown); transform:scale(1.1); }
+.med-timer { text-align:center; padding:20px 0 4px; }
+.med-timer-display { font-family:var(--fd); font-size:3rem; color:var(--brown); font-weight:300; }
+.med-timer-label { font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-top:4px; }
+.med-progress { width:100%; height:3px; background:var(--warm); border-radius:2px; margin-top:14px; overflow:hidden; }
+.med-progress-fill { height:100%; background:var(--sage); border-radius:2px; transition:width .5s linear; }
+
+/* ===================== AI CHAT ===================== */
+.chat-history { display:flex; flex-direction:column; gap:10px; margin-bottom:14px; max-height:340px; overflow-y:auto; padding-right:4px; }
+.chat-history::-webkit-scrollbar { width:3px; }
+.chat-history::-webkit-scrollbar-thumb { background:var(--warm); border-radius:2px; }
+.msg { display:flex; gap:10px; animation:fadeUp .3s ease both; }
+.msg.user { flex-direction:row-reverse; }
+.msg-bubble {
+  max-width:78%; padding:12px 15px; border-radius:16px; font-size:14px; line-height:1.55;
+}
+.msg.ai .msg-bubble { background:var(--cream); color:var(--ink); border:1px solid var(--warm); border-radius:16px 16px 16px 4px; }
+.msg.user .msg-bubble { background:var(--brown); color:var(--cream); border-radius:16px 16px 4px 16px; }
+.msg-avatar { width:30px; height:30px; border-radius:50%; background:var(--sage); display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:2px; }
+.chat-input-row { display:flex; gap:8px; align-items:flex-end; }
+.chat-input { flex:1; border:1px solid var(--warm); border-radius:12px; padding:12px 14px; font-family:var(--fb); font-size:14px; color:var(--ink); background:var(--cream); resize:none; outline:none; line-height:1.5; min-height:44px; max-height:100px; overflow-y:auto; margin-bottom:0; transition:border-color .2s; }
+.chat-input:focus { border-color:var(--sage); background:var(--card); }
+.chat-send { width:44px; height:44px; border-radius:12px; background:var(--brown); border:none; color:var(--cream); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s; }
+.chat-send:hover { background:var(--terra); }
+.chat-send:disabled { opacity:.4; cursor:default; }
+.typing { display:flex; gap:4px; padding:12px 15px; }
+.typing span { width:7px; height:7px; border-radius:50%; background:var(--muted); animation:blink 1.2s infinite; }
+.typing span:nth-child(2){animation-delay:.2s;} .typing span:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,80%,100%{opacity:.2;}40%{opacity:1;}}
+
+/* ===================== STATS ===================== */
+.stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+.stat-card { background:var(--card); border:1px solid var(--warm); border-radius:var(--r); padding:18px; text-align:center; box-shadow:var(--sh); }
+.stat-num { font-family:var(--fd); font-size:2.2rem; color:var(--brown); display:block; }
+.stat-lbl { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-top:4px; display:block; }
+.bar-chart { display:flex; gap:6px; align-items:flex-end; height:80px; }
+.bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; height:100%; justify-content:flex-end; }
+.bar-fill { width:100%; border-radius:4px 4px 0 0; background:var(--sage-l); transition:height .6s cubic-bezier(.34,1.56,.64,1); min-height:3px; }
+.bar-lbl { font-size:9px; color:var(--muted); }
+.stress-line { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.s-day { font-size:10px; color:var(--muted); width:26px; flex-shrink:0; }
+.s-bg { flex:1; height:6px; background:var(--warm); border-radius:3px; overflow:hidden; }
+.s-fill { height:100%; border-radius:3px; background:linear-gradient(to right,var(--sage),var(--terra)); transition:width .5s; }
+.s-val { font-size:10px; color:var(--muted); width:14px; text-align:right; flex-shrink:0; }
+.grat-item { padding:12px; background:var(--cream); border-radius:10px; margin-bottom:8px; }
+.grat-day { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
+.grat-text { font-family:var(--fd); font-size:15px; color:var(--ink); line-height:1.5; }
+.insight { padding:14px 16px; background:linear-gradient(135deg,rgba(138,158,138,.1),rgba(196,120,90,.08)); border:1px solid var(--warm); border-radius:12px; margin-bottom:10px; }
+.insight-title { font-size:12px; font-weight:600; color:var(--brown); margin-bottom:4px; }
+.insight-text { font-size:13px; color:var(--ink); line-height:1.5; }
+
+/* ===================== SETTINGS ===================== */
+.sg-title { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; display:block; }
+.theme-row { display:flex; gap:8px; flex-wrap:wrap; }
+.theme-opt { flex:1; min-width:70px; padding:11px 8px; border-radius:12px; border:2px solid var(--warm); cursor:pointer; text-align:center; transition:all .2s; background:var(--card); }
 .theme-opt:hover { border-color:var(--sage); }
 .theme-opt.sel { border-color:var(--brown); }
-.theme-swatch { width:28px; height:28px; border-radius:50%; margin:0 auto 6px; }
-.theme-name { font-size:11px; color:var(--muted); display:block; }
-
+.t-swatch { width:26px; height:26px; border-radius:50%; margin:0 auto 5px; }
+.t-name { font-size:10px; color:var(--muted); display:block; }
 .profile-row { display:flex; gap:8px; flex-wrap:wrap; }
-.profile-opt {
-  flex:1; min-width:120px; padding:14px 12px; border-radius:12px;
-  border:1.5px solid var(--warm); cursor:pointer; transition:all .2s;
-  background:var(--card); text-align:center;
-}
-.profile-opt:hover { border-color:var(--sage); }
-.profile-opt.sel { border-color:var(--terra); background:rgba(196,120,90,.08); }
-.profile-icon { font-size:24px; margin-bottom:6px; display:block; }
-.profile-name { font-size:12px; color:var(--ink); font-weight:500; display:block; }
-.profile-desc { font-size:10px; color:var(--muted); margin-top:2px; display:block; }
-
-.font-row { display:flex; align-items:center; gap:12px; margin-top:8px; }
-.font-lbl { font-size:12px; color:var(--muted); }
-input[type=range].font-slider {
-  flex:1; background:linear-gradient(to right, var(--sage) 0%, var(--sage) 50%, var(--warm) 50%, var(--warm) 100%);
-}
+.prof-opt { flex:1; min-width:110px; padding:13px 10px; border-radius:12px; border:1.5px solid var(--warm); cursor:pointer; transition:all .2s; background:var(--card); text-align:center; }
+.prof-opt:hover { border-color:var(--sage); }
+.prof-opt.sel { border-color:var(--terra); background:rgba(196,120,90,.07); }
+.p-icon { font-size:22px; margin-bottom:5px; display:block; }
+.p-name { font-size:12px; color:var(--ink); font-weight:500; display:block; }
+.p-desc { font-size:10px; color:var(--muted); margin-top:2px; display:block; }
 .lang-row { display:flex; gap:8px; flex-wrap:wrap; }
-.lang-btn {
-  padding:8px 16px; border-radius:8px; border:1.5px solid var(--warm);
-  background:transparent; font-size:13px; color:var(--muted); cursor:pointer; transition:all .2s;
-  font-family:var(--font-body);
-}
+.lang-btn { padding:8px 15px; border-radius:8px; border:1.5px solid var(--warm); background:transparent; font-size:13px; color:var(--muted); cursor:pointer; transition:all .2s; font-family:var(--fb); }
 .lang-btn:hover { border-color:var(--sage); color:var(--sage); }
-.lang-btn.sel { background:var(--sage); border-color:var(--sage); color:white; }
-
-.export-btn {
-  width:100%; padding:13px; border-radius:10px; border:1.5px solid var(--brown);
-  background:transparent; color:var(--brown); font-family:var(--font-body);
-  font-size:13px; cursor:pointer; transition:all .2s; margin-bottom:10px;
-  letter-spacing:.5px;
-}
+.lang-btn.sel { background:var(--sage); border-color:var(--sage); color:#fff; }
+.notif-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.notif-label { font-size:14px; color:var(--ink); }
+.toggle { width:44px; height:24px; border-radius:12px; background:var(--warm); border:none; cursor:pointer; position:relative; transition:background .2s; flex-shrink:0; }
+.toggle.on { background:var(--sage); }
+.toggle::after { content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; transition:transform .2s; box-shadow:0 1px 4px rgba(0,0,0,.2); }
+.toggle.on::after { transform:translateX(20px); }
+.export-btn { width:100%; padding:13px; border-radius:10px; border:1.5px solid var(--brown); background:transparent; color:var(--brown); font-family:var(--fb); font-size:13px; cursor:pointer; transition:all .2s; margin-bottom:10px; }
 .export-btn:hover { background:var(--brown); color:var(--cream); }
-
-.reset-btn {
-  width:100%; padding:13px; border-radius:10px; border:1.5px solid #e88;
-  background:transparent; color:#c44; font-family:var(--font-body);
-  font-size:13px; cursor:pointer; transition:all .2s;
-}
+.reset-btn { width:100%; padding:13px; border-radius:10px; border:1.5px solid #e88; background:transparent; color:#c44; font-family:var(--fb); font-size:13px; cursor:pointer; transition:all .2s; }
 .reset-btn:hover { background:#fee; }
+.notif-time { display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; }
+.nt-slot { flex:1; display:flex; flex-direction:column; gap:4px; }
+.nt-lbl { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
+input[type=time] {
+  width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--warm);
+  background:var(--cream); color:var(--ink); font-family:var(--fb); font-size:14px; outline:none;
+}
 
-/* ===== BOTTOM NAV ===== */
+/* ===================== INSTALL BANNER ===================== */
+.install-banner { margin:12px 20px 0; padding:13px 16px; background:var(--brown); border-radius:12px; display:none; align-items:center; gap:12px; }
+.install-banner.show { display:flex; }
+.ib-text { flex:1; font-size:12px; color:var(--cream); line-height:1.4; }
+.ib-text strong { display:block; margin-bottom:2px; }
+.ib-cta { padding:8px 13px; background:var(--cream); color:var(--brown); border:none; border-radius:8px; font-size:11px; font-weight:600; cursor:pointer; white-space:nowrap; font-family:var(--fb); letter-spacing:.5px; }
+.ib-close { background:none; border:none; color:rgba(255,255,255,.6); font-size:18px; cursor:pointer; }
+
+/* ===================== BOTTOM NAV ===================== */
 .bottom-nav {
-  position:fixed; bottom:0; left:0; right:0; height:70px;
-  background:var(--card); border-top:1px solid var(--warm);
+  position:fixed; bottom:0; left:0; right:0; height:68px;
+  background:var(--nav); border-top:1px solid var(--warm);
   display:flex; align-items:center; justify-content:space-around;
-  z-index:100; backdrop-filter:blur(10px);
-  padding-bottom:env(safe-area-inset-bottom);
-  transition:background .4s;
+  z-index:100; padding-bottom:env(safe-area-inset-bottom);
+  transition:background .35s; backdrop-filter:blur(12px);
 }
-.nav-item {
-  display:flex; flex-direction:column; align-items:center; gap:3px;
-  cursor:pointer; padding:8px 12px; border-radius:12px; transition:all .2s;
-  border:none; background:transparent;
-}
+.nav-item { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; padding:8px 10px; border-radius:12px; transition:all .2s; border:none; background:transparent; }
 .nav-item:hover { background:var(--cream); }
-.nav-item.active .nav-icon { filter:none; opacity:1; }
-.nav-icon { font-size:20px; opacity:.5; transition:all .2s; }
-.nav-item.active .nav-icon { opacity:1; transform:scale(1.1); }
-.nav-lbl { font-size:9px; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; transition:color .2s; }
-.nav-item.active .nav-lbl { color:var(--brown); font-weight:500; }
+.n-icon { font-size:19px; opacity:.45; transition:all .2s; }
+.nav-item.active .n-icon { opacity:1; transform:scale(1.1); }
+.n-lbl { font-size:9px; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; transition:color .2s; }
+.nav-item.active .n-lbl { color:var(--brown); font-weight:600; }
 
-/* ===== TOAST ===== */
+/* ===================== TOAST ===================== */
 .toast {
-  position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(20px);
+  position:fixed; bottom:88px; left:50%; transform:translateX(-50%) translateY(16px);
   background:var(--brown); color:var(--cream); padding:11px 22px; border-radius:24px;
-  font-size:12px; letter-spacing:.5px; transition:all .35s; z-index:200;
-  opacity:0; pointer-events:none; white-space:nowrap; font-family:var(--font-body);
+  font-size:12px; letter-spacing:.5px; z-index:200; opacity:0; pointer-events:none;
+  white-space:nowrap; font-family:var(--fb); transition:all .35s;
 }
 .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
-/* ===== INSTALL BANNER ===== */
-.install-banner {
-  margin:16px 20px 0; padding:14px 16px; background:var(--brown); border-radius:12px;
-  display:flex; align-items:center; gap:12px; display:none;
-}
-.install-banner.visible { display:flex; }
-.install-text { flex:1; font-size:12px; color:var(--cream); line-height:1.4; }
-.install-text strong { display:block; margin-bottom:2px; }
-.install-cta {
-  padding:8px 14px; background:var(--cream); color:var(--brown);
-  border:none; border-radius:8px; font-size:11px; font-weight:500;
-  cursor:pointer; white-space:nowrap; font-family:var(--font-body);
-  letter-spacing:.5px;
-}
-.install-close { background:none; border:none; color:rgba(255,255,255,.6); font-size:18px; cursor:pointer; padding:0 0 0 4px; }
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
-@keyframes breatheIn { to { transform:scale(1); } }
-@keyframes breatheOut { to { transform:scale(.55); } }
-@keyframes pulse { 0%,100% { box-shadow:0 0 30px rgba(138,158,138,.3); } 50% { box-shadow:0 0 60px rgba(138,158,138,.6); } }
-
-@media(max-width:420px) {
-  .stats-grid { grid-template-columns:1fr 1fr; }
-  .card { padding:18px; }
-  .ob-logo { font-size:2.8rem; }
-}
+/* ===================== ANIMATIONS ===================== */
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;} }
+@keyframes fadeDown { from{opacity:0;transform:translateY(-14px);}to{opacity:1;transform:none;} }
+@media(max-width:380px){ .card{padding:16px;} .stats-grid{gap:8px;} }
 </style>
 </head>
 <body>
 
-<!-- ===== ONBOARDING ===== -->
+<!-- ========== ONBOARDING ========== -->
 <div id="onboarding" class="screen">
-  <div class="ob-logo">Serena</div>
-  <div class="ob-tagline">Ton espace de paix intérieure</div>
 
-  <!-- Step 1 -->
-  <div class="ob-step active" id="ob1">
-    <p class="ob-question">Quel est ton plus grand défi en ce moment ?</p>
-    <div class="ob-options">
-      <button class="ob-opt" onclick="selectOb(this,'challenge','stress')">😮‍💨 Trop de stress au quotidien</button>
-      <button class="ob-opt" onclick="selectOb(this,'challenge','sleep')">😴 Difficultés à dormir / décompresser</button>
-      <button class="ob-opt" onclick="selectOb(this,'challenge','focus')">🌀 Manque de concentration</button>
-      <button class="ob-opt" onclick="selectOb(this,'challenge','emotion')">💭 Émotions difficiles à gérer</button>
+  <!-- PAGE 1 : Langue · Thème · Prénom · Défi -->
+  <div class="ob-page active" id="obPage1">
+    <div class="ob-header">
+      <span class="ob-logo">Serena</span>
+      <span class="ob-tag" id="obTagline">Ton espace de paix intérieure</span>
     </div>
-  </div>
 
-  <!-- Step 2 -->
-  <div class="ob-step" id="ob2">
-    <p class="ob-question">Qui es-tu dans ta vie quotidienne ?</p>
-    <div class="ob-options">
-      <button class="ob-opt" onclick="selectOb(this,'profile','parent')">👶 Parent débordé(e)</button>
-      <button class="ob-opt" onclick="selectOb(this,'profile','pro')">💼 Professionnel(le) sous pression</button>
-      <button class="ob-opt" onclick="selectOb(this,'profile','student')">🎓 Étudiant(e) stressé(e)</button>
-      <button class="ob-opt" onclick="selectOb(this,'profile','self')">🌱 En quête de moi-même</button>
+    <div class="ob-prefs">
+      <div>
+        <span class="ob-pref-label" id="obLangLabel">Langue · Language · Idioma</span>
+        <div class="ob-lang-row">
+          <button class="ob-lang-btn sel" data-lang="fr">🇫🇷 Français</button>
+          <button class="ob-lang-btn" data-lang="en">🇬🇧 English</button>
+          <button class="ob-lang-btn" data-lang="es">🇪🇸 Español</button>
+        </div>
+      </div>
+      <div>
+        <span class="ob-pref-label" id="obThemeLabel">Ambiance visuelle</span>
+        <div class="ob-theme-row">
+          <button class="ob-theme-btn sel" data-theme="light"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#f5f0e8,#8a9e8a)"></div><span class="ob-t-name" id="thDoux">Doux</span></button>
+          <button class="ob-theme-btn" data-theme="dark"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#1a1714,#7a9a7a)"></div><span class="ob-t-name" id="thSombre">Sombre</span></button>
+          <button class="ob-theme-btn" data-theme="nature"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#eef4ee,#4a7a4a)"></div><span class="ob-t-name" id="thNature">Nature</span></button>
+          <button class="ob-theme-btn" data-theme="minimal"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#fafafa,#111)"></div><span class="ob-t-name" id="thMinimal">Minimal</span></button>
+          <button class="ob-theme-btn" data-theme="coachdivin"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#4a1428,#c9a96e)"></div><span class="ob-t-name" id="thDivin">Divin</span></button>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Step 3 -->
-  <div class="ob-step" id="ob3">
-    <p class="ob-question">Ce qui t'aide le plus à te ressourcer ?</p>
-    <div class="ob-options">
-      <button class="ob-opt" onclick="selectOb(this,'method','breath')">🌬️ La respiration & le calme</button>
-      <button class="ob-opt" onclick="selectOb(this,'method','write')">✍️ L'écriture & l'expression</button>
-      <button class="ob-opt" onclick="selectOb(this,'method','move')">🚶 Le mouvement & le corps</button>
-      <button class="ob-opt" onclick="selectOb(this,'method','both')">✨ Un peu de tout</button>
+    <div class="ob-name-wrap">
+      <span class="ob-name-float" id="obNameFloat">Ton prénom</span>
+      <input class="ob-name-input" id="obNameInput" type="text" placeholder="Comment t'appelles-tu ?" maxlength="30">
     </div>
+
+    <div class="ob-divider"></div>
+
+    <p class="ob-q" id="obQ1">Quel est ton plus grand défi en ce moment ?</p>
+    <div class="ob-opts" id="obOpts1">
+      <button class="ob-opt" data-key="challenge" data-val="stress" data-page="1">
+        <span class="ob-opt-emoji">😮‍💨</span><span id="obC1">Trop de stress au quotidien</span><span class="ob-opt-check"></span>
+      </button>
+      <button class="ob-opt" data-key="challenge" data-val="sleep" data-page="1">
+        <span class="ob-opt-emoji">😴</span><span id="obC2">Difficultés à dormir / décompresser</span><span class="ob-opt-check"></span>
+      </button>
+      <button class="ob-opt" data-key="challenge" data-val="focus" data-page="1">
+        <span class="ob-opt-emoji">🌀</span><span id="obC3">Manque de concentration</span><span class="ob-opt-check"></span>
+      </button>
+      <button class="ob-opt" data-key="challenge" data-val="emotion" data-page="1">
+        <span class="ob-opt-emoji">💭</span><span id="obC4">Émotions difficiles à gérer</span><span class="ob-opt-check"></span>
+      </button>
+    </div>
+
+    <div class="ob-prog" style="margin-top:28px;">
+      <div class="ob-dot active"></div>
+      <div class="ob-dot"></div>
+    </div>
+    <button class="ob-next" id="obNext1" disabled>
+      <span id="obNextLabel1">Continuer</span> <span class="arr">→</span>
+    </button>
   </div>
 
-  <div class="ob-progress">
-    <div class="ob-dot active" id="dot0"></div>
-    <div class="ob-dot" id="dot1"></div>
-    <div class="ob-dot" id="dot2"></div>
+  <!-- PAGE 2 : Profil · Méthode -->
+  <div class="ob-page" id="obPage2">
+    <div class="ob-header">
+      <span class="ob-logo">Serena</span>
+    </div>
+
+    <p class="ob-greeting" id="obGreeting">Ravie de te rencontrer ✨</p>
+
+    <span class="ob-section-label" id="obQ2Label">Qui es-tu dans ta vie quotidienne ?</span>
+    <div class="ob-opts" style="margin-bottom:20px;" id="obOpts2">
+      <button class="ob-opt" data-key="profile" data-val="parent" data-page="2">
+        <span class="ob-opt-emoji">👶</span><span id="obP1">Parent débordé(e)</span><span class="ob-opt-check"></span>
+      </button>
+      <button class="ob-opt" data-key="profile" data-val="pro" data-page="2">
+        <span class="ob-opt-emoji">💼</span><span id="obP2">Professionnel(le) sous pression</span><span class="ob-opt-check"></span>
+      </button>
+      <button class="ob-opt" data-key="profile" data-val="student" data-page="2">
+        <span class="ob-opt-emoji">🎓</span><span id="obP3">Étudiant(e) stressé(e)</span><span class="ob-opt-check"></span>
+      </button>
+      <button class="ob-opt" data-key="profile" data-val="self" data-page="2">
+        <span class="ob-opt-emoji">🌱</span><span id="obP4">En quête de moi-même</span><span class="ob-opt-check"></span>
+      </button>
+    </div>
+
+    <div class="ob-divider"></div>
+
+    <span class="ob-section-label" id="obQ3Label" style="margin-top:4px;">Ce qui t'aide le plus à te ressourcer ?</span>
+    <div class="ob-opts" id="obOpts3">
+      <button class="ob-opt" data-key="method" data-val="breath" data-page="2">
+        <span class="ob-opt-emoji">🌬️</span><span id="obM1">La respiration & le calme</span><span class="ob-opt-check"></span>
+      </button>
+      <button class="ob-opt" data-key="method" data-val="write" data-page="2">
+        <span class="ob-opt-emoji">✍️</span><span id="obM2">L'écriture & l'expression</span><span class="ob-opt-check"></span>
+      </button>
+      <button class="ob-opt" data-key="method" data-val="move" data-page="2">
+        <span class="ob-opt-emoji">🚶</span><span id="obM3">Le mouvement & le corps</span><span class="ob-opt-check"></span>
+      </button>
+      <button class="ob-opt" data-key="method" data-val="both" data-page="2">
+        <span class="ob-opt-emoji">✨</span><span id="obM4">Un peu de tout</span><span class="ob-opt-check"></span>
+      </button>
+    </div>
+
+    <div class="ob-prog" style="margin-top:auto;padding-top:28px;">
+      <div class="ob-dot done"></div>
+      <div class="ob-dot active"></div>
+    </div>
+    <button class="ob-next" id="obNext2" disabled>
+      <span id="obNextLabel2">Commencer mon voyage</span> <span class="arr">✦</span>
+    </button>
   </div>
 
-  <button class="ob-next" id="obNext" onclick="nextObStep()" disabled>Continuer →</button>
 </div>
 
-<!-- ===== MAIN APP ===== -->
+<!-- ========== APP ========== -->
 <div id="app" class="screen">
-
-  <div class="top-nav">
+  <div class="top-bar">
     <div class="app-logo">Serena</div>
-    <div class="nav-actions">
-      <button class="icon-btn" onclick="showPage('settings')" title="Paramètres">⚙️</button>
+    <div class="top-actions">
+      <button class="icon-btn" onclick="goPage('settings')">⚙️</button>
     </div>
   </div>
 
-  <!-- Install banner -->
   <div class="install-banner" id="installBanner">
-    <div class="install-text">
-      <strong>Installer Serena</strong>
-      Accès hors-ligne, comme une vraie app
-    </div>
-    <button class="install-cta" onclick="installPWA()">Installer</button>
-    <button class="install-close" onclick="document.getElementById('installBanner').classList.remove('visible')">×</button>
+    <div class="ib-text"><strong>Installer Serena</strong>Accès hors-ligne · icône sur l'écran</div>
+    <button class="ib-cta" onclick="installPWA()">Installer</button>
+    <button class="ib-close" onclick="this.closest('.install-banner').classList.remove('show')">×</button>
   </div>
 
-  <!-- Page tabs -->
-  <div class="page-tabs">
-    <button class="tab-btn active" onclick="showPage('journal')" id="tab-journal">📓 Journal</button>
-    <button class="tab-btn" onclick="showPage('breath')" id="tab-breath">🌬️ Respiration</button>
-    <button class="tab-btn" onclick="showPage('stats')" id="tab-stats">📊 Progrès</button>
-    <button class="tab-btn" onclick="showPage('settings')" id="tab-settings">⚙️ Réglages</button>
+  <div class="tabs">
+    <button class="tab active" onclick="goPage('journal')" id="tab-journal">📓 Journal</button>
+    <button class="tab" onclick="goPage('breath')" id="tab-breath">🌬️ Respirer</button>
+    <button class="tab" onclick="goPage('meditate')" id="tab-meditate">🧘 Méditer</button>
+    <button class="tab" onclick="goPage('serena')" id="tab-serena">✨ Serena IA</button>
+    <button class="tab" onclick="goPage('stats')" id="tab-stats">📊 Progrès</button>
+    <button class="tab" onclick="goPage('settings')" id="tab-settings">⚙️ Réglages</button>
   </div>
 
-  <!-- ===== JOURNAL PAGE ===== -->
+  <!-- ====== JOURNAL ====== -->
   <div class="page active" id="page-journal">
-
-    <!-- Quote of the day -->
-    <div class="quote-card" id="quoteCard">
-      <p class="quote-text" id="quoteText">Le calme est une superforce.</p>
-      <p class="quote-author" id="quoteAuthor">— Anonyme</p>
-      <button class="quote-refresh" onclick="newQuote()">✦ Nouvelle</button>
+    <div class="quote-card">
+      <p class="q-text" id="qText">Le calme est une superforce.</p>
+      <p class="q-auth" id="qAuth">— Anonyme</p>
+      <button class="q-refresh" onclick="newQuote()">✦ Nouvelle</button>
     </div>
-
-    <!-- Day navigation -->
     <div class="day-row" id="dayNav"></div>
     <p class="day-date" id="dayDate"></p>
 
-    <!-- Morning -->
     <div class="card">
-      <div class="card-header">
-        <div class="card-icon ci-morning">🌅</div>
-        <div><div class="card-title">Rituel du matin</div><div class="card-sub">Poser l'intention · 5 min</div></div>
-      </div>
+      <div class="card-hd"><div class="c-icon ci-m">🌅</div><div><div class="c-title">Rituel du matin</div><div class="c-sub">Poser l'intention · 5 min</div></div></div>
       <ul class="task-list" id="morningTasks">
-        <li class="task-item" onclick="toggleTask(this)">
-          <div class="chk"></div>
-          <div><span class="task-lbl">Respiration consciente</span><span class="task-sub">4-4-6 · 5 cycles · avant le téléphone</span></div>
-        </li>
-        <li class="task-item" onclick="toggleTask(this)">
-          <div class="chk"></div>
-          <div><span class="task-lbl">Écriture libre (3 min)</span><span class="task-sub">"Comment je veux me sentir aujourd'hui ?"</span></div>
-        </li>
-        <li class="task-item" onclick="toggleTask(this)">
-          <div class="chk"></div>
-          <div><span class="task-lbl">Téléphone hors de portée</span><span class="task-sub">Ces 5 minutes sont à toi</span></div>
-        </li>
+        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Respiration consciente</span><span class="t-sub">4-4-6 · 5 cycles · avant le téléphone</span></div></li>
+        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Écriture libre (3 min)</span><span class="t-sub">"Comment je veux me sentir aujourd'hui ?"</span></div></li>
+        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Téléphone hors de portée</span><span class="t-sub">Ces 5 minutes sont à toi</span></div></li>
       </ul>
       <div class="divider"></div>
-      <label class="field-lbl">Mon intention du jour</label>
+      <label class="fl">Mon intention du jour</label>
       <textarea id="morningNote" rows="2" placeholder="Aujourd'hui, je choisis de…"></textarea>
     </div>
 
-    <!-- Day -->
     <div class="card">
-      <div class="card-header">
-        <div class="card-icon ci-day">☀️</div>
-        <div><div class="card-title">Micro-pauses</div><div class="card-sub">Couper le flux · 5-10 min</div></div>
-      </div>
+      <div class="card-hd"><div class="c-icon ci-d">☀️</div><div><div class="c-title">Micro-pauses</div><div class="c-sub">Couper le flux · 5-10 min</div></div></div>
       <ul class="task-list" id="dayTasks">
-        <li class="task-item" onclick="toggleTask(this)">
-          <div class="chk"></div>
-          <div><span class="task-lbl">Règle des 5 sens</span><span class="task-sub">5 vues · 4 sons · 3 touchers · 2 odeurs · 1 goût</span></div>
-        </li>
-        <li class="task-item" onclick="toggleTask(this)">
-          <div class="chk"></div>
-          <div><span class="task-lbl">Pause "rien" (5 min)</span><span class="task-sub">Sans écran, sans tâche — juste être</span></div>
-        </li>
-        <li class="task-item" onclick="toggleTask(this)">
-          <div class="chk"></div>
-          <div><span class="task-lbl">Eau & mouvement</span><span class="task-sub">Un verre d'eau + 5 min de marche consciente</span></div>
-        </li>
+        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Règle des 5 sens</span><span class="t-sub">5 vues · 4 sons · 3 touchers · 2 odeurs · 1 goût</span></div></li>
+        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Pause "rien" (5 min)</span><span class="t-sub">Sans écran, sans tâche — juste être</span></div></li>
+        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Eau & mouvement</span><span class="t-sub">Un verre d'eau + 5 min de marche consciente</span></div></li>
       </ul>
     </div>
 
-    <!-- Evening -->
     <div class="card">
-      <div class="card-header">
-        <div class="card-icon ci-evening">🌙</div>
-        <div><div class="card-title">Rituel du soir</div><div class="card-sub">Déposer la journée · 10 min</div></div>
-      </div>
+      <div class="card-hd"><div class="c-icon ci-e">🌙</div><div><div class="c-title">Rituel du soir</div><div class="c-sub">Déposer la journée · 10 min</div></div></div>
       <ul class="task-list" id="eveningTasks">
-        <li class="task-item" onclick="toggleTask(this)">
-          <div class="chk"></div>
-          <div><span class="task-lbl">Carnet du soir</span><span class="task-sub">3 choses traversées + 1 gratitude</span></div>
-        </li>
-        <li class="task-item" onclick="toggleTask(this)">
-          <div class="chk"></div>
-          <div><span class="task-lbl">Geste de clôture</span><span class="task-sub">Un mot ou dessin pour "fermer" la journée</span></div>
-        </li>
-        <li class="task-item" onclick="toggleTask(this)">
-          <div class="chk"></div>
-          <div><span class="task-lbl">Écrans off 30 min avant de dormir</span><span class="task-sub">Laisser le cerveau se déposer</span></div>
-        </li>
+        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Carnet du soir</span><span class="t-sub">3 choses traversées + 1 gratitude</span></div></li>
+        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Geste de clôture</span><span class="t-sub">Un mot ou dessin pour "fermer" la journée</span></div></li>
+        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Écrans off 30 min avant de dormir</span><span class="t-sub">Laisser le cerveau se déposer</span></div></li>
       </ul>
       <div class="divider"></div>
-      <label class="field-lbl">3 choses traversées aujourd'hui</label>
+      <label class="fl">3 choses traversées aujourd'hui</label>
       <textarea id="eveningNote" rows="3" placeholder="1. …&#10;2. …&#10;3. …"></textarea>
-      <label class="field-lbl">Ma gratitude du jour 🌿</label>
+      <label class="fl">Ma gratitude du jour 🌿</label>
       <textarea id="gratitudeNote" rows="2" placeholder="Aujourd'hui, je suis reconnaissant(e) pour…"></textarea>
-      <label class="field-lbl">Mon mot de clôture</label>
+      <label class="fl">Mon mot de clôture</label>
       <textarea id="closingNote" rows="1" placeholder="Le mot qui résume ma journée…"></textarea>
     </div>
 
-    <!-- Mood -->
     <div class="card">
-      <div class="card-header">
-        <div class="card-icon ci-mood">🌸</div>
-        <div><div class="card-title">Mon état du jour</div><div class="card-sub">Un regard bienveillant</div></div>
-      </div>
-      <label class="field-lbl">Comment je me suis senti(e) ?</label>
+      <div class="card-hd"><div class="c-icon ci-mood">🌸</div><div><div class="c-title">Mon état du jour</div><div class="c-sub">Regard bienveillant</div></div></div>
+      <label class="fl">Comment je me suis senti(e) ?</label>
       <div class="mood-row">
-        <button class="mood-btn" onclick="selectMood(this)">😮‍💨 Submergé(e)</button>
-        <button class="mood-btn" onclick="selectMood(this)">😐 Neutre</button>
-        <button class="mood-btn" onclick="selectMood(this)">🌤 En progrès</button>
-        <button class="mood-btn" onclick="selectMood(this)">😌 Apaisé(e)</button>
-        <button class="mood-btn" onclick="selectMood(this)">🌸 Bien</button>
+        <button class="mood-btn" onclick="selMood(this)">😮‍💨 Submergé(e)</button>
+        <button class="mood-btn" onclick="selMood(this)">😐 Neutre</button>
+        <button class="mood-btn" onclick="selMood(this)">🌤 En progrès</button>
+        <button class="mood-btn" onclick="selMood(this)">😌 Apaisé(e)</button>
+        <button class="mood-btn" onclick="selMood(this)">🌸 Bien</button>
       </div>
-      <div class="slider-wrap">
-        <div class="slider-top"><span>Niveau de stress</span><span id="stressVal">5</span></div>
-        <input type="range" min="1" max="10" value="5" id="stressSlider" oninput="document.getElementById('stressVal').textContent=this.value">
-        <div class="slider-labels"><span>Très calme</span><span>Très stressé(e)</span></div>
-      </div>
+      <div class="sld-top"><span>Niveau de stress</span><span id="stressVal">5</span></div>
+      <input type="range" min="1" max="10" value="5" id="stressSlider" oninput="document.getElementById('stressVal').textContent=this.value">
+      <div class="sld-lbls"><span>Très calme</span><span>Très stressé(e)</span></div>
     </div>
-
     <button class="save-btn" onclick="saveDay()">✦ Sauvegarder ma journée</button>
   </div>
 
-  <!-- ===== BREATHING PAGE ===== -->
+  <!-- ====== BREATHING ====== -->
   <div class="page" id="page-breath">
     <div class="card" style="margin-top:6px;">
-      <div class="card-header">
-        <div class="card-icon ci-breath">🌬️</div>
-        <div><div class="card-title">Respiration guidée</div><div class="card-sub">Choisir une technique</div></div>
+      <div class="card-hd"><div class="c-icon ci-br">🌬️</div><div><div class="c-title">Respiration guidée</div><div class="c-sub">Choisir une technique</div></div></div>
+      <div class="br-selector">
+        <button class="br-opt sel" onclick="selBreath(this,'446')" data-k="446"><span class="br-name">4-4-6</span><span class="br-desc">Anti-stress doux</span></button>
+        <button class="br-opt" onclick="selBreath(this,'478')" data-k="478"><span class="br-name">4-7-8</span><span class="br-desc">Apaisement profond</span></button>
+        <button class="br-opt" onclick="selBreath(this,'box')" data-k="box"><span class="br-name">Box 4×4</span><span class="br-desc">Focus & ancrage</span></button>
+        <button class="br-opt" onclick="selBreath(this,'coh')" data-k="coh"><span class="br-name">Cohérence 5-5</span><span class="br-desc">Cardiaque</span></button>
       </div>
-      <div class="breath-selector">
-        <button class="breath-opt sel" onclick="selectBreath(this,'446')" data-key="446">
-          <span class="b-name">4-4-6</span><span class="b-desc">Anti-stress doux</span>
-        </button>
-        <button class="breath-opt" onclick="selectBreath(this,'478')" data-key="478">
-          <span class="b-name">4-7-8</span><span class="b-desc">Apaisement profond</span>
-        </button>
-        <button class="breath-opt" onclick="selectBreath(this,'box')" data-key="box">
-          <span class="b-name">Box 4×4</span><span class="b-desc">Focus & ancrage</span>
-        </button>
-        <button class="breath-opt" onclick="selectBreath(this,'coh')" data-key="coh">
-          <span class="b-name">Cohérence</span><span class="b-desc">5-5 cardiaque</span>
-        </button>
-      </div>
-      <div class="breath-arena">
-        <div class="breath-circle-wrap">
-          <div class="breath-ring"></div>
-          <div class="breath-circle" id="breathCircle">
-            <span class="breath-count" id="breathCount">—</span>
-          </div>
+      <div class="br-arena">
+        <div class="br-wrap"><div class="br-ring"></div><div class="br-circle" id="brCircle"><span class="br-count" id="brCount">—</span></div></div>
+        <div class="br-phase" id="brPhase">Prêt(e) ?</div>
+        <div class="br-btns">
+          <button class="br-btn primary" id="brStart" onclick="toggleBreath()">▶ Commencer</button>
+          <button class="br-btn sec" onclick="resetBreath()">↺ Reset</button>
         </div>
-        <div class="breath-phase" id="breathPhase">Prêt(e) ?</div>
-        <div class="breath-controls">
-          <button class="breath-btn primary" id="breathStartBtn" onclick="toggleBreath()">▶ Commencer</button>
-          <button class="breath-btn secondary" id="breathResetBtn" onclick="resetBreath()">↺ Reset</button>
-        </div>
-        <div class="breath-cycles" id="breathCycles"></div>
+        <div class="br-cycles" id="brCycles"></div>
       </div>
       <div class="divider"></div>
-      <p style="font-size:13px;color:var(--muted);line-height:1.6;">
-        💡 <strong>Conseil :</strong> Fais cette respiration avant ton rituel du matin ou quand tu sens le stress monter. 5 cycles suffisent pour calmer ton système nerveux.
-      </p>
+      <label class="fl">Sons d'ambiance</label>
+      <div class="br-ambient">
+        <button class="amb-btn" onclick="toggleAmb(this,'rain')" data-sound="rain">🌧 Pluie</button>
+        <button class="amb-btn" onclick="toggleAmb(this,'forest')" data-sound="forest">🌲 Forêt</button>
+        <button class="amb-btn" onclick="toggleAmb(this,'waves')" data-sound="waves">🌊 Vagues</button>
+        <button class="amb-btn" onclick="toggleAmb(this,'bowl')" data-sound="bowl">🔔 Bol tibétain</button>
+        <button class="amb-btn" onclick="toggleAmb(this,'white')" data-sound="white">〰️ Bruit blanc</button>
+      </div>
     </div>
   </div>
 
-  <!-- ===== STATS PAGE ===== -->
+  <!-- ====== MEDITATE ====== -->
+  <div class="page" id="page-meditate">
+    <div class="card" style="margin-top:6px;">
+      <div class="card-hd"><div class="c-icon ci-med">🧘</div><div><div class="c-title">Méditations guidées</div><div class="c-sub">Choisir une session</div></div></div>
+      <div class="med-list" id="medList"></div>
+      <div class="divider"></div>
+      <div class="med-timer">
+        <div class="med-timer-display" id="medTimerDisplay">00:00</div>
+        <div class="med-timer-label" id="medTimerLabel">Sélectionne une méditation</div>
+        <div class="med-progress"><div class="med-progress-fill" id="medProgressFill" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SERENA IA ====== -->
+  <div class="page" id="page-serena">
+    <div class="card" style="margin-top:6px;">
+      <div class="card-hd"><div class="c-icon ci-ai">✨</div><div><div class="c-title">Serena IA</div><div class="c-sub">Soutien émotionnel · IA bienveillante</div></div></div>
+      <div class="chat-history" id="chatHistory">
+        <div class="msg ai">
+          <div class="msg-avatar">🌿</div>
+          <div class="msg-bubble">Bonjour, je suis Serena. Je suis ici pour t'accompagner avec bienveillance. Comment te sens-tu aujourd'hui ?</div>
+        </div>
+      </div>
+      <div class="chat-input-row">
+        <textarea class="chat-input" id="chatInput" placeholder="Dis-moi ce qui t'habite…" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
+        <button class="chat-send" id="chatSend" onclick="sendChat()">➤</button>
+      </div>
+      <p style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5;">Serena IA utilise l'API Claude. Tes messages ne sont pas stockés entre sessions. Pour une aide en crise, contacte le 3114 (France).</p>
+    </div>
+  </div>
+
+  <!-- ====== STATS ====== -->
   <div class="page" id="page-stats">
     <div class="stats-grid" style="margin-top:6px;">
-      <div class="stat-card">
-        <span class="stat-num" id="statStreak">0</span>
-        <span class="stat-lbl">🔥 Jours consécutifs</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-num" id="statTotal">0</span>
-        <span class="stat-lbl">📓 Entrées totales</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-num" id="statCompletion">0%</span>
-        <span class="stat-lbl">✅ Taux de routine</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-num" id="statAvgStress">—</span>
-        <span class="stat-lbl">💆 Stress moyen</span>
-      </div>
+      <div class="stat-card"><span class="stat-num" id="sSt">0</span><span class="stat-lbl">🔥 Jours consécutifs</span></div>
+      <div class="stat-card"><span class="stat-num" id="sTot">0</span><span class="stat-lbl">📓 Entrées totales</span></div>
+      <div class="stat-card"><span class="stat-num" id="sComp">0%</span><span class="stat-lbl">✅ Taux routine</span></div>
+      <div class="stat-card"><span class="stat-num" id="sStress">—</span><span class="stat-lbl">💆 Stress moyen</span></div>
     </div>
-
+    <div class="card" id="insightCard" style="display:none;">
+      <div class="card-hd"><div class="c-icon ci-ai">💡</div><div><div class="c-title">Insight de la semaine</div><div class="c-sub">Basé sur tes données</div></div></div>
+      <div id="insightList"></div>
+    </div>
     <div class="card">
-      <div class="card-header">
-        <div class="card-icon ci-stats">📊</div>
-        <div><div class="card-title">Rituels accomplis</div><div class="card-sub">Cette semaine</div></div>
-      </div>
+      <div class="card-hd"><div class="c-icon ci-st">📊</div><div><div class="c-title">Rituels accomplis</div><div class="c-sub">Cette semaine</div></div></div>
       <div class="bar-chart" id="barChart"></div>
-      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);" id="barLabels"></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;" id="barLabels"></div>
     </div>
-
     <div class="card">
-      <div class="card-header">
-        <div class="card-icon ci-mood">💆</div>
-        <div><div class="card-title">Évolution du stress</div><div class="card-sub">7 derniers jours</div></div>
-      </div>
-      <div class="stress-history" id="stressHistory"></div>
+      <div class="card-hd"><div class="c-icon ci-mood">💆</div><div><div class="c-title">Évolution du stress</div><div class="c-sub">7 derniers jours</div></div></div>
+      <div id="stressHist"></div>
     </div>
-
     <div class="card">
-      <div class="card-header">
-        <div class="card-icon ci-evening">🌸</div>
-        <div><div class="card-title">Dernières gratitudes</div><div class="card-sub">Pour se souvenir du beau</div></div>
-      </div>
-      <div id="gratitudeList" style="display:flex;flex-direction:column;gap:10px;"></div>
+      <div class="card-hd"><div class="c-icon ci-e">🌸</div><div><div class="c-title">Dernières gratitudes</div><div class="c-sub">Pour se souvenir du beau</div></div></div>
+      <div id="gratList"></div>
     </div>
   </div>
 
-  <!-- ===== SETTINGS PAGE ===== -->
+  <!-- ====== SETTINGS ====== -->
   <div class="page" id="page-settings">
     <div class="card" style="margin-top:6px;">
 
-      <div class="setting-group">
-        <span class="setting-group-title">Thème visuel</span>
+      <div style="margin-bottom:20px;">
+        <span class="sg-title">Thème visuel</span>
         <div class="theme-row">
-          <div class="theme-opt sel" onclick="setTheme('light',this)">
-            <div class="theme-swatch" style="background:linear-gradient(135deg,#f5f0e8,#8a9e8a)"></div>
-            <span class="theme-name">Doux</span>
-          </div>
-          <div class="theme-opt" onclick="setTheme('dark',this)">
-            <div class="theme-swatch" style="background:linear-gradient(135deg,#1a1714,#7a9a7a)"></div>
-            <span class="theme-name">Sombre</span>
-          </div>
-          <div class="theme-opt" onclick="setTheme('nature',this)">
-            <div class="theme-swatch" style="background:linear-gradient(135deg,#eef4ee,#5a8a5a)"></div>
-            <span class="theme-name">Nature</span>
-          </div>
-          <div class="theme-opt" onclick="setTheme('minimal',this)">
-            <div class="theme-swatch" style="background:linear-gradient(135deg,#fafafa,#333)"></div>
-            <span class="theme-name">Minimal</span>
-          </div>
+          <div class="theme-opt sel" onclick="setTheme('light',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#f5f0e8,#8a9e8a)"></div><span class="t-name">Doux</span></div>
+          <div class="theme-opt" onclick="setTheme('dark',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#1a1714,#7a9a7a)"></div><span class="t-name">Sombre</span></div>
+          <div class="theme-opt" onclick="setTheme('nature',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#eef4ee,#4a7a4a)"></div><span class="t-name">Nature</span></div>
+          <div class="theme-opt" onclick="setTheme('minimal',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#fafafa,#111)"></div><span class="t-name">Minimal</span></div>
+          <div class="theme-opt" onclick="setTheme('coachdivin',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#4a1428,#c9a96e)"></div><span class="t-name">Divin</span></div>
         </div>
       </div>
 
       <div class="divider"></div>
 
-      <div class="setting-group">
-        <span class="setting-group-title">Mon profil</span>
-        <div class="profile-row" id="profileRow">
-          <div class="profile-opt" onclick="setProfile('parent',this)" data-p="parent">
-            <span class="profile-icon">👶</span>
-            <span class="profile-name">Parent</span>
-            <span class="profile-desc">Routines courtes & efficaces</span>
-          </div>
-          <div class="profile-opt" onclick="setProfile('pro',this)" data-p="pro">
-            <span class="profile-icon">💼</span>
-            <span class="profile-name">Pro</span>
-            <span class="profile-desc">Anti-burnout & focus</span>
-          </div>
-          <div class="profile-opt" onclick="setProfile('student',this)" data-p="student">
-            <span class="profile-icon">🎓</span>
-            <span class="profile-name">Étudiant(e)</span>
-            <span class="profile-desc">Stress d'examens</span>
-          </div>
-          <div class="profile-opt" onclick="setProfile('self',this)" data-p="self">
-            <span class="profile-icon">🌱</span>
-            <span class="profile-name">Exploration</span>
-            <span class="profile-desc">Connaissance de soi</span>
-          </div>
+      <div style="margin-bottom:20px;">
+        <span class="sg-title">Mon profil</span>
+        <div class="profile-row" id="profRow">
+          <div class="prof-opt" onclick="setProfile('parent',this)" data-p="parent"><span class="p-icon">👶</span><span class="p-name">Parent</span><span class="p-desc">Routines courtes</span></div>
+          <div class="prof-opt" onclick="setProfile('pro',this)" data-p="pro"><span class="p-icon">💼</span><span class="p-name">Pro</span><span class="p-desc">Anti-burnout</span></div>
+          <div class="prof-opt" onclick="setProfile('student',this)" data-p="student"><span class="p-icon">🎓</span><span class="p-name">Étudiant(e)</span><span class="p-desc">Stress d'examens</span></div>
+          <div class="prof-opt" onclick="setProfile('self',this)" data-p="self"><span class="p-icon">🌱</span><span class="p-name">Exploration</span><span class="p-desc">Connaissance de soi</span></div>
         </div>
       </div>
 
       <div class="divider"></div>
 
-      <div class="setting-group">
-        <span class="setting-group-title">Langue</span>
+      <div style="margin-bottom:20px;">
+        <span class="sg-title">Langue</span>
         <div class="lang-row">
           <button class="lang-btn sel" onclick="setLang('fr',this)">🇫🇷 Français</button>
           <button class="lang-btn" onclick="setLang('en',this)">🇬🇧 English</button>
@@ -777,447 +774,925 @@ input[type=range].font-slider {
 
       <div class="divider"></div>
 
-      <div class="setting-group">
-        <span class="setting-group-title">Données</span>
-        <button class="export-btn" onclick="exportData()">⬇️ Exporter mes données (JSON)</button>
-        <button class="export-btn" onclick="exportWeekSummary()">📄 Résumé de semaine (texte)</button>
+      <div style="margin-bottom:20px;">
+        <span class="sg-title">Notifications</span>
+        <div class="notif-row"><span class="notif-label">🌅 Rappel matin</span><button class="toggle" id="tgMorning" onclick="toggleNotif(this,'morning')"></button></div>
+        <div class="notif-row"><span class="notif-label">☀️ Rappel journée</span><button class="toggle" id="tgDay" onclick="toggleNotif(this,'day')"></button></div>
+        <div class="notif-row"><span class="notif-label">🌙 Rappel soir</span><button class="toggle" id="tgEvening" onclick="toggleNotif(this,'evening')"></button></div>
+        <div class="notif-time">
+          <div class="nt-slot"><div class="nt-lbl">Heure matin</div><input type="time" id="tMorning" value="08:00" onchange="saveNotifTime()"></div>
+          <div class="nt-slot"><div class="nt-lbl">Heure journée</div><input type="time" id="tDay" value="13:00" onchange="saveNotifTime()"></div>
+          <div class="nt-slot"><div class="nt-lbl">Heure soir</div><input type="time" id="tEvening" value="21:00" onchange="saveNotifTime()"></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div>
+        <span class="sg-title">Données</span>
+        <button class="export-btn" onclick="exportJSON()">⬇️ Exporter mes données (JSON)</button>
+        <button class="export-btn" onclick="exportSummary()">📄 Résumé de semaine (texte)</button>
         <button class="reset-btn" onclick="confirmReset()">🗑️ Réinitialiser toutes les données</button>
       </div>
 
     </div>
   </div>
+</div>
 
-</div><!-- end #app -->
-
-<!-- Bottom nav -->
-<nav class="bottom-nav" id="bottomNav">
-  <button class="nav-item active" onclick="showPage('journal')" id="nav-journal">
-    <span class="nav-icon">📓</span><span class="nav-lbl">Journal</span>
-  </button>
-  <button class="nav-item" onclick="showPage('breath')" id="nav-breath">
-    <span class="nav-icon">🌬️</span><span class="nav-lbl">Respirer</span>
-  </button>
-  <button class="nav-item" onclick="showPage('stats')" id="nav-stats">
-    <span class="nav-icon">📊</span><span class="nav-lbl">Progrès</span>
-  </button>
-  <button class="nav-item" onclick="showPage('settings')" id="nav-settings">
-    <span class="nav-icon">⚙️</span><span class="nav-lbl">Réglages</span>
-  </button>
+<!-- Bottom Nav -->
+<nav class="bottom-nav" id="bottomNav" style="display:none;">
+  <button class="nav-item active" onclick="goPage('journal')" id="nav-journal"><span class="n-icon">📓</span><span class="n-lbl">Journal</span></button>
+  <button class="nav-item" onclick="goPage('breath')" id="nav-breath"><span class="n-icon">🌬️</span><span class="n-lbl">Respirer</span></button>
+  <button class="nav-item" onclick="goPage('meditate')" id="nav-meditate"><span class="n-icon">🧘</span><span class="n-lbl">Méditer</span></button>
+  <button class="nav-item" onclick="goPage('serena')" id="nav-serena"><span class="n-icon">✨</span><span class="n-lbl">Serena IA</span></button>
+  <button class="nav-item" onclick="goPage('stats')" id="nav-stats"><span class="n-icon">📊</span><span class="n-lbl">Progrès</span></button>
 </nav>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== STATE =====
+// ==================== DATA ====================
 const DAYS = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-let db = JSON.parse(localStorage.getItem('serena_v2') || '{}');
-let settings = JSON.parse(localStorage.getItem('serena_settings') || '{"theme":"light","lang":"fr","profile":"self"}');
-let currentDay = (() => { let d = new Date().getDay(); return d === 0 ? 6 : d-1; })();
-let obStep = 0, obAnswers = {};
+let db = JSON.parse(localStorage.getItem('serena_db') || '{}');
+let cfg = JSON.parse(localStorage.getItem('serena_cfg') || '{"theme":"light","lang":"fr","profile":"self","notifs":{}}');
+let currentDay = (() => { let d=new Date().getDay(); return d===0?6:d-1; })();
+let obStep=0, obAns={};
+let chatHistory = [];
 
-// ===== QUOTES =====
+// ==================== QUOTES (300) ====================
 const QUOTES = [
-  { text:"Le calme est une superforce.", author:"Anonyme" },
-  { text:"La paix vient de l'intérieur. Ne la cherche pas à l'extérieur.", author:"Bouddha" },
-  { text:"Prends soin de ton jardin intérieur avant de t'occuper du monde extérieur.", author:"Voltaire" },
-  { text:"Respirer, c'est déjà un acte de présence.", author:"Thich Nhat Hanh" },
-  { text:"Tu n'as pas à contrôler tes pensées. Tu dois juste arrêter de les laisser te contrôler.", author:"Dan Millman" },
-  { text:"Le repos n'est pas une récompense. C'est une nécessité.", author:"Anonyme" },
-  { text:"Prendre soin de soi n'est pas un luxe, c'est une survie.", author:"Audre Lorde" },
-  { text:"Le moment présent est le seul endroit où la vie existe.", author:"Eckhart Tolle" },
-  { text:"La gratitude transforme ce que nous avons en suffisance.", author:"Melody Beattie" },
-  { text:"Chaque matin est une nouvelle chance de recommencer.", author:"Anonyme" },
-  { text:"In the middle of every difficulty lies opportunity.", author:"Albert Einstein" },
-  { text:"Almost everything will work again if you unplug it for a few minutes.", author:"Anne Lamott" },
-  { text:"En medio de la dificultad reside la oportunidad.", author:"Albert Einstein" },
+  // --- FRANÇAIS : Paix & calme ---
+  {t:"Le calme est une superforce.",a:"Anonyme"},
+  {t:"La paix vient de l'intérieur. Ne la cherche pas à l'extérieur.",a:"Bouddha"},
+  {t:"Dans le silence, tu trouveras ce dont tu as besoin.",a:"Anonyme"},
+  {t:"Respirer, c'est déjà un acte de présence.",a:"Thich Nhat Hanh"},
+  {t:"Le calme n'est pas l'absence de tempête, c'est la paix au milieu d'elle.",a:"Anonyme"},
+  {t:"Là où il y a la paix, il y a la puissance.",a:"Anonyme"},
+  {t:"Le silence est la langue de Dieu ; tout le reste n'est que traduction.",a:"Rumi"},
+  {t:"La tranquillité est le nouveau luxe.",a:"Anonyme"},
+  {t:"Sois comme l'eau : calme en surface, puissante en profondeur.",a:"Anonyme"},
+  {t:"La paix intérieure commence au moment où tu choisis de ne pas laisser une personne ou un événement contrôler tes émotions.",a:"Pema Chödrön"},
+  // --- FRANÇAIS : Présence & moment ---
+  {t:"Le moment présent est le seul endroit où la vie existe.",a:"Eckhart Tolle"},
+  {t:"Hier est passé, demain n'est pas encore là. Aujourd'hui est un cadeau.",a:"Anonyme"},
+  {t:"Sois ici. Maintenant. C'est tout ce qui compte.",a:"Ram Dass"},
+  {t:"Chaque instant vécu pleinement est une victoire sur l'anxiété.",a:"Anonyme"},
+  {t:"Ne vis pas dans le passé, ne rêve pas du futur. Concentre ton esprit sur le moment présent.",a:"Bouddha"},
+  {t:"La vie n'est pas dans les grandes choses. Elle est dans les petites choses vécues pleinement.",a:"Anonyme"},
+  {t:"Chaque respiration est un nouveau commencement.",a:"Anonyme"},
+  {t:"Le présent est une fenêtre ouverte. Regarde par elle sans te précipiter vers la suivante.",a:"Anonyme"},
+  {t:"Fais ce que tu fais avec tout ton être. C'est ça, la pleine conscience.",a:"Thich Nhat Hanh"},
+  {t:"Ce que tu vis maintenant deviendra un souvenir que tu chériras.",a:"Anonyme"},
+  // --- FRANÇAIS : Résilience & force ---
+  {t:"Tu n'as pas à contrôler tes pensées. Tu dois juste arrêter de les laisser te contrôler.",a:"Dan Millman"},
+  {t:"Les difficultés préparent des gens ordinaires à une destinée extraordinaire.",a:"C.S. Lewis"},
+  {t:"Ce qui ne te tue pas te rend plus fort.",a:"Friedrich Nietzsche"},
+  {t:"La résistance révèle ta force. La douleur révèle ta profondeur.",a:"Anonyme"},
+  {t:"Tu as survécu à 100% de tes pires journées.",a:"Anonyme"},
+  {t:"Les tempêtes font grandir les arbres aux racines profondes.",a:"Anonyme"},
+  {t:"La cicatrice est la preuve que la blessure a guéri.",a:"Anonyme"},
+  {t:"Tombe sept fois, relève-toi huit.",a:"Proverbe japonais"},
+  {t:"Le courage n'est pas l'absence de peur, c'est avancer malgré elle.",a:"Nelson Mandela"},
+  {t:"Tu es plus fort que tu ne le penses.",a:"Winnie the Pooh"},
+  // --- FRANÇAIS : Gratitude ---
+  {t:"La gratitude transforme ce que nous avons en suffisance.",a:"Melody Beattie"},
+  {t:"Un cœur reconnaissant est un cœur heureux.",a:"Anonyme"},
+  {t:"Cherche le beau dans chaque journée, même si tu dois le chercher longtemps.",a:"Anonyme"},
+  {t:"La gratitude est la mémoire du cœur.",a:"Jean-Baptiste Massieu"},
+  {t:"Commence chaque journée avec une pensée reconnaissante.",a:"Anonyme"},
+  {t:"Ce que tu apprécies s'apprécie.",a:"Anonyme"},
+  {t:"Il y a toujours quelque chose pour lequel être reconnaissant.",a:"Anonyme"},
+  {t:"La gratitude est la plus belle des fleurs qui jaillissent de l'âme.",a:"Henry Ward Beecher"},
+  {t:"Merci est l'une des plus belles prières.",a:"Anonyme"},
+  {t:"Compte tes bénédictions, pas tes problèmes.",a:"Anonyme"},
+  // --- FRANÇAIS : Prendre soin de soi ---
+  {t:"Prendre soin de soi n'est pas un luxe, c'est une survie.",a:"Audre Lorde"},
+  {t:"Le repos n'est pas une récompense. C'est une nécessité.",a:"Anonyme"},
+  {t:"Tu ne peux pas verser depuis une tasse vide.",a:"Anonyme"},
+  {t:"Aimer les autres commence par s'aimer soi-même.",a:"Anonyme"},
+  {t:"Prends soin de ton jardin intérieur avant de t'occuper du monde extérieur.",a:"Voltaire"},
+  {t:"Le bien-être n'est pas une destination, c'est un mode de vie.",a:"Anonyme"},
+  {t:"Dormir, manger, bouger, respirer. Ces quatre choses changent tout.",a:"Anonyme"},
+  {t:"Ton corps mérite autant d'amour que ton âme.",a:"Anonyme"},
+  {t:"La santé est la plus grande des richesses.",a:"Virgile"},
+  {t:"Écoute ton corps. Il te parle avant que ta tête comprenne.",a:"Anonyme"},
+  // --- FRANÇAIS : Croissance personnelle ---
+  {t:"Chaque matin est une nouvelle chance de recommencer.",a:"Anonyme"},
+  {t:"Chaque jour est une page vierge. Tu tiens le crayon.",a:"Anonyme"},
+  {t:"Ta valeur ne diminue pas parce que quelqu'un ne voit pas ta lumière.",a:"Anonyme"},
+  {t:"La meilleure version de toi-même t'attend de l'autre côté de ta zone de confort.",a:"Anonyme"},
+  {t:"Ce que tu penses de toi-même est bien plus important que ce que les autres pensent de toi.",a:"Sénèque"},
+  {t:"Chaque expert a un jour été un débutant.",a:"Anonyme"},
+  {t:"Le changement est douloureux. Mais rester coincé là où tu n'appartiens pas l'est encore plus.",a:"Anonyme"},
+  {t:"Progresse chaque jour, même d'un millimètre.",a:"Anonyme"},
+  {t:"Deviens la personne que tu avais besoin quand tu étais plus jeune.",a:"Anonyme"},
+  {t:"Ce n'est pas qui tu es qui te retient, c'est qui tu penses ne pas être.",a:"Denis Waitley"},
+  // --- FRANÇAIS : Lâcher prise ---
+  {t:"Lâcher prise ne veut pas dire abandonner. Cela veut dire avancer.",a:"Anonyme"},
+  {t:"Certaines choses méritent d'être lâchées, pas portées.",a:"Anonyme"},
+  {t:"Tu ne peux pas contrôler tout ce qui t'arrive, mais tu peux contrôler ta réaction.",a:"Epictète"},
+  {t:"L'acceptation est le début de la transformation.",a:"Anonyme"},
+  {t:"Ce qui est fait est fait. Ce qui compte, c'est maintenant.",a:"Anonyme"},
+  {t:"Libère-toi de ce qui te pèse. Tu n'en as plus besoin.",a:"Anonyme"},
+  {t:"La paix commence là où les attentes s'arrêtent.",a:"Anonyme"},
+  {t:"Résiste moins. Accepte plus. Vis mieux.",a:"Anonyme"},
+  {t:"Le pardon est un cadeau que tu te fais à toi-même.",a:"Anonyme"},
+  {t:"Parfois, la chose la plus courageuse est de laisser partir.",a:"Anonyme"},
+  // --- FRANÇAIS : Amour & connexion ---
+  {t:"La bienveillance est un langage que les sourds peuvent entendre et les aveugles peuvent voir.",a:"Mark Twain"},
+  {t:"Là où tu te sens aimé, tu es chez toi.",a:"Anonyme"},
+  {t:"L'amour commence par un sourire, grandit avec un baiser et finit avec une larme.",a:"Anonyme"},
+  {t:"La gentillesse ne coûte rien mais vaut tout.",a:"Anonyme"},
+  {t:"Traite les autres comme tu veux être traité.",a:"Règle d'or"},
+  {t:"Un seul ami sincère vaut plus que mille connaissances.",a:"Anonyme"},
+  {t:"Celui qui donne reçoit.",a:"Anonyme"},
+  {t:"La compassion est la signature de l'âme humaine.",a:"Anonyme"},
+  {t:"Aide les autres sans attendre de retour. La vie s'en chargera.",a:"Anonyme"},
+  {t:"Sois la raison pour laquelle quelqu'un croit encore en la bonté des gens.",a:"Anonyme"},
+  // --- FRANÇAIS : Confiance & intuition ---
+  {t:"Fais confiance au processus, même quand tu ne vois pas la destination.",a:"Anonyme"},
+  {t:"Ton instinct sait ce que ta tête n'a pas encore compris.",a:"Anonyme"},
+  {t:"Crois en toi plus fort que les doutes.",a:"Anonyme"},
+  {t:"La foi, c'est avancer dans le noir en sachant que la lumière viendra.",a:"Anonyme"},
+  {t:"Tu as tout ce qu'il te faut pour aujourd'hui.",a:"Anonyme"},
+  {t:"Fais confiance à ton voyage, même si tu ne comprends pas le chemin.",a:"Anonyme"},
+  {t:"Ta vie a un sens, même dans les chapitres difficiles.",a:"Anonyme"},
+  {t:"Chaque pièce du puzzle a sa place. La tienne aussi.",a:"Anonyme"},
+  {t:"Le doute coupe plus de rêves que l'échec.",a:"Suzy Kassem"},
+  {t:"Tu es exactement là où tu dois être.",a:"Anonyme"},
+  // --- FRANÇAIS : Simplicité & légèreté ---
+  {t:"La vie est simple. C'est nous qui la compliquons.",a:"Confucius"},
+  {t:"Simplifie. Puis simplifie encore.",a:"Henry David Thoreau"},
+  {t:"La légèreté est une forme de sagesse.",a:"Anonyme"},
+  {t:"Less is more.",a:"Ludwig Mies van der Rohe"},
+  {t:"Désencombre ta vie pour laisser entrer ce qui compte.",a:"Anonyme"},
+  {t:"L'art d'être heureux réside dans le pouvoir de trouver de la joie dans les choses ordinaires.",a:"Henry Ward Beecher"},
+  {t:"Le bonheur est fait de petits riens vécus intensément.",a:"Anonyme"},
+  {t:"Prends le temps de regarder les étoiles. Elles ont quelque chose à te dire.",a:"Anonyme"},
+  {t:"Un coucher de soleil ne dure que quelques minutes. Regarde-le.",a:"Anonyme"},
+  {t:"Le bonheur n'est pas au bout du chemin. Il est le chemin.",a:"Anonyme"},
+  // --- ANGLAIS : Mindfulness & peace ---
+  {t:"Almost everything will work again if you unplug it for a few minutes.",a:"Anne Lamott",l:"en"},
+  {t:"Slow down and everything you are chasing will come around and catch you.",a:"John De Paola",l:"en"},
+  {t:"Peace is not the absence of chaos, but the presence of calm within it.",a:"Anonyme",l:"en"},
+  {t:"Be still and know that I am God.",a:"Psalm 46:10",l:"en"},
+  {t:"You can't stop the waves, but you can learn to surf.",a:"Jon Kabat-Zinn",l:"en"},
+  {t:"In the midst of movement and chaos, keep stillness inside of you.",a:"Deepak Chopra",l:"en"},
+  {t:"Breathe. Let go. And remind yourself that this very moment is the only one you know you have for sure.",a:"Oprah Winfrey",l:"en"},
+  {t:"The quieter you become, the more you are able to hear.",a:"Rumi",l:"en"},
+  {t:"Peace begins with a smile.",a:"Mother Teresa",l:"en"},
+  {t:"Nothing can disturb your peace of mind unless you allow it to.",a:"Roy T. Bennett",l:"en"},
+  // --- ANGLAIS : Resilience ---
+  {t:"Fall seven times, stand up eight.",a:"Japanese Proverb",l:"en"},
+  {t:"She stood in the storm, and when the wind did not blow her away, she adjusted her sails.",a:"Elizabeth Edwards",l:"en"},
+  {t:"The oak fought the wind and was broken, the willow bent when it must and survived.",a:"Robert Jordan",l:"en"},
+  {t:"Rock bottom became the solid foundation on which I rebuilt my life.",a:"J.K. Rowling",l:"en"},
+  {t:"You are braver than you believe, stronger than you seem.",a:"A.A. Milne",l:"en"},
+  {t:"It always seems impossible until it's done.",a:"Nelson Mandela",l:"en"},
+  {t:"Hard times never last, but hard people do.",a:"Robert H. Schuller",l:"en"},
+  {t:"The human capacity for burden is like bamboo — far more flexible than you'd ever believe at first glance.",a:"Jodi Picoult",l:"en"},
+  {t:"Turn your wounds into wisdom.",a:"Oprah Winfrey",l:"en"},
+  {t:"Every storm runs out of rain.",a:"Maya Angelou",l:"en"},
+  // --- ANGLAIS : Self-care & growth ---
+  {t:"You yourself, as much as anybody in the entire universe, deserve your love and affection.",a:"Bouddha",l:"en"},
+  {t:"To love oneself is the beginning of a lifelong romance.",a:"Oscar Wilde",l:"en"},
+  {t:"Growth is painful. Change is painful. But nothing is as painful as staying stuck somewhere you don't belong.",a:"Mandy Hale",l:"en"},
+  {t:"Be the change you wish to see in the world.",a:"Mahatma Gandhi",l:"en"},
+  {t:"What lies behind us and what lies before us are tiny matters compared to what lies within us.",a:"Ralph Waldo Emerson",l:"en"},
+  {t:"The only journey is the one within.",a:"Rainer Maria Rilke",l:"en"},
+  {t:"Your life is your message to the world. Make sure it's inspiring.",a:"Lorrin L. Lee",l:"en"},
+  {t:"Self-care is how you take your power back.",a:"Lalah Delia",l:"en"},
+  {t:"Do something today that your future self will thank you for.",a:"Sean Patrick Flanery",l:"en"},
+  {t:"You are enough just as you are.",a:"Megan Markle",l:"en"},
+  // --- ANGLAIS : Gratitude & joy ---
+  {t:"Joy is not in things; it is in us.",a:"Richard Wagner",l:"en"},
+  {t:"Gratitude is not only the greatest of virtues, but the parent of all the others.",a:"Cicéron",l:"en"},
+  {t:"The more grateful I am, the more beauty I see.",a:"Mary Davis",l:"en"},
+  {t:"Happiness is not something ready made. It comes from your own actions.",a:"Dalaï Lama",l:"en"},
+  {t:"Count your blessings, not your problems.",a:"Anonyme",l:"en"},
+  {t:"When you focus on the good, the good gets better.",a:"Abraham Hicks",l:"en"},
+  {t:"Start each day with a grateful heart.",a:"Anonyme",l:"en"},
+  {t:"Joy is what happens when we allow ourselves to recognize how good things really are.",a:"Marianne Williamson",l:"en"},
+  {t:"A grateful mind is a great mind which eventually attracts to itself great things.",a:"Platon",l:"en"},
+  {t:"Enjoy the little things, for one day you may look back and realize they were the big things.",a:"Robert Brault",l:"en"},
+  // --- ANGLAIS : Letting go ---
+  {t:"Let go of what no longer serves you.",a:"Anonyme",l:"en"},
+  {t:"Some people believe holding on and hanging in there are signs of great strength. However, there are times when it takes much more strength to know when to let go.",a:"Ann Landers",l:"en"},
+  {t:"The truth is, unless you let go, unless you forgive yourself, unless you forgive the situation, unless you realize that the situation is over, you cannot move forward.",a:"Steve Maraboli",l:"en"},
+  {t:"Breathe and let be.",a:"Jon Kabat-Zinn",l:"en"},
+  {t:"Release the need to know how. Trust that the how will show up.",a:"Anonyme",l:"en"},
+  {t:"When I let go of what I am, I become what I might be.",a:"Lao Tzu",l:"en"},
+  {t:"Accept what is, let go of what was, have faith in what will be.",a:"Sonia Ricotti",l:"en"},
+  {t:"You don't have to see the whole staircase, just take the first step.",a:"Martin Luther King Jr.",l:"en"},
+  {t:"Surrender to what is. Let go of what was. Have faith in what will be.",a:"Anonyme",l:"en"},
+  {t:"Not all storms come to disrupt your life, some come to clear your path.",a:"Anonyme",l:"en"},
+  // --- ANGLAIS : Courage & trust ---
+  {t:"Courage is not the absence of fear, but the triumph over it.",a:"Nelson Mandela",l:"en"},
+  {t:"Believe you can and you're halfway there.",a:"Theodore Roosevelt",l:"en"},
+  {t:"Everything you've ever wanted is on the other side of fear.",a:"George Addair",l:"en"},
+  {t:"Trust yourself. You know more than you think you do.",a:"Benjamin Spock",l:"en"},
+  {t:"You are capable of more than you know.",a:"E.O. Wilson",l:"en"},
+  {t:"Stars can't shine without darkness.",a:"Anonyme",l:"en"},
+  {t:"The secret of getting ahead is getting started.",a:"Mark Twain",l:"en"},
+  {t:"Doubt kills more dreams than failure ever will.",a:"Suzy Kassem",l:"en"},
+  {t:"With the new day comes new strength and new thoughts.",a:"Eleanor Roosevelt",l:"en"},
+  {t:"You have within you right now, everything you need to deal with whatever the world can throw at you.",a:"Brian Tracy",l:"en"},
+  // --- ANGLAIS : Simple wisdom ---
+  {t:"This too shall pass.",a:"Proverbe persan",l:"en"},
+  {t:"Less is more.",a:"Ludwig Mies van der Rohe",l:"en"},
+  {t:"The present moment always will have been.",a:"Anonyme",l:"en"},
+  {t:"Wherever you are, be all there.",a:"Jim Elliot",l:"en"},
+  {t:"Life is not measured by the number of breaths we take, but by the moments that take our breath away.",a:"Maya Angelou",l:"en"},
+  {t:"We are what we repeatedly do. Excellence, then, is not an act, but a habit.",a:"Aristote",l:"en"},
+  {t:"In every walk with nature, one receives far more than he seeks.",a:"John Muir",l:"en"},
+  {t:"The soul always knows what to do to heal itself. The challenge is to silence the mind.",a:"Caroline Myss",l:"en"},
+  {t:"Do what you can, with what you have, where you are.",a:"Theodore Roosevelt",l:"en"},
+  {t:"Act as if what you do makes a difference. It does.",a:"William James",l:"en"},
+  // --- ESPAGNOL : Paz y calma ---
+  {t:"La paz comienza con una sonrisa.",a:"Madre Teresa",l:"es"},
+  {t:"Dentro de ti hay un silencio que lo sana todo.",a:"Anónimo",l:"es"},
+  {t:"El que busca la paz, la encuentra.",a:"Anónimo",l:"es"},
+  {t:"Respira. Todo pasa.",a:"Anónimo",l:"es"},
+  {t:"La calma es la cuna de la sabiduría.",a:"Anónimo",l:"es"},
+  {t:"En el silencio habita la respuesta que buscas.",a:"Anónimo",l:"es"},
+  {t:"El alma que ama en paz, todo lo tiene.",a:"San Juan de la Cruz",l:"es"},
+  {t:"Aprende a estar en silencio. Deja que tu mente tranquila te escuche.",a:"Pitágoras",l:"es"},
+  {t:"La serenidad no es ausencia de tormenta. Es la paz en medio de ella.",a:"Anónimo",l:"es"},
+  {t:"Nada turba, nada espanta. Todo pasa.",a:"Santa Teresa de Ávila",l:"es"},
+  // --- ESPAGNOL : Fuerza y crecimiento ---
+  {t:"Cae siete veces, levántate ocho.",a:"Proverbio japonés",l:"es"},
+  {t:"Las dificultades preparan a personas comunes para destinos extraordinarios.",a:"C.S. Lewis",l:"es"},
+  {t:"Sé el cambio que deseas ver en el mundo.",a:"Mahatma Gandhi",l:"es"},
+  {t:"El único modo de hacer un gran trabajo es amar lo que haces.",a:"Steve Jobs",l:"es"},
+  {t:"La vida no se mide por los momentos, sino por los momentos que te quitan el aliento.",a:"Anónimo",l:"es"},
+  {t:"Tu actitud determina tu dirección.",a:"Anónimo",l:"es"},
+  {t:"El éxito es la suma de pequeños esfuerzos repetidos cada día.",a:"Robert Collier",l:"es"},
+  {t:"No esperes el momento perfecto. Toma el momento y hazlo perfecto.",a:"Anónimo",l:"es"},
+  {t:"Haz lo que puedas, con lo que tengas, donde estés.",a:"Theodore Roosevelt",l:"es"},
+  {t:"Cada día es una segunda oportunidad.",a:"Anónimo",l:"es"},
+  // --- ESPAGNOL : Gratitud y alegría ---
+  {t:"La gratitud convierte lo que tenemos en suficiente.",a:"Anónimo",l:"es"},
+  {t:"Agradece lo pequeño y lo grande llegará solo.",a:"Anónimo",l:"es"},
+  {t:"Hay flores por doquier, para quien quiera verlas.",a:"Henri Matisse",l:"es"},
+  {t:"La alegría no está en las cosas, está en nosotros.",a:"Richard Wagner",l:"es"},
+  {t:"Un corazón agradecido es un corazón feliz.",a:"Anónimo",l:"es"},
+  {t:"Celebra cada pequeña victoria.",a:"Anónimo",l:"es"},
+  {t:"La felicidad no es un destino, es una forma de viajar.",a:"Anónimo",l:"es"},
+  {t:"Encuentra belleza en cada día.",a:"Anónimo",l:"es"},
+  {t:"La vida es bella cuando la miras con agradecimiento.",a:"Anónimo",l:"es"},
+  {t:"Lo que aprecias, se aprecia.",a:"Anónimo",l:"es"},
+  // --- ESPAGNOL : Amor propio ---
+  {t:"Ámate a ti mismo primero y todo lo demás encajará.",a:"Lucille Ball",l:"es"},
+  {t:"Cuídate como cuidas a quienes amas.",a:"Anónimo",l:"es"},
+  {t:"Tu relación más importante es la que tienes contigo mismo.",a:"Anónimo",l:"es"},
+  {t:"Eres suficiente, exactamente como eres.",a:"Anónimo",l:"es"},
+  {t:"No puedes servir desde una copa vacía.",a:"Anónimo",l:"es"},
+  {t:"El descanso no es una recompensa. Es una necesidad.",a:"Anónimo",l:"es"},
+  {t:"Trátate con la misma bondad que le darías a un amigo.",a:"Anónimo",l:"es"},
+  {t:"Tu cuerpo merece amor, no castigo.",a:"Anónimo",l:"es"},
+  {t:"Mereces la amabilidad que das a los demás.",a:"Anónimo",l:"es"},
+  {t:"Cuidarte no es egoísmo. Es supervivencia.",a:"Audre Lorde",l:"es"},
+  // --- PHILOSOPHES & sages ---
+  {t:"Connais-toi toi-même.",a:"Socrate"},
+  {t:"La vie doit être vécue et non calculée.",a:"Dostoïevski"},
+  {t:"L'homme est la mesure de toutes choses.",a:"Protagoras"},
+  {t:"Il n'y a pas de vent favorable pour celui qui ne sait pas où il va.",a:"Sénèque"},
+  {t:"Ce n'est pas parce que les choses sont difficiles que nous n'osons pas, c'est parce que nous n'osons pas qu'elles sont difficiles.",a:"Sénèque"},
+  {t:"La vie est courte, l'art est long.",a:"Hippocrate"},
+  {t:"Le bonheur est la récompense de la vertu.",a:"Aristote"},
+  {t:"L'imagination est plus importante que la connaissance.",a:"Albert Einstein"},
+  {t:"Tout ce que je sais, c'est que je ne sais rien.",a:"Socrate"},
+  {t:"Vis comme si tu devais mourir demain. Apprends comme si tu devais vivre toujours.",a:"Mahatma Gandhi"},
+  // --- Poètes & écrivains ---
+  {t:"La vie est une fleur dont l'amour est le miel.",a:"Victor Hugo"},
+  {t:"Aimer, ce n'est pas se regarder l'un l'autre, c'est regarder ensemble dans la même direction.",a:"Antoine de Saint-Exupéry"},
+  {t:"On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux.",a:"Antoine de Saint-Exupéry"},
+  {t:"Je suis un être humain en cours de construction.",a:"Anonyme"},
+  {t:"La poésie est la vérité habillée d'une image.",a:"William Shakespeare"},
+  {t:"Deux chemins divergeaient dans un bois. J'ai pris celui que peu de gens empruntaient.",a:"Robert Frost"},
+  {t:"Tu n'as pas à être parfait pour commencer, mais tu dois commencer pour être parfait.",a:"Zig Ziglar"},
+  {t:"Les mots ont le pouvoir de changer le monde.",a:"Anonyme"},
+  {t:"L'art de vivre consiste à savoir sacrifier une partie de sa vie pour en embellir le reste.",a:"Anatole France"},
+  {t:"Le voyage de mille lieues commence par un seul pas.",a:"Lao Tzu"},
+  // --- Spirituel & universel ---
+  {t:"L'univers te soutient. Fais-lui confiance.",a:"Anonyme"},
+  {t:"Tu es une âme ayant une expérience humaine.",a:"Pierre Teilhard de Chardin"},
+  {t:"Tout est connecté. Tout a un sens.",a:"Anonyme"},
+  {t:"La prière est parler à Dieu. La méditation est l'écouter.",a:"Anonyme"},
+  {t:"Il y a une lumière en toi qui ne peut jamais s'éteindre.",a:"Anonyme"},
+  {t:"Tu es fait de la même matière que les étoiles.",a:"Carl Sagan"},
+  {t:"Chaque âme est venue sur terre pour apprendre quelque chose.",a:"Anonyme"},
+  {t:"La vie est un cadeau. Ouvre-le avec soin.",a:"Anonyme"},
+  {t:"Dieu ne donne jamais plus que ce que tu peux porter.",a:"Anonyme"},
+  {t:"La lumière est toujours plus forte que l'obscurité.",a:"Anonyme"},
+  // --- Humour & légèreté ---
+  {t:"Ne prenez pas la vie trop au sérieux, vous n'en sortirez pas vivant.",a:"Elbert Hubbard"},
+  {t:"Le rire est le soleil qui chasse l'hiver du visage humain.",a:"Victor Hugo"},
+  {t:"Souris. Demain, ça pourrait être pire. Je rigole. Souris quand même.",a:"Anonyme"},
+  {t:"La vie est trop courte pour boire du mauvais café.",a:"Anonyme"},
+  {t:"Si plan A ne marche pas, souviens-toi : l'alphabet a encore 25 lettres.",a:"Anonyme"},
+  {t:"Chaque jour est une bonne journée si on choisit de le voir ainsi.",a:"Anonyme"},
+  {t:"Le meilleur moment pour planter un arbre, c'était il y a 20 ans. Le second meilleur moment, c'est maintenant.",a:"Proverbe chinois"},
+  {t:"Un problème sans solution est un problème mal posé.",a:"Albert Einstein"},
+  {t:"Parfois, la chose la plus productive que tu puisses faire, c'est te reposer.",a:"Anonyme"},
+  {t:"Rappelle-toi que tu es humain. Pas une machine. Pas un superhéros.",a:"Anonyme"},
+  // --- Corps & nature ---
+  {t:"Marche dans la nature et tu trouveras des réponses à des questions que tu n'avais pas encore posées.",a:"John Muir"},
+  {t:"La nature est le meilleur thérapeute.",a:"Anonyme"},
+  {t:"Un corps en mouvement reste en mouvement.",a:"Newton (adapté)"},
+  {t:"Bois de l'eau. Dors. Bouge. Répète.",a:"Anonyme"},
+  {t:"Ton corps est ton temple. Prends-en soin.",a:"Anonyme"},
+  {t:"Le soleil se lève chaque matin sans exception. Toi aussi, tu peux.",a:"Anonyme"},
+  {t:"La mer n'est pas une menace. C'est une invitation.",a:"Anonyme"},
+  {t:"Les saisons changent. Toi aussi.",a:"Anonyme"},
+  {t:"Écoute le vent. Il te raconte quelque chose.",a:"Anonyme"},
+  {t:"Chaque fleur a besoin de sa saison. La tienne viendra.",a:"Anonyme"},
+  // --- Travail & passion ---
+  {t:"Fais ce que tu aimes et tu n'auras pas l'impression de travailler un seul jour.",a:"Confucius"},
+  {t:"Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",a:"Winston Churchill"},
+  {t:"L'excellence est une habitude.",a:"Aristote"},
+  {t:"Fais le avec passion ou pas du tout.",a:"Rosa Couchette Carey"},
+  {t:"Le talent gagne des matchs, mais le travail d'équipe remporte des championnats.",a:"Michael Jordan"},
+  {t:"Ce n'est pas le chemin qui est difficile, c'est le difficile qui est le chemin.",a:"Søren Kierkegaard"},
+  {t:"Le génie, c'est 1% d'inspiration et 99% de transpiration.",a:"Thomas Edison"},
+  {t:"Commence là où tu es. Utilise ce que tu as. Fais ce que tu peux.",a:"Arthur Ashe"},
+  {t:"La discipline, c'est choisir entre ce que tu veux maintenant et ce que tu veux le plus.",a:"Abraham Lincoln"},
+  {t:"Un rêve sans plan n'est qu'un souhait.",a:"Antoine de Saint-Exupéry"},
+  // --- Amitié & relations ---
+  {t:"Les amis sont la famille que l'on choisit.",a:"Edna Buchanan"},
+  {t:"Un vrai ami est celui qui entre quand tout le monde sort.",a:"Walter Winchell"},
+  {t:"La solitude est belle quand on choisit d'être seul.",a:"Honoré de Balzac"},
+  {t:"Entoure-toi de gens qui te tirent vers le haut.",a:"Anonyme"},
+  {t:"Ta tribu définit ton énergie. Choisis-la bien.",a:"Anonyme"},
+  {t:"La qualité de tes relations détermine la qualité de ta vie.",a:"Anonyme"},
+  {t:"Sois pour les autres ce que tu aurais aimé avoir pour toi.",a:"Anonyme"},
+  {t:"Une conversation sincère vaut mille messages.",a:"Anonyme"},
+  {t:"Le meilleur cadeau que tu puisses offrir à quelqu'un, c'est ta présence.",a:"Thich Nhat Hanh"},
+  {t:"Écoute pour comprendre, pas pour répondre.",a:"Stephen Covey"},
+  // --- Introspection ---
+  {t:"La vie que tu mènes est le reflet des pensées que tu cultives.",a:"Anonyme"},
+  {t:"Ce que tu résistes persiste. Ce que tu acceptes se transforme.",a:"Carl Jung"},
+  {t:"L'inconscient sait souvent ce que le conscient refuse de voir.",a:"Anonyme"},
+  {t:"Tes émotions sont des messagers, pas des ennemis.",a:"Anonyme"},
+  {t:"Le chemin intérieur est le plus long et le plus riche.",a:"Anonyme"},
+  {t:"On ne change pas ce qu'on refuse de voir.",a:"Anonyme"},
+  {t:"Observe tes pensées comme des nuages. Laisse-les passer.",a:"Anonyme"},
+  {t:"La guérison commence quand tu te permets de ressentir.",a:"Anonyme"},
+  {t:"Ce que tu fuis te suit. Ce que tu affrontes te libère.",a:"Carl Jung"},
+  {t:"Ton ombre n'est pas ton ennemi. C'est la partie de toi qui a besoin d'amour.",a:"Anonyme"},
+  {t:"Le vrai voyage de découverte ne consiste pas à chercher de nouveaux paysages, mais à avoir de nouveaux yeux.",a:"Marcel Proust"},
+  {t:"Celui qui regarde à l'extérieur rêve. Celui qui regarde à l'intérieur s'éveille.",a:"Carl Jung"},
+  {t:"La vie commence là où ta zone de confort s'arrête.",a:"Neale Donald Walsch"},
+  {t:"Chaque jour, à chaque point de vue, je vais de mieux en mieux.",a:"Émile Coué"},
+  {t:"Tu es le ciel. Tout le reste n'est que météo.",a:"Pema Chödrön"},
 ];
-
-let quoteIdx = Math.floor(Math.random() * QUOTES.length);
-function newQuote() {
-  quoteIdx = (quoteIdx + 1) % QUOTES.length;
-  document.getElementById('quoteText').textContent = QUOTES[quoteIdx].text;
-  document.getElementById('quoteAuthor').textContent = '— ' + QUOTES[quoteIdx].author;
+let qIdx = Math.floor(Math.random()*QUOTES.length);
+function getLangQuotes(){ return QUOTES.filter(q => !q.l || q.l === cfg.lang || cfg.lang === 'all'); }
+function newQuote(){
+  const pool = getLangQuotes();
+  qIdx = (qIdx+1) % pool.length;
+  document.getElementById('qText').textContent = pool[qIdx].t;
+  document.getElementById('qAuth').textContent = '— ' + pool[qIdx].a;
+}
+function initQuote(){
+  const pool = getLangQuotes();
+  qIdx = Math.floor(Math.random()*pool.length);
+  document.getElementById('qText').textContent = pool[qIdx].t;
+  document.getElementById('qAuth').textContent = '— ' + pool[qIdx].a;
 }
 
-// ===== ONBOARDING =====
-function selectOb(el, key, val) {
-  el.closest('.ob-options').querySelectorAll('.ob-opt').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
-  obAnswers[key] = val;
-  document.getElementById('obNext').disabled = false;
+// ==================== ONBOARDING ====================
+const OB_I18N = {
+  fr: {
+    tagline:'Ton espace de paix intérieure', themeLabel:'Ambiance visuelle',
+    namePlaceholder:"Comment t'appelles-tu ?", nameFloat:'Ton prénom',
+    q1:'Quel est ton plus grand défi en ce moment ?',
+    c1:'Trop de stress au quotidien', c2:'Difficultés à dormir / décompresser',
+    c3:'Manque de concentration', c4:'Émotions difficiles à gérer',
+    next1:'Continuer', greeting:(n)=>`Ravie de te rencontrer, ${n} ✨`,
+    q2:'Qui es-tu dans ta vie quotidienne ?',
+    p1:'Parent débordé(e)', p2:'Professionnel(le) sous pression',
+    p3:'Étudiant(e) stressé(e)', p4:'En quête de moi-même',
+    q3:"Ce qui t'aide le plus à te ressourcer ?",
+    m1:'La respiration & le calme', m2:"L'écriture & l'expression",
+    m3:'Le mouvement & le corps', m4:'Un peu de tout',
+    next2:'Commencer mon voyage',
+    th:['Doux','Sombre','Nature','Minimal','Divin']
+  },
+  en: {
+    tagline:'Your space for inner peace', themeLabel:'Visual theme',
+    namePlaceholder:"What's your name?", nameFloat:'Your name',
+    q1:'What is your biggest challenge right now?',
+    c1:'Too much daily stress', c2:'Trouble sleeping / unwinding',
+    c3:'Lack of focus', c4:'Difficult emotions to manage',
+    next1:'Continue', greeting:(n)=>`Lovely to meet you, ${n} ✨`,
+    q2:'Who are you in your daily life?',
+    p1:'Overwhelmed parent', p2:'Professional under pressure',
+    p3:'Stressed student', p4:'In search of myself',
+    q3:'What helps you recharge the most?',
+    m1:'Breathing & stillness', m2:'Writing & expression',
+    m3:'Movement & body', m4:'A bit of everything',
+    next2:'Begin my journey',
+    th:['Soft','Dark','Nature','Minimal','Divine']
+  },
+  es: {
+    tagline:'Tu espacio de paz interior', themeLabel:'Tema visual',
+    namePlaceholder:'¿Cómo te llamas?', nameFloat:'Tu nombre',
+    q1:'¿Cuál es tu mayor desafío ahora mismo?',
+    c1:'Demasiado estrés cotidiano', c2:'Dificultad para dormir / desconectar',
+    c3:'Falta de concentración', c4:'Emociones difíciles de gestionar',
+    next1:'Continuar', greeting:(n)=>`Encantada de conocerte, ${n} ✨`,
+    q2:'¿Quién eres en tu vida cotidiana?',
+    p1:'Padre/madre desbordado(a)', p2:'Profesional bajo presión',
+    p3:'Estudiante estresado(a)', p4:'En busca de mí mismo(a)',
+    q3:'¿Qué te ayuda más a recargar energías?',
+    m1:'La respiración & la calma', m2:'La escritura & la expresión',
+    m3:'El movimiento & el cuerpo', m4:'Un poco de todo',
+    next2:'Comenzar mi viaje',
+    th:['Suave','Oscuro','Natura','Mínimal','Divino']
+  }
+};
+
+let obLang = 'fr', obTheme = 'light', obAns = {};
+
+function obSetLang(lang, el) {
+  obLang = lang; cfg.lang = lang;
+  document.querySelectorAll('.ob-lang-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+  obTranslate();
 }
 
-function nextObStep() {
-  if (obStep < 2) {
-    document.getElementById('ob'+(obStep+1)).classList.remove('active');
-    obStep++;
-    document.getElementById('ob'+(obStep+1)).classList.add('active');
-    document.getElementById('dot'+(obStep-1)).classList.remove('active');
-    document.getElementById('dot'+obStep).classList.add('active');
-    document.getElementById('obNext').disabled = true;
-    if (obStep === 2) document.getElementById('obNext').textContent = 'Commencer ✦';
-  } else {
-    // Save and go to app
-    settings.profile = obAnswers.profile || 'self';
-    saveSettings();
-    db.onboarded = true;
-    saveDb();
-    startApp();
+function obSetTheme(theme, el) {
+  obTheme = theme; cfg.theme = theme;
+  applyTheme(theme);
+  document.querySelectorAll('.ob-theme-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function obTranslate() {
+  const i = OB_I18N[obLang];
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  const setPlaceholder = (id, val) => { const el = document.getElementById(id); if(el) el.placeholder = val; };
+  set('obTagline', i.tagline); set('obThemeLabel', i.themeLabel);
+  set('obNameFloat', i.nameFloat);
+  setPlaceholder('obNameInput', i.namePlaceholder);
+  set('obQ1', i.q1);
+  set('obC1', i.c1); set('obC2', i.c2); set('obC3', i.c3); set('obC4', i.c4);
+  set('obNextLabel1', i.next1);
+  set('obQ2Label', i.q2);
+  set('obP1', i.p1); set('obP2', i.p2); set('obP3', i.p3); set('obP4', i.p4);
+  set('obQ3Label', i.q3);
+  set('obM1', i.m1); set('obM2', i.m2); set('obM3', i.m3); set('obM4', i.m4);
+  set('obNextLabel2', i.next2);
+  ['thDoux','thSombre','thNature','thMinimal','thDivin'].forEach((id, idx) => set(id, i.th[idx]));
+  const name = document.getElementById('obNameInput').value.trim();
+  if(name) set('obGreeting', i.greeting(name));
+}
+
+function obCheckPage1() {
+  const name = (document.getElementById('obNameInput').value || '').trim();
+  document.getElementById('obNext1').disabled = !(name.length >= 2 && obAns.challenge);
+}
+
+function selOb(el, k, v, page) {
+  el.closest('.ob-opts').querySelectorAll('.ob-opt').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+  obAns[k] = v;
+  if (page === '1') obCheckPage1();
+  if (page === '2') {
+    document.getElementById('obNext2').disabled = !(obAns.profile && obAns.method);
   }
 }
 
-// ===== APP START =====
-function startApp() {
+function goObPage2() {
+  const name = (document.getElementById('obNameInput').value || '').trim();
+  cfg.firstName = name;
+  const i = OB_I18N[obLang];
+  document.getElementById('obGreeting').textContent = i.greeting(name);
+  document.getElementById('obPage1').classList.remove('active');
+  document.getElementById('obPage2').classList.add('active');
+  document.getElementById('obNext2').disabled = true;
+  obAns.profile = null; obAns.method = null;
+  document.querySelectorAll('#obPage2 .ob-opt').forEach(b => b.classList.remove('sel'));
+}
+
+function finishOb() {
+  cfg.profile = obAns.profile || 'self';
+  cfg.lang = obLang; cfg.theme = obTheme;
+  saveCfg(); db.onboarded = true; saveDb();
+  startApp();
+}
+
+function initObListeners() {
+  // Lang buttons
+  document.querySelectorAll('.ob-lang-btn').forEach(btn => {
+    btn.addEventListener('click', function() { obSetLang(this.dataset.lang, this); });
+  });
+  // Theme buttons
+  document.querySelectorAll('.ob-theme-btn').forEach(btn => {
+    btn.addEventListener('click', function() { obSetTheme(this.dataset.theme, this); });
+  });
+  // Name input
+  const nameInput = document.getElementById('obNameInput');
+  if(nameInput) nameInput.addEventListener('input', obCheckPage1);
+  // Option buttons (challenge / profile / method)
+  document.querySelectorAll('.ob-opt').forEach(btn => {
+    btn.addEventListener('click', function() {
+      selOb(this, this.dataset.key, this.dataset.val, this.dataset.page);
+    });
+  });
+  // Next buttons
+  const next1 = document.getElementById('obNext1');
+  if(next1) next1.addEventListener('click', goObPage2);
+  const next2 = document.getElementById('obNext2');
+  if(next2) next2.addEventListener('click', finishOb);
+}
+
+// ==================== APP START ====================
+function startApp(){
   document.getElementById('onboarding').classList.remove('active');
   document.getElementById('app').classList.add('active');
-  document.getElementById('bottomNav').style.display = 'flex';
-  applyTheme(settings.theme);
-  buildDayNav();
-  loadDay(currentDay);
-  buildStats();
-  updateProfileUI();
+  document.getElementById('bottomNav').style.display='flex';
+  applyTheme(cfg.theme);
+  buildDayNav(); loadDay(currentDay);
+  buildMedList(); buildStats();
+  updateProfileUI(); updateLangUI();
+  loadNotifSettings();
+  initChat();
+  initQuote();
+  // Personalize top bar with first name
+  if(cfg.firstName){
+    const greeting = cfg.lang==='en' ? `Hi, ${cfg.firstName}` : cfg.lang==='es' ? `Hola, ${cfg.firstName}` : `Bonjour, ${cfg.firstName}`;
+    document.querySelector('.app-logo').textContent = greeting;
+  }
 }
 
-// ===== THEME =====
-function applyTheme(t) {
-  document.documentElement.setAttribute('data-theme', t);
-  const colors = { light:'#6b4f3a', dark:'#242018', nature:'#3a6a3a', minimal:'#111' };
-  document.querySelector('meta[name=theme-color]').content = colors[t] || '#6b4f3a';
+// ==================== THEME ====================
+const THEME_COLORS={light:'#6b4f3a',dark:'#242018',nature:'#2a5a2a',minimal:'#111',coachdivin:'#4a1428'};
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  document.getElementById('themeMetaColor').content=THEME_COLORS[t]||'#6b4f3a';
 }
-function setTheme(t, el) {
-  settings.theme = t;
-  saveSettings();
-  applyTheme(t);
-  document.querySelectorAll('.theme-opt').forEach(e => e.classList.remove('sel'));
-  el.classList.add('sel');
-  toast('Thème appliqué 🎨');
-}
+function setTheme(t,el){cfg.theme=t;saveCfg();applyTheme(t);document.querySelectorAll('.theme-opt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');toast('Thème appliqué 🎨');}
 
-// ===== PROFILE =====
-function setProfile(p, el) {
-  settings.profile = p;
-  saveSettings();
-  document.querySelectorAll('.profile-opt').forEach(e => e.classList.remove('sel'));
-  el.classList.add('sel');
-  toast('Profil mis à jour ✦');
-}
-function updateProfileUI() {
-  document.querySelectorAll('.profile-opt').forEach(e => {
-    e.classList.toggle('sel', e.dataset.p === settings.profile);
-  });
-}
+// ==================== PROFILE ====================
+function setProfile(p,el){cfg.profile=p;saveCfg();document.querySelectorAll('.prof-opt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');toast('Profil mis à jour ✦');}
+function updateProfileUI(){document.querySelectorAll('.prof-opt').forEach(e=>e.classList.toggle('sel',e.dataset.p===cfg.profile));}
+function setLang(l,el){cfg.lang=l;saveCfg();document.querySelectorAll('.lang-btn').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');toast('Langue mise à jour 🌍');}
+function updateLangUI(){document.querySelectorAll('.lang-btn').forEach(b=>{const map={fr:'Français',en:'English',es:'Español'};b.classList.toggle('sel',b.textContent.includes(map[cfg.lang]))});}
 
-// ===== LANG =====
-function setLang(l, el) {
-  settings.lang = l;
-  saveSettings();
-  document.querySelectorAll('.lang-btn').forEach(e => e.classList.remove('sel'));
-  el.classList.add('sel');
-  toast('Langue mise à jour 🌍');
-}
-
-// ===== DAY NAV =====
-function buildDayNav() {
-  const nav = document.getElementById('dayNav');
-  nav.innerHTML = '';
-  DAYS.forEach((d, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'day-btn' + (i===currentDay?' active':'') + (db[i]?' has-entry':'');
-    btn.textContent = d;
-    btn.onclick = () => { saveCurrentToMem(); currentDay=i; loadDay(i); buildDayNav(); };
+// ==================== DAY NAV ====================
+function buildDayNav(){
+  const nav=document.getElementById('dayNav');nav.innerHTML='';
+  DAYS.forEach((d,i)=>{
+    const btn=document.createElement('button');
+    btn.className='day-btn'+(i===currentDay?' active':'')+(db[i]?' has-entry':'');
+    btn.textContent=d;
+    btn.onclick=()=>{saveCurrentToMem();currentDay=i;loadDay(i);buildDayNav();};
     nav.appendChild(btn);
   });
-  const opts = { weekday:'long', month:'long', day:'numeric' };
-  const today = new Date();
-  const offset = currentDay - (today.getDay()===0?6:today.getDay()-1);
-  const d = new Date(today); d.setDate(d.getDate()+offset);
-  document.getElementById('dayDate').textContent = d.toLocaleDateString('fr-FR', opts);
+  const today=new Date(),offset=currentDay-(today.getDay()===0?6:today.getDay()-1);
+  const d=new Date(today);d.setDate(d.getDate()+offset);
+  document.getElementById('dayDate').textContent=d.toLocaleDateString('fr-FR',{weekday:'long',month:'long',day:'numeric'});
 }
 
-// ===== TASKS =====
-function toggleTask(item) { item.classList.toggle('done'); }
+// ==================== TASKS ====================
+function toggleTask(item){item.classList.toggle('done');}
 
-// ===== MOOD =====
-function selectMood(btn) {
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('sel'));
-  btn.classList.add('sel');
-}
+// ==================== MOOD ====================
+function selMood(btn){document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
 
-// ===== SAVE / LOAD =====
-function saveCurrentToMem() {
-  const tasks = id => [...document.getElementById(id).querySelectorAll('.task-item')].map(i=>i.classList.contains('done'));
-  const mood = document.querySelector('.mood-btn.sel');
-  db[currentDay] = {
-    morningTasks: tasks('morningTasks'),
-    dayTasks: tasks('dayTasks'),
-    eveningTasks: tasks('eveningTasks'),
-    morningNote: document.getElementById('morningNote').value,
-    eveningNote: document.getElementById('eveningNote').value,
-    gratitudeNote: document.getElementById('gratitudeNote').value,
-    closingNote: document.getElementById('closingNote').value,
-    stress: +document.getElementById('stressSlider').value,
-    mood: mood ? mood.textContent : '',
-    savedAt: new Date().toISOString()
+// ==================== SAVE/LOAD ====================
+function saveCurrentToMem(){
+  const tasks=id=>[...document.getElementById(id).querySelectorAll('.task-item')].map(i=>i.classList.contains('done'));
+  const mood=document.querySelector('.mood-btn.sel');
+  db[currentDay]={
+    morningTasks:tasks('morningTasks'),dayTasks:tasks('dayTasks'),eveningTasks:tasks('eveningTasks'),
+    morningNote:document.getElementById('morningNote').value,
+    eveningNote:document.getElementById('eveningNote').value,
+    gratitudeNote:document.getElementById('gratitudeNote').value,
+    closingNote:document.getElementById('closingNote').value,
+    stress:+document.getElementById('stressSlider').value,
+    mood:mood?mood.textContent:'',
+    savedAt:new Date().toISOString()
   };
 }
+function loadDay(i){
+  const d=db[i]||{};
+  const loadTasks=(id,saved)=>{document.getElementById(id).querySelectorAll('.task-item').forEach((item,idx)=>item.classList.toggle('done',!!(saved&&saved[idx])));};
+  loadTasks('morningTasks',d.morningTasks);loadTasks('dayTasks',d.dayTasks);loadTasks('eveningTasks',d.eveningTasks);
+  document.getElementById('morningNote').value=d.morningNote||'';
+  document.getElementById('eveningNote').value=d.eveningNote||'';
+  document.getElementById('gratitudeNote').value=d.gratitudeNote||'';
+  document.getElementById('closingNote').value=d.closingNote||'';
+  document.getElementById('stressSlider').value=d.stress||5;
+  document.getElementById('stressVal').textContent=d.stress||5;
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.toggle('sel',b.textContent===d.mood));
+}
+function saveDay(){saveCurrentToMem();saveDb();buildDayNav();buildStats();scheduleNotifs();toast('Journée sauvegardée 🌿');}
+function saveDb(){localStorage.setItem('serena_db',JSON.stringify(db));}
+function saveCfg(){localStorage.setItem('serena_cfg',JSON.stringify(cfg));}
 
-function loadDay(i) {
-  const d = db[i] || {};
-  const loadTasks = (listId, saved) => {
-    const items = document.getElementById(listId).querySelectorAll('.task-item');
-    items.forEach((item,idx) => item.classList.toggle('done', !!(saved && saved[idx])));
-  };
-  loadTasks('morningTasks', d.morningTasks);
-  loadTasks('dayTasks', d.dayTasks);
-  loadTasks('eveningTasks', d.eveningTasks);
-  document.getElementById('morningNote').value = d.morningNote||'';
-  document.getElementById('eveningNote').value = d.eveningNote||'';
-  document.getElementById('gratitudeNote').value = d.gratitudeNote||'';
-  document.getElementById('closingNote').value = d.closingNote||'';
-  document.getElementById('stressSlider').value = d.stress||5;
-  document.getElementById('stressVal').textContent = d.stress||5;
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.toggle('sel', b.textContent === d.mood));
+// ==================== BREATHING ====================
+const BREATHS={
+  '446':{phases:['Inspire','Retiens','Expire'],times:[4,4,6]},
+  '478':{phases:['Inspire','Retiens','Expire'],times:[4,7,8]},
+  'box':{phases:['Inspire','Retiens','Expire','Retiens'],times:[4,4,4,4]},
+  'coh':{phases:['Inspire','Expire'],times:[5,5]}
+};
+let bKey='446',bRunning=false,bTimer=null,bPhase=0,bCycles=0,bSec=0;
+function selBreath(el,k){document.querySelectorAll('.br-opt').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');bKey=k;resetBreath();}
+function toggleBreath(){if(bRunning){clearInterval(bTimer);bRunning=false;document.getElementById('brStart').textContent='▶ Reprendre';}else{bRunning=true;document.getElementById('brStart').textContent='⏸ Pause';runBPhase();}}
+function runBPhase(){
+  const b=BREATHS[bKey];bSec=b.times[bPhase];
+  document.getElementById('brPhase').textContent=b.phases[bPhase];
+  document.getElementById('brCount').textContent=bSec;
+  animBreath(b.phases[bPhase],b.times[bPhase]);
+  bTimer=setInterval(()=>{bSec--;document.getElementById('brCount').textContent=bSec;if(bSec<=0){clearInterval(bTimer);bPhase=(bPhase+1)%b.phases.length;if(bPhase===0){bCycles++;document.getElementById('brCycles').textContent=bCycles+' cycle'+(bCycles>1?'s':'')+' ✓';}if(bRunning)setTimeout(runBPhase,300);}},1000);
+}
+function animBreath(phase,dur){
+  const c=document.getElementById('brCircle');c.style.transition='none';
+  if(phase==='Inspire'){requestAnimationFrame(()=>{c.style.transition=`transform ${dur}s ease-in-out`;c.style.transform='scale(1)';});}
+  else if(phase==='Expire'){requestAnimationFrame(()=>{c.style.transition=`transform ${dur}s ease-in-out`;c.style.transform='scale(.55)';});}
+}
+function resetBreath(){clearInterval(bTimer);bRunning=false;bPhase=0;bCycles=0;bSec=0;document.getElementById('brStart').textContent='▶ Commencer';document.getElementById('brPhase').textContent='Prêt(e) ?';document.getElementById('brCount').textContent='—';document.getElementById('brCycles').textContent='';const c=document.getElementById('brCircle');c.style.transition='transform .4s';c.style.transform='scale(.6)';}
+
+// ==================== AMBIENT SOUNDS (Web Audio) ====================
+let audioCtx=null,ambientNodes={},currentAmb=null;
+function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function createNoise(type){
+  const ctx=getAudioCtx(),buf=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate),data=buf.getChannelData(0);
+  for(let i=0;i<data.length;i++)data[i]=Math.random()*2-1;
+  const src=ctx.createBufferSource();src.buffer=buf;src.loop=true;
+  const gain=ctx.createGain();gain.gain.value=0.06;
+  if(type==='rain'){const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=1200;f.Q.value=0.5;src.connect(f);f.connect(gain);}
+  else if(type==='waves'){const f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=600;src.connect(f);const lfo=ctx.createOscillator();lfo.frequency.value=0.15;const lfoGain=ctx.createGain();lfoGain.gain.value=0.03;lfo.connect(lfoGain);lfoGain.connect(gain.gain);lfo.start();f.connect(gain);}
+  else if(type==='white'){src.connect(gain);}
+  else if(type==='forest'){const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=800;f.Q.value=2;src.connect(f);f.connect(gain);}
+  else if(type==='bowl'){
+    // Sine tone for bowl
+    const osc=ctx.createOscillator();osc.frequency.value=432;osc.type='sine';
+    const g=ctx.createGain();g.gain.value=0.12;
+    const osc2=ctx.createOscillator();osc2.frequency.value=864;osc2.type='sine';
+    const g2=ctx.createGain();g2.gain.value=0.04;
+    osc.connect(g);osc2.connect(g2);g.connect(ctx.destination);g2.connect(ctx.destination);
+    osc.start();osc2.start();
+    return {stop:()=>{try{osc.stop();osc2.stop();}catch(e){}}};
+  }
+  gain.connect(ctx.destination);src.start();
+  return {stop:()=>{try{src.stop();}catch(e){}}};
+}
+function toggleAmb(btn,type){
+  if(btn.classList.contains('playing')){if(ambientNodes[type]){ambientNodes[type].stop();delete ambientNodes[type];}btn.classList.remove('playing');return;}
+  if(currentAmb){const old=document.querySelector('.amb-btn.playing');if(old)old.classList.remove('playing');if(ambientNodes[currentAmb]){ambientNodes[currentAmb].stop();delete ambientNodes[currentAmb];}}
+  try{ambientNodes[type]=createNoise(type);btn.classList.add('playing');currentAmb=type;}catch(e){toast('Son non disponible sur cet appareil');}
 }
 
-function saveDay() {
-  saveCurrentToMem();
-  saveDb();
-  buildDayNav();
-  buildStats();
-  toast('Journée sauvegardée 🌿');
-}
-
-function saveDb() { localStorage.setItem('serena_v2', JSON.stringify(db)); }
-function saveSettings() { localStorage.setItem('serena_settings', JSON.stringify(settings)); }
-
-// ===== STATS =====
-function buildStats() {
-  const entries = DAYS.map((_,i) => db[i]).filter(Boolean);
-  const total = entries.length;
-  document.getElementById('statTotal').textContent = total;
-
-  // Streak
-  let streak = 0;
-  for (let i = currentDay; i >= 0; i--) { if (db[i]) streak++; else break; }
-  document.getElementById('statStreak').textContent = streak;
-
-  // Avg completion
-  const rates = entries.map(d => {
-    const all = [...(d.morningTasks||[]),...(d.dayTasks||[]),...(d.eveningTasks||[])];
-    return all.length ? all.filter(Boolean).length/all.length : 0;
+// ==================== MEDITATION ====================
+const MEDITATIONS=[
+  {id:'body',icon:'🌿',title:'Scan corporel',desc:'Relâcher les tensions',dur:300},
+  {id:'gratitude',icon:'🙏',title:'Méditation gratitude',desc:'Ouvrir le cœur',dur:240},
+  {id:'breath',icon:'🌬️',title:'Pleine conscience',desc:'Ancrage dans le présent',dur:180},
+  {id:'sleep',icon:'😴',title:'Préparation au sommeil',desc:'Laisser aller la journée',dur:600},
+  {id:'stress',icon:'💆',title:'Anti-stress rapide',desc:'Calmer le système nerveux',dur:120},
+  {id:'morning',icon:'🌅',title:'Éveil en douceur',desc:'Accueillir la journée',dur:180},
+];
+const MED_SCRIPTS={
+  body:"Installe-toi confortablement. Ferme les yeux. Commence par remarquer ton souffle... Sens ton corps en contact avec le sol ou le siège... Porte ton attention à tes pieds. Remarque toutes les sensations... Remonte doucement vers tes chevilles, tes mollets... Sens tes genoux, tes cuisses se relâcher... Laisse le bas du dos s'alourdir... Remarque si des tensions sont présentes dans ton ventre... Relâche tes épaules en expirant... Laisse tes bras tomber lourdement... Détends ta mâchoire, ton front... Tu es en sécurité. Tu peux lâcher.",
+  gratitude:"Ferme les yeux. Pose une main sur ton cœur... Pense à quelque chose de simple qui t'a apporté de la joie aujourd'hui... Peut-être une lumière, un sourire, une saveur... Laisse ce sentiment de gratitude se déposer dans ta poitrine... Maintenant pense à une personne pour qui tu ressens de l'amour... Envoie-lui mentalement de la chaleur... Enfin, dirige cette bienveillance vers toi-même. Tu mérites ta propre gratitude.",
+  breath:"Assieds-toi confortablement. Sens ton souffle naturel... Ne le contrôle pas, observe-le juste... Remarque l'air qui entre par tes narines... La légère pause entre l'inspiration et l'expiration... L'air qui ressort, plus chaud... Si ton esprit part, reviens simplement à ce souffle... Tu n'as rien à faire. Juste être ici, maintenant.",
+  sleep:"Allonge-toi. Laisse ton corps s'enfoncer dans le matelas... Imagine une lumière dorée et douce qui entre dans ta tête et descend lentement... Elle détend ton front, tes yeux, ta bouche... Elle coule dans ta gorge, tes épaules... Dans ta poitrine, ton ventre... Dans tes bras, tes mains... Dans tes jambes, tes pieds... Ton corps est lourd, chaud, en sécurité. La journée est terminée. Tu peux te reposer.",
+  stress:"Sens tes pieds sur le sol. Appuie-les fermement... Inspire profondément par le nez en comptant jusqu'à 4... Retiens 2 secondes... Expire lentement par la bouche sur 6 secondes... Encore... Sens ton corps se stabiliser... Tu es ancré(e). Le stress n'est qu'une vague — elle arrive, et elle repart.",
+  morning:"Bienvenue dans cette nouvelle journée... Commence par trois respirations profondes... En inspirant, accueille les possibilités de ce jour... En expirant, relâche tout ce qui reste d'hier... Pose une intention simple pour aujourd'hui — une émotion, une qualité à incarner... Porte cette intention avec toi comme une boussole intérieure.",
+};
+let medTimer=null,medRunning=false,medDur=0,medElapsed=0,medCurrent=null;
+function buildMedList(){
+  const list=document.getElementById('medList');list.innerHTML='';
+  MEDITATIONS.forEach(m=>{
+    const d=document.createElement('div');d.className='med-item';d.dataset.id=m.id;
+    d.innerHTML=`<div class="med-icon">${m.icon}</div><div class="med-info"><div class="med-title">${m.title}</div><div class="med-dur">${Math.floor(m.dur/60)} min · ${m.desc}</div></div><button class="med-play" onclick="startMed('${m.id}',${m.dur},this)">▶</button>`;
+    list.appendChild(d);
   });
-  const avg = rates.length ? Math.round(rates.reduce((a,b)=>a+b,0)/rates.length*100) : 0;
-  document.getElementById('statCompletion').textContent = avg + '%';
+}
+function startMed(id,dur,btn){
+  if(medRunning){clearInterval(medTimer);medRunning=false;}
+  document.querySelectorAll('.med-item').forEach(i=>i.classList.remove('active'));
+  btn.closest('.med-item').classList.add('active');
+  medDur=dur;medElapsed=0;medCurrent=id;medRunning=true;
+  const m=MEDITATIONS.find(x=>x.id===id);
+  document.getElementById('medTimerLabel').textContent=m.title;
+  btn.textContent='⏸';
+  btn.onclick=()=>{if(medRunning){clearInterval(medTimer);medRunning=false;btn.textContent='▶';btn.onclick=()=>resumeMed(btn);}};
+  runMedTimer(btn);
+  speakMed(id);
+}
+function resumeMed(btn){medRunning=true;btn.textContent='⏸';runMedTimer(btn);}
+function runMedTimer(btn){
+  medTimer=setInterval(()=>{
+    medElapsed++;
+    const rem=medDur-medElapsed;
+    const mm=String(Math.floor(rem/60)).padStart(2,'0'),ss=String(rem%60).padStart(2,'0');
+    document.getElementById('medTimerDisplay').textContent=mm+':'+ss;
+    document.getElementById('medProgressFill').style.width=(medElapsed/medDur*100)+'%';
+    if(rem<=0){clearInterval(medTimer);medRunning=false;btn.textContent='▶';toast('Méditation terminée 🙏');}
+  },1000);
+}
+function speakMed(id){
+  if(!('speechSynthesis' in window))return;
+  window.speechSynthesis.cancel();
+  const script=MED_SCRIPTS[id];
+  const sentences=script.split('...');
+  let i=0;
+  function speakNext(){
+    if(i>=sentences.length||!medRunning)return;
+    const u=new SpeechSynthesisUtterance(sentences[i].trim());
+    u.lang=cfg.lang==='en'?'en-US':cfg.lang==='es'?'es-ES':'fr-FR';
+    u.rate=0.85;u.pitch=0.95;u.volume=0.9;
+    u.onend=()=>{i++;setTimeout(speakNext,1200);};
+    window.speechSynthesis.speak(u);
+  }
+  speakNext();
+}
 
-  // Avg stress
-  const stresses = entries.filter(d=>d.stress).map(d=>d.stress);
-  document.getElementById('statAvgStress').textContent = stresses.length ? (stresses.reduce((a,b)=>a+b,0)/stresses.length).toFixed(1) : '—';
+// ==================== SERENA AI CHAT ====================
+function initChat(){
+  chatHistory=[{role:'assistant',content:'Bonjour, je suis Serena. Je suis ici pour t\'accompagner avec bienveillance. Comment te sens-tu aujourd\'hui ?'}];
+}
+async function sendChat(){
+  const input=document.getElementById('chatInput');
+  const msg=input.value.trim();if(!msg)return;
+  input.value='';input.style.height='44px';
+  const btn=document.getElementById('chatSend');btn.disabled=true;
+  appendMsg('user',msg);
+  chatHistory.push({role:'user',content:msg});
+  const typing=appendTyping();
+  try{
+    const systemPrompt=`Tu es Serena, une IA de soutien émotionnel bienveillante et douce. Tu accompagnes des personnes qui cherchent la paix intérieure. Tu t'exprimes avec chaleur, empathie et douceur. Tu n'es pas thérapeute, mais tu offres un espace d'écoute et de soutien. Tu poses des questions douces et ouvertes. Tu évites le jargon. Tu es courte dans tes réponses (2-4 phrases max). Si quelqu'un exprime une détresse sérieuse, tu l'invites à consulter un professionnel ou le 3114. Le profil de l'utilisateur : ${cfg.profile}. Langue : ${cfg.lang}.`;
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:systemPrompt,
+        messages:chatHistory.filter(m=>m.role!=='assistant'||chatHistory.indexOf(m)>0).map(m=>({role:m.role,content:m.content}))
+      })
+    });
+    const data=await res.json();
+    typing.remove();
+    const reply=data.content?.map(c=>c.text||'').join('')||'Je suis là pour toi. 🌿';
+    chatHistory.push({role:'assistant',content:reply});
+    appendMsg('ai',reply);
+  }catch(e){
+    typing.remove();
+    const fallback='Je t\'entends. Prends un souffle profond avec moi. 🌿';
+    appendMsg('ai',fallback);
+  }
+  btn.disabled=false;
+  const ch=document.getElementById('chatHistory');ch.scrollTop=ch.scrollHeight;
+}
+function appendMsg(role,text){
+  const ch=document.getElementById('chatHistory');
+  const div=document.createElement('div');div.className='msg '+role;
+  div.innerHTML=role==='ai'
+    ?`<div class="msg-avatar">🌿</div><div class="msg-bubble">${text}</div>`
+    :`<div class="msg-bubble">${text}</div>`;
+  ch.appendChild(div);ch.scrollTop=ch.scrollHeight;
+  return div;
+}
+function appendTyping(){
+  const ch=document.getElementById('chatHistory');
+  const div=document.createElement('div');div.className='msg ai';
+  div.innerHTML=`<div class="msg-avatar">🌿</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  ch.appendChild(div);ch.scrollTop=ch.scrollHeight;
+  return div;
+}
+
+// ==================== STATS ====================
+function buildStats(){
+  const entries=DAYS.map((_,i)=>db[i]).filter(Boolean);
+  document.getElementById('sTot').textContent=entries.length;
+  let streak=0;for(let i=currentDay;i>=0;i--){if(db[i])streak++;else break;}
+  document.getElementById('sSt').textContent=streak;
+  const rates=entries.map(d=>{const all=[...(d.morningTasks||[]),...(d.dayTasks||[]),...(d.eveningTasks||[])];return all.length?all.filter(Boolean).length/all.length:0;});
+  const avg=rates.length?Math.round(rates.reduce((a,b)=>a+b,0)/rates.length*100):0;
+  document.getElementById('sComp').textContent=avg+'%';
+  const st=entries.filter(d=>d.stress).map(d=>d.stress);
+  const avgSt=st.length?(st.reduce((a,b)=>a+b,0)/st.length).toFixed(1):'—';
+  document.getElementById('sStress').textContent=avgSt;
+
+  // Insights
+  buildInsights(entries,avg,avgSt,streak);
 
   // Bar chart
-  const chart = document.getElementById('barChart');
-  const labels = document.getElementById('barLabels');
-  chart.innerHTML = ''; labels.innerHTML = '';
-  DAYS.forEach((d, i) => {
-    const entry = db[i];
-    let pct = 0;
-    if (entry) {
-      const all = [...(entry.morningTasks||[]),...(entry.dayTasks||[]),...(entry.eveningTasks||[])];
-      pct = all.length ? Math.round(all.filter(Boolean).length/all.length*100) : 0;
-    }
-    const col = document.createElement('div');
-    col.className = 'bar-col';
-    col.innerHTML = `<div class="bar-fill" style="height:${Math.max(3,pct*.72)}px;background:${i===currentDay?'var(--terra)':'var(--sage-l)'}"></div>`;
+  const chart=document.getElementById('barChart'),lbls=document.getElementById('barLabels');
+  chart.innerHTML='';lbls.innerHTML='';
+  DAYS.forEach((d,i)=>{
+    const e=db[i];let pct=0;
+    if(e){const all=[...(e.morningTasks||[]),...(e.dayTasks||[]),...(e.eveningTasks||[])];pct=all.length?Math.round(all.filter(Boolean).length/all.length*100):0;}
+    const col=document.createElement('div');col.className='bar-col';
+    col.innerHTML=`<div class="bar-fill" style="height:${Math.max(3,pct*.72)}px;background:${i===currentDay?'var(--terra)':'var(--sage-l)'}"></div>`;
     chart.appendChild(col);
-    const lbl = document.createElement('span'); lbl.style.cssText='font-size:10px;color:var(--muted);flex:1;text-align:center;';
-    lbl.textContent = d; labels.appendChild(lbl);
+    const l=document.createElement('span');l.style.cssText='font-size:9px;color:var(--muted);flex:1;text-align:center;';l.textContent=d;lbls.appendChild(l);
   });
 
   // Stress history
-  const sh = document.getElementById('stressHistory');
-  sh.innerHTML = '';
-  DAYS.forEach((d,i) => {
-    const entry = db[i];
-    const val = entry?.stress || 0;
-    const row = document.createElement('div'); row.className='stress-line';
-    row.innerHTML = `<span class="stress-day">${d}</span>
-      <div class="stress-bar-bg"><div class="stress-bar-fill" style="width:${val?val*10:0}%"></div></div>
-      <span class="stress-val">${val||'—'}</span>`;
-    sh.appendChild(row);
-  });
+  const sh=document.getElementById('stressHist');sh.innerHTML='';
+  DAYS.forEach((d,i)=>{const v=db[i]?.stress||0;const row=document.createElement('div');row.className='stress-line';row.innerHTML=`<span class="s-day">${d}</span><div class="s-bg"><div class="s-fill" style="width:${v?v*10:0}%"></div></div><span class="s-val">${v||'—'}</span>`;sh.appendChild(row);});
 
-  // Gratitude list
-  const gl = document.getElementById('gratitudeList');
-  gl.innerHTML = '';
-  DAYS.slice().reverse().forEach((d,ri) => {
-    const i = 6 - ri;
-    const note = db[i]?.gratitudeNote;
-    if (note && note.trim()) {
-      const el = document.createElement('div');
-      el.style.cssText = 'padding:12px;background:var(--cream);border-radius:10px;';
-      el.innerHTML = `<div style="font-size:10px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">${d}</div>
-        <div style="font-family:var(--font-display);font-size:15px;color:var(--ink);line-height:1.5;">${note}</div>`;
-      gl.appendChild(el);
-    }
-  });
-  if (!gl.children.length) gl.innerHTML = '<p style="font-size:13px;color:var(--muted);font-style:italic;">Tes gratitudes apparaîtront ici 🌿</p>';
+  // Gratitude
+  const gl=document.getElementById('gratList');gl.innerHTML='';
+  DAYS.slice().reverse().forEach((_,ri)=>{const i=6-ri;const note=db[i]?.gratitudeNote;if(note?.trim()){const el=document.createElement('div');el.className='grat-item';el.innerHTML=`<div class="grat-day">${DAYS[i]}</div><div class="grat-text">${note}</div>`;gl.appendChild(el);}});
+  if(!gl.children.length)gl.innerHTML='<p style="font-size:13px;color:var(--muted);font-style:italic;">Tes gratitudes apparaîtront ici 🌿</p>';
 }
 
-// ===== PAGE SWITCHING =====
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+function buildInsights(entries,avg,avgSt,streak){
+  const card=document.getElementById('insightCard'),list=document.getElementById('insightList');
+  list.innerHTML='';const insights=[];
+  if(streak>=3)insights.push({t:'🔥 Belle constance !',txt:`${streak} jours consécutifs — la régularité est la clé de la paix intérieure.`});
+  if(avg>=70)insights.push({t:'✅ Routines bien tenues',txt:`Tu complètes en moyenne ${avg}% de tes rituels. Continue sur cette lancée !`});
+  if(avg<30&&entries.length>2)insights.push({t:'💡 Commence petit',txt:'Essaie de ne cocher qu\'un seul rituel par jour pour créer l\'habitude.'});
+  const stVals=DAYS.map((_,i)=>db[i]?.stress).filter(Boolean);
+  if(stVals.length>=3){const trend=stVals[stVals.length-1]-stVals[0];if(trend<-1)insights.push({t:'📉 Stress en baisse',txt:`Ton stress a diminué de ${Math.abs(trend.toFixed(1))} points cette semaine. Quelque chose fonctionne !`});if(trend>2)insights.push({t:'⚠️ Semaine difficile',txt:'Ton stress semble avoir augmenté. Essaie une respiration guidée maintenant.'});}
+  if(insights.length>0){insights.forEach(ins=>{const el=document.createElement('div');el.className='insight';el.innerHTML=`<div class="insight-title">${ins.t}</div><div class="insight-text">${ins.txt}</div>`;list.appendChild(el);});card.style.display='block';}else{card.style.display='none';}
+}
+
+// ==================== NOTIFICATIONS ====================
+function loadNotifSettings(){
+  const n=cfg.notifs||{};
+  ['morning','day','evening'].forEach(k=>{const tg=document.getElementById('tg'+k.charAt(0).toUpperCase()+k.slice(1));if(tg)tg.classList.toggle('on',!!n[k]);});
+  if(n.times){if(n.times.morning)document.getElementById('tMorning').value=n.times.morning;if(n.times.day)document.getElementById('tDay').value=n.times.day;if(n.times.evening)document.getElementById('tEvening').value=n.times.evening;}
+}
+function saveNotifTime(){cfg.notifs=cfg.notifs||{};cfg.notifs.times={morning:document.getElementById('tMorning').value,day:document.getElementById('tDay').value,evening:document.getElementById('tEvening').value};saveCfg();}
+async function toggleNotif(btn,key){
+  if(!('Notification' in window)){toast('Notifications non supportées sur ce navigateur');return;}
+  if(Notification.permission==='denied'){toast('Notifications bloquées — active-les dans les réglages du navigateur');return;}
+  if(Notification.permission!=='granted'){const p=await Notification.requestPermission();if(p!=='granted'){toast('Permission refusée');return;}}
+  btn.classList.toggle('on');
+  cfg.notifs=cfg.notifs||{};cfg.notifs[key]=btn.classList.contains('on');saveCfg();
+  toast(btn.classList.contains('on')?'Rappel activé 🔔':'Rappel désactivé');
+  scheduleNotifs();
+}
+function scheduleNotifs(){
+  if(!('serviceWorker' in navigator))return;
+  // Note: real push notifications require a backend. This schedules local Web Notifications via setTimeout for current session.
+  const n=cfg.notifs||{};
+  const msgs={morning:{title:'🌅 Rituel du matin',body:'Commence ta journée avec intention.'},day:{title:'☀️ Micro-pause',body:'Prends 5 minutes rien que pour toi.'},evening:{title:'🌙 Rituel du soir',body:'Il est temps de déposer ta journée.'}};
+  ['morning','day','evening'].forEach(k=>{
+    if(!n[k])return;
+    const times=n.times||{morning:'08:00',day:'13:00',evening:'21:00'};
+    const [h,m]=(times[k]||'08:00').split(':').map(Number);
+    const now=new Date(),target=new Date();
+    target.setHours(h,m,0,0);
+    if(target<=now)target.setDate(target.getDate()+1);
+    const delay=target-now;
+    setTimeout(()=>{if(Notification.permission==='granted'&&n[k])new Notification(msgs[k].title,{body:msgs[k].body,icon:'./icons/icon-192.png'});},delay);
+  });
+}
+
+// ==================== EXPORT ====================
+function exportJSON(){const blob=new Blob([JSON.stringify({cfg,data:db},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='serena-export-'+new Date().toISOString().split('T')[0]+'.json';a.click();toast('Données exportées ✓');}
+function exportSummary(){
+  let txt='✦ SERENA — Résumé de semaine\n'+new Date().toLocaleDateString('fr-FR')+'\n\n';
+  DAYS.forEach((d,i)=>{const e=db[i];if(!e)return;txt+=`═══ ${d} ═══\n`;if(e.morningNote)txt+=`Intention : ${e.morningNote}\n`;if(e.gratitudeNote)txt+=`Gratitude : ${e.gratitudeNote}\n`;if(e.mood)txt+=`Humeur : ${e.mood}\n`;if(e.stress)txt+=`Stress : ${e.stress}/10\n`;txt+='\n';});
+  const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='serena-semaine.txt';a.click();toast('Résumé exporté 📄');
+}
+function confirmReset(){if(confirm('⚠️ Réinitialiser toutes les données Serena ? Cette action est irréversible.')){localStorage.removeItem('serena_db');localStorage.removeItem('serena_cfg');location.reload();}}
+
+// ==================== PAGE NAV ====================
+function goPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
-  const tab = document.getElementById('tab-'+page);
-  const nav = document.getElementById('nav-'+page);
-  if (tab) tab.classList.add('active');
-  if (nav) nav.classList.add('active');
-  if (page === 'stats') buildStats();
+  const tab=document.getElementById('tab-'+page),nav=document.getElementById('nav-'+page);
+  if(tab)tab.classList.add('active');if(nav)nav.classList.add('active');
+  if(page==='stats')buildStats();
 }
 
-// ===== BREATHING =====
-const BREATHS = {
-  '446': { phases:['Inspire','Retiens','Expire'], times:[4,4,6], name:'4-4-6' },
-  '478': { phases:['Inspire','Retiens','Expire'], times:[4,7,8], name:'4-7-8' },
-  'box':  { phases:['Inspire','Retiens','Expire','Retiens'], times:[4,4,4,4], name:'Box 4×4' },
-  'coh':  { phases:['Inspire','Expire'], times:[5,5], name:'Cohérence 5-5' }
-};
-let breathKey='446', breathRunning=false, breathTimer=null, breathPhaseIdx=0, breathCycleCount=0, breathSec=0;
+// ==================== TOAST ====================
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
 
-function selectBreath(el, key) {
-  document.querySelectorAll('.breath-opt').forEach(b => b.classList.remove('sel'));
-  el.classList.add('sel');
-  breathKey = key;
-  resetBreath();
-}
+// ==================== PWA ====================
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').classList.add('show');});
+function installPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBanner').classList.remove('show');});}}
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 
-function toggleBreath() {
-  if (breathRunning) {
-    clearInterval(breathTimer);
-    breathRunning = false;
-    document.getElementById('breathStartBtn').textContent = '▶ Reprendre';
-  } else {
-    breathRunning = true;
-    document.getElementById('breathStartBtn').textContent = '⏸ Pause';
-    runBreathPhase();
-  }
-}
+// ==================== INIT ====================
+(function(){
+  applyTheme(cfg.theme);
+  obLang = cfg.lang || 'fr';
+  obTheme = cfg.theme || 'light';
 
-function runBreathPhase() {
-  const b = BREATHS[breathKey];
-  breathSec = b.times[breathPhaseIdx];
-  updateBreathUI();
-  animateCircle(b.phases[breathPhaseIdx]);
-  breathTimer = setInterval(() => {
-    breathSec--;
-    document.getElementById('breathCount').textContent = breathSec;
-    if (breathSec <= 0) {
-      clearInterval(breathTimer);
-      breathPhaseIdx = (breathPhaseIdx+1) % b.phases.length;
-      if (breathPhaseIdx === 0) {
-        breathCycleCount++;
-        document.getElementById('breathCycles').textContent = `${breathCycleCount} cycle${breathCycleCount>1?'s':''} ✓`;
-      }
-      if (breathRunning) setTimeout(runBreathPhase, 300);
-    }
-  }, 1000);
-}
+  // Always wire up onboarding listeners (they're always in the DOM)
+  initObListeners();
 
-function updateBreathUI() {
-  const b = BREATHS[breathKey];
-  document.getElementById('breathPhase').textContent = b.phases[breathPhaseIdx];
-  document.getElementById('breathCount').textContent = breathSec;
-}
-
-function animateCircle(phase) {
-  const c = document.getElementById('breathCircle');
-  c.style.transition = 'none';
-  if (phase === 'Inspire') {
-    requestAnimationFrame(()=>{ c.style.transition=`transform ${BREATHS[breathKey].times[breathPhaseIdx]}s ease-in-out`; c.style.transform='scale(1)'; });
-  } else if (phase === 'Expire') {
-    requestAnimationFrame(()=>{ c.style.transition=`transform ${BREATHS[breathKey].times[breathPhaseIdx]}s ease-in-out`; c.style.transform='scale(.55)'; });
-  }
-}
-
-function resetBreath() {
-  clearInterval(breathTimer);
-  breathRunning=false; breathPhaseIdx=0; breathCycleCount=0; breathSec=0;
-  document.getElementById('breathStartBtn').textContent='▶ Commencer';
-  document.getElementById('breathPhase').textContent='Prêt(e) ?';
-  document.getElementById('breathCount').textContent='—';
-  document.getElementById('breathCycles').textContent='';
-  const c=document.getElementById('breathCircle');
-  c.style.transition='transform .4s ease'; c.style.transform='scale(.6)';
-}
-
-// ===== EXPORT =====
-function exportData() {
-  const blob = new Blob([JSON.stringify({settings, data:db}, null, 2)], {type:'application/json'});
-  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download = 'serena-export.json'; a.click();
-  toast('Données exportées ✓');
-}
-
-function exportWeekSummary() {
-  let txt = '✦ SERENA — Résumé de semaine\n\n';
-  DAYS.forEach((d,i) => {
-    const e = db[i];
-    if (!e) return;
-    txt += `═══ ${d} ═══\n`;
-    if (e.morningNote) txt += `Intention : ${e.morningNote}\n`;
-    if (e.gratitudeNote) txt += `Gratitude : ${e.gratitudeNote}\n`;
-    if (e.mood) txt += `Humeur : ${e.mood}\n`;
-    if (e.stress) txt += `Stress : ${e.stress}/10\n`;
-    txt += '\n';
-  });
-  const blob = new Blob([txt], {type:'text/plain'});
-  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download='serena-semaine.txt'; a.click();
-  toast('Résumé exporté 📄');
-}
-
-function confirmReset() {
-  if (confirm('⚠️ Réinitialiser toutes les données Serena ? Cette action est irréversible.')) {
-    localStorage.removeItem('serena_v2');
-    localStorage.removeItem('serena_settings');
-    location.reload();
-  }
-}
-
-// ===== TOAST =====
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2600);
-}
-
-// ===== PWA =====
-let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault(); deferredPrompt = e;
-  document.getElementById('installBanner').classList.add('visible');
-});
-function installPWA() {
-  if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBanner').classList.remove('visible'); }); }
-}
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-}
-
-// ===== INIT =====
-(function init() {
-  applyTheme(settings.theme);
-
-  // Apply saved lang/profile UI
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    b.classList.toggle('sel', b.textContent.includes(settings.lang==='fr'?'Français':settings.lang==='en'?'English':'Español'));
-  });
-
-  if (db.onboarded) {
+  if(db.onboarded){
     startApp();
   } else {
     document.getElementById('onboarding').classList.add('active');
-    document.getElementById('bottomNav').style.display = 'none';
+    obTranslate();
   }
 })();
 </script>
