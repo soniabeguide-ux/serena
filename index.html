@@ -2,826 +2,615 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#6b4f3a" id="themeMetaColor">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4a1428" id="metaTheme">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Serena">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>Serena — Paix Intérieure</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Serena</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ===================== DESIGN TOKENS ===================== */
+/* ── TOKENS ────────────────────────────────────────────── */
 :root {
-  --cream:#f5f0e8; --warm:#e8ddd0; --sage:#8a9e8a; --sage-l:#b5c5b5;
-  --terra:#c4785a; --brown:#6b4f3a; --ink:#2d2520; --muted:#9e8e82;
-  --card:#ffffff; --nav:#ffffff;
+  --bg:#f5f0e8; --warm:#e8ddd0; --sage:#8a9e8a; --sage-l:#b5c5b5;
+  --accent:#c4785a; --brand:#6b4f3a; --ink:#2d2520; --muted:#9e8e82;
+  --card:#ffffff; --r:16px;
   --fd:'Cormorant Garamond',serif; --fb:'Jost',sans-serif;
-  --r:16px; --sh:0 2px 24px rgba(107,79,58,.08);
 }
-[data-theme=dark]{
-  --cream:#1a1714; --warm:#2a2420; --sage:#7a9a7a; --sage-l:#4a6a4a;
-  --terra:#c4785a; --brown:#d4a882; --ink:#ede8e0; --muted:#7a6a62;
-  --card:#242018; --nav:#1e1a16;
-}
-[data-theme=nature]{
-  --cream:#eef4ee; --warm:#cce4cc; --sage:#4a7a4a; --sage-l:#7aaa7a;
-  --terra:#6aaa6a; --brown:#2a5a2a; --ink:#1a2e1a; --muted:#5a7a5a;
-  --card:#f4faf4; --nav:#f4faf4;
-}
-[data-theme=minimal]{
-  --cream:#fafafa; --warm:#e8e8e8; --sage:#555; --sage-l:#aaa;
-  --terra:#222; --brown:#111; --ink:#111; --muted:#777;
-  --card:#fff; --nav:#fff;
-}
-[data-theme=coachdivin]{
-  --cream:#f5f0ec; --warm:#e8ddd4; --sage:#c9a96e; --sage-l:#d4b98a;
-  --terra:#9b2335; --brown:#4a1428; --ink:#1e0a12; --muted:#7a5a62;
-  --card:#fdf8f5; --nav:#fdf8f5;
-}
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html { scroll-behavior:smooth; }
-body {
-  background:var(--cream); font-family:var(--fb); color:var(--ink);
-  min-height:100vh; transition:background .35s,color .35s; overflow-x:hidden;
-}
-body::before {
-  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
-}
-/* ===================== SCREENS ===================== */
-.screen { display:none; min-height:100vh; position:relative; z-index:1; }
-.screen.active { display:block; }
+[data-theme=dark]{--bg:#1a1714;--warm:#2a2420;--sage:#7a9a7a;--sage-l:#5a7a5a;--accent:#c4785a;--brand:#d4a882;--ink:#ede8e0;--muted:#8a7a72;--card:#242018;}
+[data-theme=nature]{--bg:#eef4ee;--warm:#d8ecd8;--sage:#5a8a5a;--sage-l:#8ab88a;--accent:#7ab87a;--brand:#3a6a3a;--ink:#1a2e1a;--muted:#6a8a6a;--card:#f4f9f4;}
+[data-theme=minimal]{--bg:#fafafa;--warm:#ebebeb;--sage:#555;--sage-l:#aaa;--accent:#222;--brand:#111;--ink:#111;--muted:#888;--card:#fff;}
+[data-theme=coachdivin]{--bg:#f5f0ec;--warm:#e8ddd4;--sage:#c9a96e;--sage-l:#d4b98a;--accent:#9b2335;--brand:#4a1428;--ink:#1e0a12;--muted:#7a5a62;--card:#fdf8f5;}
+[data-theme=ocean]{--bg:#e8f4f8;--warm:#c8e4ed;--sage:#3a7a9a;--sage-l:#6aaac4;--accent:#1a5a7a;--brand:#0a3a5a;--ink:#0a1e2a;--muted:#4a7a8a;--card:#f0f8fc;}
+[data-theme=sunset]{--bg:#fdf0e8;--warm:#f4d8c4;--sage:#d4844a;--sage-l:#e8a87a;--accent:#c43a2a;--brand:#7a2a1a;--ink:#2a0e0a;--muted:#8a5a4a;--card:#fff8f4;}
 
-/* ===================== ONBOARDING ===================== */
-#onboarding {
-  background:linear-gradient(155deg,var(--brown) 0%,color-mix(in srgb,var(--brown) 50%,#000) 100%);
-  color:var(--cream); min-height:100vh; display:flex; flex-direction:column;
-  align-items:center; overflow-y:auto;
-}
-#onboarding.active { display:flex; }
-.ob-page { display:none; width:100%; max-width:460px; padding:48px 28px 50px; flex-direction:column; min-height:100vh; }
-.ob-page.active { display:flex; animation:fadeUp .5s ease both; }
-.ob-header { text-align:center; margin-bottom:32px; }
-.ob-logo { font-family:var(--fd); font-size:3.4rem; font-weight:300; letter-spacing:3px; display:block; margin-bottom:4px; }
-.ob-tag { font-size:10px; letter-spacing:4px; text-transform:uppercase; opacity:.45; }
-.ob-prefs { display:flex; flex-direction:column; gap:16px; margin-bottom:24px; }
-.ob-pref-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:.5; margin-bottom:8px; display:block; }
-.ob-lang-row,.ob-theme-row { display:flex; gap:8px; }
-.ob-lang-btn {
-  flex:1; padding:11px 8px; border-radius:11px; border:1.5px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.07); color:var(--cream); font-family:var(--fb);
-  font-size:13px; cursor:pointer; transition:all .2s; text-align:center;
-}
-.ob-lang-btn:hover { background:rgba(255,255,255,.14); }
-.ob-lang-btn.sel { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.65); font-weight:600; }
-.ob-theme-btn {
-  flex:1; padding:10px 6px; border-radius:11px; border:1.5px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.07); cursor:pointer; transition:all .2s; text-align:center;
-}
-.ob-theme-btn:hover { background:rgba(255,255,255,.14); }
-.ob-theme-btn.sel { border-color:rgba(255,255,255,.7); background:rgba(255,255,255,.2); }
-.ob-t-swatch { width:22px; height:22px; border-radius:50%; margin:0 auto 5px; }
-.ob-t-name { font-size:10px; color:rgba(255,255,255,.7); display:block; }
-.ob-theme-btn.sel .ob-t-name { color:#fff; font-weight:600; }
-.ob-name-wrap { position:relative; margin-bottom:24px; }
-.ob-name-input {
-  width:100%; padding:16px 18px; border-radius:13px;
-  border:1.5px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1);
-  color:var(--cream); font-family:var(--fd); font-size:1.3rem;
-  outline:none; transition:all .3s; letter-spacing:.5px;
-}
-.ob-name-input::placeholder { color:rgba(255,255,255,.3); font-style:italic; }
-.ob-name-input:focus { border-color:rgba(255,255,255,.6); background:rgba(255,255,255,.15); }
-.ob-name-float { position:absolute; top:-10px; left:14px; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.5); pointer-events:none; }
-.ob-divider { height:1px; background:rgba(255,255,255,.12); margin:20px 0; }
-.ob-q { font-family:var(--fd); font-size:1.55rem; font-weight:300; line-height:1.45; margin-bottom:18px; }
-.ob-opts { display:flex; flex-direction:column; gap:9px; }
-.ob-opt {
-  padding:14px 16px; border-radius:13px; border:1.5px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.07); color:var(--cream); font-family:var(--fb);
-  font-size:14px; cursor:pointer; text-align:left; transition:all .25s;
-  display:flex; align-items:center; gap:10px;
-}
-.ob-opt:hover { background:rgba(255,255,255,.14); border-color:rgba(255,255,255,.4); transform:translateX(3px); }
-.ob-opt.sel { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.65); transform:translateX(3px); }
-.ob-opt-emoji { font-size:18px; flex-shrink:0; }
-.ob-opt-check { width:18px; height:18px; border-radius:50%; border:1.5px solid rgba(255,255,255,.3); flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; margin-left:auto; }
-.ob-opt.sel .ob-opt-check { background:rgba(255,255,255,.9); border-color:transparent; }
-.ob-opt.sel .ob-opt-check::after { content:'✓'; color:var(--brown); font-size:10px; font-weight:700; }
-.ob-prog { display:flex; gap:6px; justify-content:center; margin:auto 0 20px; padding-top:28px; }
-.ob-dot { width:28px; height:4px; border-radius:2px; background:rgba(255,255,255,.2); transition:all .4s; }
-.ob-dot.active { background:var(--cream); width:44px; }
-.ob-dot.done { background:rgba(255,255,255,.5); }
-.ob-next {
-  width:100%; padding:16px; border-radius:13px; background:var(--cream); color:var(--brown);
-  border:none; font-family:var(--fb); font-size:13px; font-weight:600;
-  letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all .25s;
-  display:flex; align-items:center; justify-content:center; gap:8px;
-}
-.ob-next:not(:disabled):hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.35); }
-.ob-next:disabled { opacity:.3; cursor:default; }
-.ob-greeting { font-family:var(--fd); font-size:1.05rem; opacity:.65; margin-bottom:26px; font-style:italic; }
-.ob-section-label { font-size:10px; letter-spacing:2.5px; text-transform:uppercase; opacity:.45; margin-bottom:12px; display:block; }
+/* ── RESET ─────────────────────────────────────────────── */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);font-family:var(--fb);color:var(--ink);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
 
-/* ===================== APP SHELL ===================== */
-#app { padding-bottom:80px; }
-.top-bar {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 20px 0; position:sticky; top:0; z-index:60;
-  background:var(--cream); transition:background .35s;
-}
-.app-logo { font-family:var(--fd); font-size:1.7rem; color:var(--brown); font-weight:300; letter-spacing:1px; }
-.top-actions { display:flex; gap:8px; }
-.icon-btn {
-  width:38px; height:38px; border-radius:50%; border:1.5px solid var(--warm);
-  background:var(--card); cursor:pointer; display:flex; align-items:center;
-  justify-content:center; font-size:15px; transition:all .2s; color:var(--ink);
-}
-.icon-btn:hover { border-color:var(--sage); }
+/* ── SCREENS ───────────────────────────────────────────── */
+.screen{display:none;min-height:100vh;}
+.screen.active{display:block;}
 
-/* ===================== TABS ===================== */
-.tabs {
-  display:flex; gap:4px; padding:14px 20px 0;
-  overflow-x:auto; scrollbar-width:none;
+/* ══════════════════════════════════════════════════════════
+   ONBOARDING
+══════════════════════════════════════════════════════════ */
+#ob{
+  background:linear-gradient(155deg,#4a1428,#1a0510);
+  min-height:100vh; overflow-y:auto; color:#fff;
 }
-.tabs::-webkit-scrollbar { display:none; }
-.tab {
-  padding:8px 16px; border-radius:20px; white-space:nowrap; flex-shrink:0;
-  border:1.5px solid var(--warm); background:transparent;
-  font-family:var(--fb); font-size:12px; color:var(--muted);
-  cursor:pointer; transition:all .2s;
-}
-.tab.active { background:var(--brown); border-color:var(--brown); color:var(--cream); }
+#ob.active{display:block;}
+.ob-page{display:none;max-width:440px;margin:0 auto;padding:44px 22px 60px;flex-direction:column;min-height:100vh;}
+.ob-page.active{display:flex;animation:fadeUp .4s ease both;}
 
-/* ===================== PAGES ===================== */
-.page { display:none; padding:16px 20px 0; animation:fadeUp .4s ease both; }
-.page.active { display:block; }
+.ob-logo{font-family:var(--fd);font-size:2.8rem;font-weight:300;letter-spacing:3px;color:#fff;display:block;text-align:center;margin-bottom:4px;}
+.ob-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);display:block;text-align:center;margin-bottom:36px;}
+.ob-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px;display:block;}
 
-/* ===================== CARDS ===================== */
-.card {
-  background:var(--card); border-radius:var(--r); border:1px solid var(--warm);
-  box-shadow:var(--sh); padding:22px; margin-bottom:14px; transition:box-shadow .2s, background .35s;
-}
-.card:hover { box-shadow:0 4px 32px rgba(107,79,58,.12); }
-.card-hd { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
-.c-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
-.ci-m{background:#fef3e8;} .ci-d{background:#eef3ee;} .ci-e{background:#f0eaf5;}
-.ci-mood{background:#fdecea;} .ci-br{background:#e8f4fd;} .ci-st{background:#fdf8e8;}
-.ci-ai{background:#f0f0ff;} .ci-med{background:#fef5e8;}
-.c-title { font-family:var(--fd); font-size:1.15rem; color:var(--brown); }
-.c-sub { font-size:10px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
-.divider { height:1px; background:var(--warm); margin:14px 0; }
+#ob-langs{display:flex;gap:8px;margin-bottom:20px;}
+.ob-lang{flex:1;padding:11px 4px;border-radius:10px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font-family:var(--fb);font-size:12px;cursor:pointer;text-align:center;}
+.ob-lang.on{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.7);font-weight:600;}
 
-/* ===================== TASKS ===================== */
-.task-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
-.task-item {
-  display:flex; align-items:flex-start; gap:12px; padding:9px 10px;
-  border-radius:10px; cursor:pointer; transition:background .15s; user-select:none;
-}
-.task-item:hover { background:var(--cream); }
-.chk {
-  width:20px; height:20px; border-radius:6px; border:1.5px solid var(--warm);
-  flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center;
-  transition:all .2s;
-}
-.task-item.done .chk { background:var(--sage); border-color:var(--sage); }
-.task-item.done .chk::after { content:'✓'; color:#fff; font-size:10px; font-weight:700; }
-.t-lbl { font-size:14px; color:var(--ink); line-height:1.4; transition:color .2s; }
-.t-sub { font-size:11px; color:var(--muted); display:block; margin-top:2px; }
-.task-item.done .t-lbl { color:var(--muted); text-decoration:line-through; text-decoration-color:var(--sage-l); }
+/* Onboarding theme grid - 3 columns */
+#ob-themes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px;}
+.ob-th{padding:12px 6px;border-radius:12px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:all .2s;}
+.ob-th:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.4);}
+.ob-th.on{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.8);transform:scale(1.03);}
+.ob-th-sw{width:28px;height:28px;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.ob-th-nm{font-size:10px;color:rgba(255,255,255,.7);font-family:var(--fb);text-align:center;line-height:1.3;}
+.ob-th.on .ob-th-nm{color:#fff;font-weight:600;}
 
-/* ===================== INPUTS ===================== */
-.fl { font-size:11px; color:var(--muted); letter-spacing:.5px; margin-bottom:7px; display:block; text-transform:uppercase; }
-textarea, input[type=text] {
-  width:100%; border:1px solid var(--warm); border-radius:10px; padding:13px 15px;
-  font-family:var(--fd); font-size:15px; color:var(--ink); background:var(--cream);
-  resize:none; outline:none; transition:border-color .2s,background .2s; line-height:1.6; margin-bottom:12px;
-}
-textarea:focus, input[type=text]:focus { border-color:var(--sage); background:var(--card); }
-textarea::placeholder, input[type=text]::placeholder { color:var(--muted); font-style:italic; }
+.ob-name-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px;display:block;}
+#ob-name{width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;font-family:var(--fb);font-size:1rem;outline:none;transition:border-color .2s;}
+#ob-name::placeholder{color:rgba(255,255,255,.3);font-style:italic;}
+#ob-name:focus{border-color:rgba(255,255,255,.6);}
+.ob-div{height:1px;background:rgba(255,255,255,.12);margin:20px 0;}
+.ob-q{font-family:var(--fd);font-size:1.4rem;font-weight:300;line-height:1.45;color:#fff;margin-bottom:14px;}
+.ob-opts{display:flex;flex-direction:column;gap:8px;}
+.ob-opt{width:100%;padding:13px 16px;border-radius:11px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;font-family:var(--fb);font-size:14px;cursor:pointer;text-align:left;transition:all .18s;}
+.ob-opt:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.4);}
+.ob-opt.on{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.7);transform:translateX(4px);}
+.ob-prog{display:flex;gap:6px;justify-content:center;margin:24px 0 16px;}
+.ob-dot{width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,.2);transition:all .35s;}
+.ob-dot.on{background:#fff;width:44px;}
+.ob-dot.done{background:rgba(255,255,255,.5);}
+.ob-btn{width:100%;padding:15px;border-radius:12px;background:#f5f0ec;color:#4a1428;border:none;font-family:var(--fb);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .22s;}
+.ob-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.35);}
+.ob-btn:disabled{opacity:.3;cursor:default;}
+.ob-greet{font-family:var(--fd);font-size:1.05rem;color:rgba(255,255,255,.65);font-style:italic;margin-bottom:24px;}
 
-/* ===================== MOOD ===================== */
-.mood-row { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px; }
-.mood-btn {
-  padding:8px 14px; border-radius:20px; border:1.5px solid var(--warm);
-  background:transparent; font-size:12px; color:var(--muted);
-  cursor:pointer; transition:all .2s; font-family:var(--fb);
-}
-.mood-btn:hover { border-color:var(--sage); color:var(--sage); }
-.mood-btn.sel { background:var(--sage); border-color:var(--sage); color:#fff; }
+/* ══════════════════════════════════════════════════════════
+   APP SHELL
+══════════════════════════════════════════════════════════ */
+#app{padding-bottom:80px;}
 
-/* ===================== SLIDER ===================== */
-.sld-top { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-bottom:8px; }
-input[type=range] {
-  width:100%; -webkit-appearance:none; height:4px; border-radius:2px;
-  background:linear-gradient(to right,var(--sage) 0%,var(--terra) 100%); outline:none;
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
-  background:var(--card); border:2px solid var(--terra); cursor:pointer;
-  box-shadow:0 2px 8px rgba(0,0,0,.15);
-}
-.sld-lbls { display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-top:3px; }
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 0;position:sticky;top:0;z-index:40;background:var(--bg);transition:background .3s;}
+.top-logo{font-family:var(--fd);font-size:1.5rem;color:var(--brand);font-weight:300;}
+.top-right{display:flex;gap:8px;align-items:center;}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--warm);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all .2s;}
+.icon-btn:hover{border-color:var(--sage);}
 
-/* ===================== SAVE BTN ===================== */
-.save-btn {
-  width:100%; padding:15px; background:var(--brown); color:var(--cream);
-  border:none; border-radius:12px; font-family:var(--fb); font-size:12px;
-  letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all .2s; margin-top:4px;
-}
-.save-btn:hover { background:var(--terra); transform:translateY(-2px); box-shadow:0 8px 24px rgba(196,120,90,.3); }
+/* quick theme picker in top bar */
+.quick-theme-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--warm);cursor:pointer;transition:all .2s;background:linear-gradient(135deg,var(--brand),var(--sage));position:relative;overflow:hidden;}
+.quick-theme-btn:hover{transform:scale(1.1);border-color:var(--sage);}
 
-/* ===================== QUOTE ===================== */
-.quote-card {
-  background:linear-gradient(135deg,var(--brown),color-mix(in srgb,var(--brown) 60%,#000));
-  color:var(--cream); border-radius:var(--r); padding:26px 22px; margin-bottom:14px; position:relative; overflow:hidden;
-}
-.quote-card::before {
-  content:'"'; position:absolute; top:-14px; left:12px;
-  font-family:var(--fd); font-size:9rem; color:rgba(255,255,255,.07); line-height:1; pointer-events:none;
-}
-.q-text { font-family:var(--fd); font-size:1.2rem; font-style:italic; line-height:1.65; margin-bottom:12px; position:relative; }
-.q-auth { font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:.55; }
-.q-refresh { position:absolute; bottom:14px; right:14px; background:rgba(255,255,255,.13); border:none; border-radius:8px; padding:7px 12px; color:var(--cream); font-size:11px; cursor:pointer; transition:background .2s; font-family:var(--fb); }
-.q-refresh:hover { background:rgba(255,255,255,.25); }
+/* theme picker dropdown */
+.theme-picker-panel{position:fixed;top:65px;right:14px;background:var(--card);border:1px solid var(--warm);border-radius:14px;padding:14px;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.15);display:none;animation:fadeUp .2s ease both;}
+.theme-picker-panel.open{display:block;}
+.tp-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:block;}
+.tp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
+.tp-item{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;padding:7px 5px;border-radius:10px;border:1.5px solid var(--warm);background:transparent;transition:all .18s;}
+.tp-item:hover{border-color:var(--sage);background:var(--bg);}
+.tp-item.on{border-color:var(--brand);background:var(--bg);}
+.tp-swatch{width:24px;height:24px;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.tp-nm{font-size:9px;color:var(--muted);text-align:center;}
+.tp-item.on .tp-nm{color:var(--brand);font-weight:600;}
+.tp-divider{height:1px;background:var(--warm);margin:8px 0;}
+.tp-dm-row{display:flex;gap:8px;}
+.tp-dm-btn{flex:1;padding:8px 6px;border-radius:9px;border:1.5px solid var(--warm);background:transparent;font-family:var(--fb);font-size:11px;color:var(--muted);cursor:pointer;text-align:center;transition:all .18s;}
+.tp-dm-btn:hover{border-color:var(--sage);color:var(--ink);}
+.tp-dm-btn.on{border-color:var(--brand);background:var(--brand);color:#fff;}
 
-/* ===================== DAY NAV ===================== */
-.day-row { display:flex; gap:5px; justify-content:center; flex-wrap:wrap; padding:12px 0 0; }
-.day-btn {
-  width:38px; height:38px; border-radius:50%; border:1.5px solid var(--warm);
-  background:transparent; font-size:11px; color:var(--muted); cursor:pointer;
-  transition:all .2s; font-family:var(--fb); display:flex; align-items:center; justify-content:center;
-}
-.day-btn:hover { border-color:var(--sage); color:var(--sage); }
-.day-btn.active { background:var(--sage); border-color:var(--sage); color:#fff; }
-.day-btn.has-entry { border-color:var(--terra); color:var(--terra); }
-.day-btn.active.has-entry { background:var(--terra); border-color:var(--terra); color:#fff; }
-.day-date { text-align:center; font-size:11px; color:var(--muted); padding:7px 0 0; letter-spacing:.5px; }
+.install-banner{display:none;margin:14px 18px 0;padding:12px 16px;background:var(--brand);border-radius:12px;align-items:center;gap:10px;}
+.install-banner.show{display:flex;}
+.ib-text{flex:1;font-size:12px;color:#fff;line-height:1.4;}
+.ib-text strong{display:block;margin-bottom:2px;}
+.ib-btn{padding:7px 13px;background:#fff;color:var(--brand);border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:var(--fb);}
+.ib-close{background:none;border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;}
 
-/* ===================== BREATHING ===================== */
-.br-selector { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
-.br-opt {
-  flex:1; min-width:110px; padding:12px 10px; border-radius:12px;
-  border:1.5px solid var(--warm); background:transparent; text-align:center; cursor:pointer; transition:all .2s;
-}
-.br-opt:hover { border-color:var(--sage); }
-.br-opt.sel { background:var(--sage); border-color:var(--sage); }
-.br-name { font-size:13px; color:var(--ink); display:block; font-weight:500; }
-.br-opt.sel .br-name { color:#fff; }
-.br-desc { font-size:10px; color:var(--muted); margin-top:2px; display:block; }
-.br-opt.sel .br-desc { color:rgba(255,255,255,.8); }
-.br-arena { display:flex; flex-direction:column; align-items:center; padding:20px 0; }
-.br-wrap { position:relative; width:180px; height:180px; margin-bottom:24px; }
-.br-ring { position:absolute; inset:0; border-radius:50%; border:2px solid var(--sage-l); opacity:.3; }
-.br-circle {
-  position:absolute; inset:16px; border-radius:50%;
-  background:radial-gradient(circle at 40% 35%,var(--sage-l),var(--sage));
-  transform:scale(.6); box-shadow:0 0 40px rgba(138,158,138,.35);
-  display:flex; align-items:center; justify-content:center;
-}
-.br-count { font-family:var(--fd); font-size:2.5rem; color:#fff; font-weight:300; }
-.br-phase { font-size:12px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:18px; }
-.br-btns { display:flex; gap:10px; }
-.br-btn { padding:12px 26px; border-radius:10px; border:1.5px solid var(--sage); font-family:var(--fb); font-size:12px; cursor:pointer; transition:all .2s; }
-.br-btn.primary { background:var(--sage); color:#fff; }
-.br-btn.primary:hover { background:var(--brown); border-color:var(--brown); }
-.br-btn.sec { background:transparent; color:var(--sage); }
-.br-btn.sec:hover { background:var(--sage); color:#fff; }
-.br-cycles { font-size:12px; color:var(--muted); margin-top:14px; min-height:18px; }
-.br-ambient { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
-.amb-btn {
-  padding:7px 14px; border-radius:20px; border:1.5px solid var(--warm);
-  background:transparent; font-size:12px; color:var(--muted); cursor:pointer; transition:all .2s; font-family:var(--fb);
-}
-.amb-btn:hover { border-color:var(--sage); color:var(--sage); }
-.amb-btn.playing { background:var(--sage); border-color:var(--sage); color:#fff; }
+.tabs{display:flex;gap:4px;padding:14px 18px 0;overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{padding:8px 14px;border-radius:20px;white-space:nowrap;border:1.5px solid var(--warm);background:transparent;font-family:var(--fb);font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s;flex-shrink:0;}
+.tab.active{background:var(--brand);border-color:var(--brand);color:#fff;}
 
-/* ===================== MEDITATION ===================== */
-.med-list { display:flex; flex-direction:column; gap:10px; }
-.med-item {
-  display:flex; align-items:center; gap:14px; padding:14px 16px;
-  border-radius:12px; border:1.5px solid var(--warm); background:var(--cream);
-  cursor:pointer; transition:all .2s;
-}
-.med-item:hover { border-color:var(--sage); }
-.med-item.active { border-color:var(--terra); background:rgba(196,120,90,.06); }
-.med-icon { font-size:22px; flex-shrink:0; }
-.med-info { flex:1; }
-.med-title { font-size:14px; color:var(--ink); font-weight:500; }
-.med-dur { font-size:11px; color:var(--muted); margin-top:2px; }
-.med-play { width:34px; height:34px; border-radius:50%; background:var(--sage); border:none; color:#fff; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s; }
-.med-play:hover { background:var(--brown); transform:scale(1.1); }
-.med-timer { text-align:center; padding:20px 0 4px; }
-.med-timer-display { font-family:var(--fd); font-size:3rem; color:var(--brown); font-weight:300; }
-.med-timer-label { font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-top:4px; }
-.med-progress { width:100%; height:3px; background:var(--warm); border-radius:2px; margin-top:14px; overflow:hidden; }
-.med-progress-fill { height:100%; background:var(--sage); border-radius:2px; transition:width .5s linear; }
+.page{display:none;padding:18px 18px 0;animation:fadeUp .35s ease both;}
+.page.active{display:block;}
 
-/* ===================== AI CHAT ===================== */
-.chat-history { display:flex; flex-direction:column; gap:10px; margin-bottom:14px; max-height:340px; overflow-y:auto; padding-right:4px; }
-.chat-history::-webkit-scrollbar { width:3px; }
-.chat-history::-webkit-scrollbar-thumb { background:var(--warm); border-radius:2px; }
-.msg { display:flex; gap:10px; animation:fadeUp .3s ease both; }
-.msg.user { flex-direction:row-reverse; }
-.msg-bubble {
-  max-width:78%; padding:12px 15px; border-radius:16px; font-size:14px; line-height:1.55;
-}
-.msg.ai .msg-bubble { background:var(--cream); color:var(--ink); border:1px solid var(--warm); border-radius:16px 16px 16px 4px; }
-.msg.user .msg-bubble { background:var(--brown); color:var(--cream); border-radius:16px 16px 4px 16px; }
-.msg-avatar { width:30px; height:30px; border-radius:50%; background:var(--sage); display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:2px; }
-.chat-input-row { display:flex; gap:8px; align-items:flex-end; }
-.chat-input { flex:1; border:1px solid var(--warm); border-radius:12px; padding:12px 14px; font-family:var(--fb); font-size:14px; color:var(--ink); background:var(--cream); resize:none; outline:none; line-height:1.5; min-height:44px; max-height:100px; overflow-y:auto; margin-bottom:0; transition:border-color .2s; }
-.chat-input:focus { border-color:var(--sage); background:var(--card); }
-.chat-send { width:44px; height:44px; border-radius:12px; background:var(--brown); border:none; color:var(--cream); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s; }
-.chat-send:hover { background:var(--terra); }
-.chat-send:disabled { opacity:.4; cursor:default; }
-.typing { display:flex; gap:4px; padding:12px 15px; }
-.typing span { width:7px; height:7px; border-radius:50%; background:var(--muted); animation:blink 1.2s infinite; }
-.typing span:nth-child(2){animation-delay:.2s;} .typing span:nth-child(3){animation-delay:.4s;}
-@keyframes blink{0%,80%,100%{opacity:.2;}40%{opacity:1;}}
+.card{background:var(--card);border-radius:var(--r);border:1px solid var(--warm);padding:22px;margin-bottom:14px;box-shadow:0 2px 20px rgba(0,0,0,.05);}
+.card-hd{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.card-title{font-family:var(--fd);font-size:1.1rem;color:var(--brand);}
+.card-sub{font-size:11px;color:var(--muted);letter-spacing:.7px;text-transform:uppercase;}
 
-/* ===================== STATS ===================== */
-.stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
-.stat-card { background:var(--card); border:1px solid var(--warm); border-radius:var(--r); padding:18px; text-align:center; box-shadow:var(--sh); }
-.stat-num { font-family:var(--fd); font-size:2.2rem; color:var(--brown); display:block; }
-.stat-lbl { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-top:4px; display:block; }
-.bar-chart { display:flex; gap:6px; align-items:flex-end; height:80px; }
-.bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; height:100%; justify-content:flex-end; }
-.bar-fill { width:100%; border-radius:4px 4px 0 0; background:var(--sage-l); transition:height .6s cubic-bezier(.34,1.56,.64,1); min-height:3px; }
-.bar-lbl { font-size:9px; color:var(--muted); }
-.stress-line { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-.s-day { font-size:10px; color:var(--muted); width:26px; flex-shrink:0; }
-.s-bg { flex:1; height:6px; background:var(--warm); border-radius:3px; overflow:hidden; }
-.s-fill { height:100%; border-radius:3px; background:linear-gradient(to right,var(--sage),var(--terra)); transition:width .5s; }
-.s-val { font-size:10px; color:var(--muted); width:14px; text-align:right; flex-shrink:0; }
-.grat-item { padding:12px; background:var(--cream); border-radius:10px; margin-bottom:8px; }
-.grat-day { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
-.grat-text { font-family:var(--fd); font-size:15px; color:var(--ink); line-height:1.5; }
-.insight { padding:14px 16px; background:linear-gradient(135deg,rgba(138,158,138,.1),rgba(196,120,90,.08)); border:1px solid var(--warm); border-radius:12px; margin-bottom:10px; }
-.insight-title { font-size:12px; font-weight:600; color:var(--brown); margin-bottom:4px; }
-.insight-text { font-size:13px; color:var(--ink); line-height:1.5; }
+.day-row{display:flex;gap:5px;justify-content:center;padding:14px 18px 0;flex-wrap:wrap;}
+.day-btn{width:37px;height:37px;border-radius:50%;border:1.5px solid var(--warm);background:transparent;font-size:11px;color:var(--muted);cursor:pointer;transition:all .2s;font-family:var(--fb);}
+.day-btn:hover{border-color:var(--sage);color:var(--sage);}
+.day-btn.active{background:var(--sage);border-color:var(--sage);color:#fff;}
+.day-btn.has{border-color:var(--accent);color:var(--accent);}
+.day-btn.active.has{background:var(--accent);border-color:var(--accent);color:#fff;}
+.day-date{text-align:center;font-size:11px;color:var(--muted);padding:7px 0 0;letter-spacing:.4px;}
 
-/* ===================== SETTINGS ===================== */
-.sg-title { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:12px; display:block; }
-.theme-row { display:flex; gap:8px; flex-wrap:wrap; }
-.theme-opt { flex:1; min-width:70px; padding:11px 8px; border-radius:12px; border:2px solid var(--warm); cursor:pointer; text-align:center; transition:all .2s; background:var(--card); }
-.theme-opt:hover { border-color:var(--sage); }
-.theme-opt.sel { border-color:var(--brown); }
-.t-swatch { width:26px; height:26px; border-radius:50%; margin:0 auto 5px; }
-.t-name { font-size:10px; color:var(--muted); display:block; }
-.profile-row { display:flex; gap:8px; flex-wrap:wrap; }
-.prof-opt { flex:1; min-width:110px; padding:13px 10px; border-radius:12px; border:1.5px solid var(--warm); cursor:pointer; transition:all .2s; background:var(--card); text-align:center; }
-.prof-opt:hover { border-color:var(--sage); }
-.prof-opt.sel { border-color:var(--terra); background:rgba(196,120,90,.07); }
-.p-icon { font-size:22px; margin-bottom:5px; display:block; }
-.p-name { font-size:12px; color:var(--ink); font-weight:500; display:block; }
-.p-desc { font-size:10px; color:var(--muted); margin-top:2px; display:block; }
-.lang-row { display:flex; gap:8px; flex-wrap:wrap; }
-.lang-btn { padding:8px 15px; border-radius:8px; border:1.5px solid var(--warm); background:transparent; font-size:13px; color:var(--muted); cursor:pointer; transition:all .2s; font-family:var(--fb); }
-.lang-btn:hover { border-color:var(--sage); color:var(--sage); }
-.lang-btn.sel { background:var(--sage); border-color:var(--sage); color:#fff; }
-.notif-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-.notif-label { font-size:14px; color:var(--ink); }
-.toggle { width:44px; height:24px; border-radius:12px; background:var(--warm); border:none; cursor:pointer; position:relative; transition:background .2s; flex-shrink:0; }
-.toggle.on { background:var(--sage); }
-.toggle::after { content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; transition:transform .2s; box-shadow:0 1px 4px rgba(0,0,0,.2); }
-.toggle.on::after { transform:translateX(20px); }
-.export-btn { width:100%; padding:13px; border-radius:10px; border:1.5px solid var(--brown); background:transparent; color:var(--brown); font-family:var(--fb); font-size:13px; cursor:pointer; transition:all .2s; margin-bottom:10px; }
-.export-btn:hover { background:var(--brown); color:var(--cream); }
-.reset-btn { width:100%; padding:13px; border-radius:10px; border:1.5px solid #e88; background:transparent; color:#c44; font-family:var(--fb); font-size:13px; cursor:pointer; transition:all .2s; }
-.reset-btn:hover { background:#fee; }
-.notif-time { display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; }
-.nt-slot { flex:1; display:flex; flex-direction:column; gap:4px; }
-.nt-lbl { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
-input[type=time] {
-  width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--warm);
-  background:var(--cream); color:var(--ink); font-family:var(--fb); font-size:14px; outline:none;
-}
+.task-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.task{display:flex;align-items:flex-start;gap:11px;padding:9px;border-radius:9px;cursor:pointer;transition:background .15s;}
+.task:hover{background:var(--bg);}
+.chk{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--warm);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.task.done .chk{background:var(--sage);border-color:var(--sage);}
+.task.done .chk::after{content:'✓';color:#fff;font-size:10px;font-weight:700;}
+.task-lbl{font-size:14px;color:var(--ink);line-height:1.4;}
+.task-sub{font-size:11px;color:var(--muted);display:block;margin-top:2px;}
+.task.done .task-lbl{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--sage-l);}
 
-/* ===================== INSTALL BANNER ===================== */
-.install-banner { margin:12px 20px 0; padding:13px 16px; background:var(--brown); border-radius:12px; display:none; align-items:center; gap:12px; }
-.install-banner.show { display:flex; }
-.ib-text { flex:1; font-size:12px; color:var(--cream); line-height:1.4; }
-.ib-text strong { display:block; margin-bottom:2px; }
-.ib-cta { padding:8px 13px; background:var(--cream); color:var(--brown); border:none; border-radius:8px; font-size:11px; font-weight:600; cursor:pointer; white-space:nowrap; font-family:var(--fb); letter-spacing:.5px; }
-.ib-close { background:none; border:none; color:rgba(255,255,255,.6); font-size:18px; cursor:pointer; }
+.f-lbl{font-size:11px;color:var(--muted);letter-spacing:.5px;margin-bottom:7px;display:block;text-transform:uppercase;}
+textarea{width:100%;border:1px solid var(--warm);border-radius:10px;padding:12px 14px;font-family:var(--fd);font-size:15px;color:var(--ink);background:var(--bg);resize:none;outline:none;transition:border-color .2s,background .2s;line-height:1.6;margin-bottom:12px;}
+textarea:focus{border-color:var(--sage);background:var(--card);}
+textarea::placeholder{color:var(--muted);font-style:italic;}
+.divider{height:1px;background:var(--warm);margin:14px 0;}
 
-/* ===================== BOTTOM NAV ===================== */
-.bottom-nav {
-  position:fixed; bottom:0; left:0; right:0; height:68px;
-  background:var(--nav); border-top:1px solid var(--warm);
-  display:flex; align-items:center; justify-content:space-around;
-  z-index:100; padding-bottom:env(safe-area-inset-bottom);
-  transition:background .35s; backdrop-filter:blur(12px);
-}
-.nav-item { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; padding:8px 10px; border-radius:12px; transition:all .2s; border:none; background:transparent; }
-.nav-item:hover { background:var(--cream); }
-.n-icon { font-size:19px; opacity:.45; transition:all .2s; }
-.nav-item.active .n-icon { opacity:1; transform:scale(1.1); }
-.n-lbl { font-size:9px; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; transition:color .2s; }
-.nav-item.active .n-lbl { color:var(--brown); font-weight:600; }
+.mood-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+.mood-btn{padding:7px 13px;border-radius:20px;border:1.5px solid var(--warm);background:transparent;font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s;font-family:var(--fb);}
+.mood-btn:hover{border-color:var(--sage);color:var(--sage);}
+.mood-btn.on{background:var(--sage);border-color:var(--sage);color:#fff;}
 
-/* ===================== TOAST ===================== */
-.toast {
-  position:fixed; bottom:88px; left:50%; transform:translateX(-50%) translateY(16px);
-  background:var(--brown); color:var(--cream); padding:11px 22px; border-radius:24px;
-  font-size:12px; letter-spacing:.5px; z-index:200; opacity:0; pointer-events:none;
-  white-space:nowrap; font-family:var(--fb); transition:all .35s;
-}
-.toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+.sl-top{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:8px;}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:linear-gradient(to right,var(--sage),var(--accent));outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--card);border:2px solid var(--accent);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.sl-labs{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px;}
 
-/* ===================== ANIMATIONS ===================== */
-@keyframes fadeUp { from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;} }
-@keyframes fadeDown { from{opacity:0;transform:translateY(-14px);}to{opacity:1;transform:none;} }
-@media(max-width:380px){ .card{padding:16px;} .stats-grid{gap:8px;} }
+.save-btn{width:100%;padding:14px;background:var(--brand);color:#fff;border:none;border-radius:12px;font-family:var(--fb);font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:4px;}
+.save-btn:hover{background:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2);}
+
+.q-card{background:linear-gradient(135deg,var(--brand),#0d0208);color:#fff;border-radius:var(--r);padding:26px 22px;margin-bottom:14px;position:relative;overflow:hidden;}
+.q-card::before{content:'"';position:absolute;top:-10px;left:12px;font-family:var(--fd);font-size:8rem;color:rgba(255,255,255,.08);line-height:1;pointer-events:none;}
+.q-text{font-family:var(--fd);font-size:1.15rem;font-style:italic;line-height:1.6;margin-bottom:12px;position:relative;}
+.q-auth{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;opacity:.6;}
+.q-new{position:absolute;bottom:14px;right:14px;background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:6px 12px;color:#fff;font-size:11px;cursor:pointer;font-family:var(--fb);}
+.q-new:hover{background:rgba(255,255,255,.25);}
+
+.br-sel{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.br-opt{flex:1;min-width:100px;padding:11px 8px;border-radius:11px;border:1.5px solid var(--warm);background:transparent;text-align:center;cursor:pointer;transition:all .2s;}
+.br-opt.on{background:var(--sage);border-color:var(--sage);color:#fff;}
+.br-opt .bn{font-size:13px;color:var(--ink);display:block;font-weight:500;}
+.br-opt.on .bn{color:#fff;}
+.br-opt .bd{font-size:10px;color:var(--muted);}
+.br-opt.on .bd{color:rgba(255,255,255,.8);}
+.br-arena{display:flex;flex-direction:column;align-items:center;padding:24px 0;}
+.br-wrap{position:relative;width:170px;height:170px;margin-bottom:24px;}
+.br-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--sage-l);opacity:.3;}
+.br-circle{position:absolute;inset:14px;border-radius:50%;background:radial-gradient(circle at 40% 35%,var(--sage-l),var(--sage));transform:scale(.6);transition:transform 0s;box-shadow:0 0 40px rgba(138,158,138,.4);display:flex;align-items:center;justify-content:center;}
+.br-count{font-family:var(--fd);font-size:2.4rem;color:#fff;font-weight:300;}
+.br-phase{font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:18px;}
+.br-btns{display:flex;gap:10px;}
+.br-btn{padding:11px 24px;border-radius:10px;border:1.5px solid var(--sage);font-family:var(--fb);font-size:13px;cursor:pointer;transition:all .2s;}
+.br-btn.p{background:var(--sage);color:#fff;border-color:var(--sage);}
+.br-btn.p:hover{background:var(--brand);border-color:var(--brand);}
+.br-btn.s{background:transparent;color:var(--sage);}
+.br-btn.s:hover{background:var(--sage);color:#fff;}
+.br-cyc{font-size:12px;color:var(--muted);margin-top:14px;}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.stat-card{background:var(--card);border:1px solid var(--warm);border-radius:var(--r);padding:18px;text-align:center;}
+.stat-n{font-family:var(--fd);font-size:2.1rem;color:var(--brand);display:block;}
+.stat-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;display:block;margin-top:3px;}
+.bar-chart{display:flex;gap:7px;align-items:flex-end;height:70px;margin:14px 0 6px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end;}
+.bar-fill{width:100%;border-radius:4px 4px 0 0;background:var(--sage-l);transition:height .5s cubic-bezier(.34,1.56,.64,1);min-height:3px;}
+.bar-lbl{font-size:10px;color:var(--muted);}
+.stress-row{display:flex;align-items:center;gap:9px;margin-bottom:7px;}
+.stress-day{font-size:11px;color:var(--muted);width:26px;flex-shrink:0;}
+.stress-bg{flex:1;height:6px;background:var(--warm);border-radius:3px;overflow:hidden;}
+.stress-fill{height:100%;border-radius:3px;background:linear-gradient(to right,var(--sage),var(--accent));transition:width .5s;}
+.stress-v{font-size:11px;color:var(--muted);width:14px;text-align:right;}
+
+.sg-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;display:block;}
+.theme-row{display:flex;gap:9px;flex-wrap:wrap;}
+.th-opt{flex:1;min-width:70px;padding:11px 7px;border-radius:11px;border:2px solid var(--warm);cursor:pointer;text-align:center;transition:all .2s;background:var(--card);}
+.th-opt:hover{border-color:var(--sage);}
+.th-opt.on{border-color:var(--brand);}
+.th-sw{width:26px;height:26px;border-radius:50%;margin:0 auto 5px;}
+.th-nm{font-size:11px;color:var(--muted);}
+.profile-row{display:flex;gap:8px;flex-wrap:wrap;}
+.pr-opt{flex:1;min-width:110px;padding:13px 10px;border-radius:11px;border:1.5px solid var(--warm);cursor:pointer;text-align:center;background:var(--card);transition:all .2s;}
+.pr-opt.on{border-color:var(--accent);background:rgba(196,120,90,.1);}
+.pr-icon{font-size:22px;margin-bottom:5px;display:block;}
+.pr-name{font-size:12px;color:var(--ink);font-weight:500;}
+.pr-desc{font-size:10px;color:var(--muted);margin-top:2px;display:block;}
+.lang-row{display:flex;gap:8px;flex-wrap:wrap;}
+.lang-btn{padding:8px 14px;border-radius:8px;border:1.5px solid var(--warm);background:transparent;font-size:13px;color:var(--muted);cursor:pointer;transition:all .2s;font-family:var(--fb);}
+.lang-btn.on{background:var(--sage);border-color:var(--sage);color:#fff;}
+.exp-btn{width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--brand);background:transparent;color:var(--brand);font-family:var(--fb);font-size:13px;cursor:pointer;transition:all .2s;margin-bottom:9px;}
+.exp-btn:hover{background:var(--brand);color:#fff;}
+.rst-btn{width:100%;padding:12px;border-radius:10px;border:1.5px solid #e88;background:transparent;color:#c44;font-family:var(--fb);font-size:13px;cursor:pointer;}
+
+/* ── AI chat ── */
+.chat-msgs{display:flex;flex-direction:column;gap:10px;min-height:120px;margin-bottom:14px;max-height:320px;overflow-y:auto;}
+.msg{padding:11px 14px;border-radius:12px;font-size:14px;line-height:1.55;max-width:88%;}
+.msg.ai{background:var(--bg);color:var(--ink);align-self:flex-start;border:1px solid var(--warm);}
+.msg.user{background:var(--brand);color:#fff;align-self:flex-end;}
+.chat-input-row{display:flex;gap:8px;}
+.chat-input{flex:1;border:1px solid var(--warm);border-radius:10px;padding:11px 14px;font-family:var(--fb);font-size:14px;color:var(--ink);background:var(--bg);outline:none;transition:border-color .2s;}
+.chat-input:focus{border-color:var(--sage);}
+.chat-send{padding:11px 18px;background:var(--brand);color:#fff;border:none;border-radius:10px;font-family:var(--fb);font-size:13px;cursor:pointer;transition:background .2s;}
+.chat-send:hover{background:var(--accent);}
+
+/* ── SÉRÉNITÉ ── */
+.serene-hero{background:linear-gradient(135deg,var(--brand),var(--sage));border-radius:var(--r);padding:24px 20px;margin-bottom:14px;color:#fff;position:relative;overflow:hidden;}
+.serene-hero::after{content:'☯';position:absolute;right:16px;bottom:-8px;font-size:5rem;opacity:.1;pointer-events:none;}
+.serene-hero-title{font-family:var(--fd);font-size:1.4rem;font-weight:300;margin-bottom:6px;}
+.serene-hero-sub{font-size:12px;opacity:.75;letter-spacing:.5px;}
+.serene-cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:14px;padding-bottom:2px;}
+.serene-cats::-webkit-scrollbar{display:none;}
+.serene-cat{padding:7px 14px;border-radius:20px;border:1.5px solid var(--warm);background:transparent;font-family:var(--fb);font-size:11px;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0;}
+.serene-cat.on{background:var(--brand);border-color:var(--brand);color:#fff;}
+.tip-card{background:var(--card);border-radius:14px;border:1px solid var(--warm);padding:18px;margin-bottom:10px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;}
+.tip-card:hover{border-color:var(--sage);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08);}
+.tip-card.open{border-color:var(--brand);}
+.tip-header{display:flex;align-items:flex-start;gap:12px;}
+.tip-emoji{font-size:24px;flex-shrink:0;line-height:1;}
+.tip-info{flex:1;}
+.tip-title{font-family:var(--fd);font-size:1rem;color:var(--brand);margin-bottom:3px;line-height:1.3;}
+.tip-badge{font-size:10px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+.tip-arrow{font-size:14px;color:var(--muted);transition:transform .2s;flex-shrink:0;margin-top:2px;}
+.tip-card.open .tip-arrow{transform:rotate(90deg);}
+.tip-body{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--warm);}
+.tip-card.open .tip-body{display:block;}
+.tip-text{font-size:14px;color:var(--ink);line-height:1.65;margin-bottom:10px;}
+.tip-steps{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.tip-step{display:flex;gap:10px;font-size:13px;color:var(--ink);line-height:1.5;}
+.tip-step-n{width:20px;height:20px;border-radius:50%;background:var(--sage);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.tip-try{display:inline-block;margin-top:12px;padding:8px 16px;background:var(--sage);color:#fff;border:none;border-radius:8px;font-family:var(--fb);font-size:11px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:all .18s;}
+.tip-try:hover{background:var(--brand);}
+.sos-banner{background:linear-gradient(135deg,#9b2335,#4a1428);border-radius:14px;padding:18px;margin-bottom:14px;color:#fff;}
+.sos-title{font-family:var(--fd);font-size:1.1rem;margin-bottom:8px;}
+.sos-text{font-size:13px;opacity:.85;line-height:1.6;}
+.sos-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.sos-item{background:rgba(255,255,255,.12);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .18s;}
+.sos-item:hover{background:rgba(255,255,255,.22);}
+.sos-icon{font-size:20px;display:block;margin-bottom:4px;}
+.sos-lbl{font-size:11px;color:rgba(255,255,255,.85);}
+
+/* bottom nav */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:68px;background:var(--card);border-top:1px solid var(--warm);display:flex;align-items:center;justify-content:space-around;z-index:100;padding-bottom:env(safe-area-inset-bottom);transition:background .3s;}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:7px 10px;border-radius:11px;border:none;background:transparent;transition:all .2s;}
+.nav-icon{font-size:19px;opacity:.45;transition:all .2s;}
+.nav-item.active .nav-icon{opacity:1;transform:scale(1.1);}
+.nav-lbl{font-size:9px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;}
+.nav-item.active .nav-lbl{color:var(--brand);font-weight:500;}
+
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--brand);color:#fff;padding:10px 20px;border-radius:24px;font-size:12px;z-index:200;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;font-family:var(--fb);}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.overlay{position:fixed;inset:0;z-index:150;display:none;}
+.overlay.open{display:block;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+@media(max-width:420px){.card{padding:16px;}.ob-page{padding:36px 18px 50px;}}
 </style>
 </head>
 <body>
 
-<!-- ========== ONBOARDING ========== -->
-<div id="onboarding" class="screen">
-
-  <!-- PAGE 1 : Langue · Thème · Prénom · Défi -->
-  <div class="ob-page active" id="obPage1">
-    <div class="ob-header">
-      <span class="ob-logo">Serena</span>
-      <span class="ob-tag" id="obTagline">Ton espace de paix intérieure</span>
-    </div>
-
-    <div class="ob-prefs">
-      <div>
-        <span class="ob-pref-label" id="obLangLabel">Langue · Language · Idioma</span>
-        <div class="ob-lang-row">
-          <button class="ob-lang-btn sel" data-lang="fr">🇫🇷 Français</button>
-          <button class="ob-lang-btn" data-lang="en">🇬🇧 English</button>
-          <button class="ob-lang-btn" data-lang="es">🇪🇸 Español</button>
-        </div>
-      </div>
-      <div>
-        <span class="ob-pref-label" id="obThemeLabel">Ambiance visuelle</span>
-        <div class="ob-theme-row">
-          <button class="ob-theme-btn sel" data-theme="light"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#f5f0e8,#8a9e8a)"></div><span class="ob-t-name" id="thDoux">Doux</span></button>
-          <button class="ob-theme-btn" data-theme="dark"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#1a1714,#7a9a7a)"></div><span class="ob-t-name" id="thSombre">Sombre</span></button>
-          <button class="ob-theme-btn" data-theme="nature"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#eef4ee,#4a7a4a)"></div><span class="ob-t-name" id="thNature">Nature</span></button>
-          <button class="ob-theme-btn" data-theme="minimal"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#fafafa,#111)"></div><span class="ob-t-name" id="thMinimal">Minimal</span></button>
-          <button class="ob-theme-btn" data-theme="coachdivin"><div class="ob-t-swatch" style="background:linear-gradient(135deg,#4a1428,#c9a96e)"></div><span class="ob-t-name" id="thDivin">Divin</span></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="ob-name-wrap">
-      <span class="ob-name-float" id="obNameFloat">Ton prénom</span>
-      <input class="ob-name-input" id="obNameInput" type="text" placeholder="Comment t'appelles-tu ?" maxlength="30">
-    </div>
-
-    <div class="ob-divider"></div>
-
-    <p class="ob-q" id="obQ1">Quel est ton plus grand défi en ce moment ?</p>
-    <div class="ob-opts" id="obOpts1">
-      <button class="ob-opt" data-key="challenge" data-val="stress" data-page="1">
-        <span class="ob-opt-emoji">😮‍💨</span><span id="obC1">Trop de stress au quotidien</span><span class="ob-opt-check"></span>
-      </button>
-      <button class="ob-opt" data-key="challenge" data-val="sleep" data-page="1">
-        <span class="ob-opt-emoji">😴</span><span id="obC2">Difficultés à dormir / décompresser</span><span class="ob-opt-check"></span>
-      </button>
-      <button class="ob-opt" data-key="challenge" data-val="focus" data-page="1">
-        <span class="ob-opt-emoji">🌀</span><span id="obC3">Manque de concentration</span><span class="ob-opt-check"></span>
-      </button>
-      <button class="ob-opt" data-key="challenge" data-val="emotion" data-page="1">
-        <span class="ob-opt-emoji">💭</span><span id="obC4">Émotions difficiles à gérer</span><span class="ob-opt-check"></span>
-      </button>
-    </div>
-
-    <div class="ob-prog" style="margin-top:28px;">
-      <div class="ob-dot active"></div>
-      <div class="ob-dot"></div>
-    </div>
-    <button class="ob-next" id="obNext1" disabled>
-      <span id="obNextLabel1">Continuer</span> <span class="arr">→</span>
-    </button>
+<!-- ══ ONBOARDING ══════════════════════════════════════ -->
+<div id="ob" class="screen">
+  <div class="ob-page active" id="obP1">
+    <span class="ob-logo">Serena</span>
+    <span class="ob-sub" id="t-tag">Ton espace de paix intérieure</span>
+    <span class="ob-lbl">Langue · Language · Idioma</span>
+    <div id="ob-langs"></div>
+    <span class="ob-lbl" id="t-th">Ambiance visuelle</span>
+    <div id="ob-themes"></div>
+    <span class="ob-name-lbl" id="t-nf">Ton prénom</span>
+    <input id="ob-name" type="text" placeholder="Comment t'appelles-tu ?" maxlength="30">
+    <div class="ob-div"></div>
+    <p class="ob-q" id="t-q1">Quel est ton plus grand défi en ce moment ?</p>
+    <div class="ob-opts" id="ob-c"></div>
+    <div class="ob-prog"><div class="ob-dot on"></div><div class="ob-dot"></div></div>
+    <button class="ob-btn" id="obN1" disabled>Continuer →</button>
   </div>
-
-  <!-- PAGE 2 : Profil · Méthode -->
-  <div class="ob-page" id="obPage2">
-    <div class="ob-header">
-      <span class="ob-logo">Serena</span>
-    </div>
-
-    <p class="ob-greeting" id="obGreeting">Ravie de te rencontrer ✨</p>
-
-    <span class="ob-section-label" id="obQ2Label">Qui es-tu dans ta vie quotidienne ?</span>
-    <div class="ob-opts" style="margin-bottom:20px;" id="obOpts2">
-      <button class="ob-opt" data-key="profile" data-val="parent" data-page="2">
-        <span class="ob-opt-emoji">👶</span><span id="obP1">Parent débordé(e)</span><span class="ob-opt-check"></span>
-      </button>
-      <button class="ob-opt" data-key="profile" data-val="pro" data-page="2">
-        <span class="ob-opt-emoji">💼</span><span id="obP2">Professionnel(le) sous pression</span><span class="ob-opt-check"></span>
-      </button>
-      <button class="ob-opt" data-key="profile" data-val="student" data-page="2">
-        <span class="ob-opt-emoji">🎓</span><span id="obP3">Étudiant(e) stressé(e)</span><span class="ob-opt-check"></span>
-      </button>
-      <button class="ob-opt" data-key="profile" data-val="self" data-page="2">
-        <span class="ob-opt-emoji">🌱</span><span id="obP4">En quête de moi-même</span><span class="ob-opt-check"></span>
-      </button>
-    </div>
-
-    <div class="ob-divider"></div>
-
-    <span class="ob-section-label" id="obQ3Label" style="margin-top:4px;">Ce qui t'aide le plus à te ressourcer ?</span>
-    <div class="ob-opts" id="obOpts3">
-      <button class="ob-opt" data-key="method" data-val="breath" data-page="2">
-        <span class="ob-opt-emoji">🌬️</span><span id="obM1">La respiration & le calme</span><span class="ob-opt-check"></span>
-      </button>
-      <button class="ob-opt" data-key="method" data-val="write" data-page="2">
-        <span class="ob-opt-emoji">✍️</span><span id="obM2">L'écriture & l'expression</span><span class="ob-opt-check"></span>
-      </button>
-      <button class="ob-opt" data-key="method" data-val="move" data-page="2">
-        <span class="ob-opt-emoji">🚶</span><span id="obM3">Le mouvement & le corps</span><span class="ob-opt-check"></span>
-      </button>
-      <button class="ob-opt" data-key="method" data-val="both" data-page="2">
-        <span class="ob-opt-emoji">✨</span><span id="obM4">Un peu de tout</span><span class="ob-opt-check"></span>
-      </button>
-    </div>
-
-    <div class="ob-prog" style="margin-top:auto;padding-top:28px;">
-      <div class="ob-dot done"></div>
-      <div class="ob-dot active"></div>
-    </div>
-    <button class="ob-next" id="obNext2" disabled>
-      <span id="obNextLabel2">Commencer mon voyage</span> <span class="arr">✦</span>
-    </button>
+  <div class="ob-page" id="obP2">
+    <span class="ob-logo">Serena</span>
+    <p class="ob-greet" id="t-gr">Ravie de te rencontrer ✨</p>
+    <span class="ob-lbl" id="t-q2">Qui es-tu dans ta vie quotidienne ?</span>
+    <div class="ob-opts" id="ob-p" style="margin-bottom:20px;"></div>
+    <div class="ob-div"></div>
+    <span class="ob-lbl" id="t-q3">Ce qui t'aide le plus à te ressourcer ?</span>
+    <div class="ob-opts" id="ob-m"></div>
+    <div class="ob-prog"><div class="ob-dot done"></div><div class="ob-dot on"></div></div>
+    <button class="ob-btn" id="obN2" disabled>Commencer mon voyage ✦</button>
   </div>
-
 </div>
 
-<!-- ========== APP ========== -->
+<!-- ══ APP ════════════════════════════════════════════ -->
 <div id="app" class="screen">
   <div class="top-bar">
-    <div class="app-logo">Serena</div>
-    <div class="top-actions">
-      <button class="icon-btn" onclick="goPage('settings')">⚙️</button>
+    <span class="top-logo" id="topLogo">Serena</span>
+    <div class="top-right">
+      <button class="quick-theme-btn" id="btnThemePicker" title="Changer l'ambiance"></button>
+      <button class="icon-btn" id="btnSettings" title="Réglages">⚙️</button>
+    </div>
+  </div>
+
+  <!-- Theme picker dropdown -->
+  <div class="overlay" id="themeOverlay"></div>
+  <div class="theme-picker-panel" id="themePicker">
+    <span class="tp-title">Ambiance visuelle</span>
+    <div class="tp-grid" id="tpGrid"></div>
+    <div class="tp-divider"></div>
+    <div class="tp-dm-row">
+      <button class="tp-dm-btn" id="tpLight">☀️ Clair</button>
+      <button class="tp-dm-btn" id="tpDark">🌙 Sombre</button>
     </div>
   </div>
 
   <div class="install-banner" id="installBanner">
-    <div class="ib-text"><strong>Installer Serena</strong>Accès hors-ligne · icône sur l'écran</div>
-    <button class="ib-cta" onclick="installPWA()">Installer</button>
-    <button class="ib-close" onclick="this.closest('.install-banner').classList.remove('show')">×</button>
+    <div class="ib-text"><strong>Installer Serena</strong>Accès hors-ligne</div>
+    <button class="ib-btn" id="btnInstall">Installer</button>
+    <button class="ib-close" id="btnInstallClose">×</button>
   </div>
-
   <div class="tabs">
-    <button class="tab active" onclick="goPage('journal')" id="tab-journal">📓 Journal</button>
-    <button class="tab" onclick="goPage('breath')" id="tab-breath">🌬️ Respirer</button>
-    <button class="tab" onclick="goPage('meditate')" id="tab-meditate">🧘 Méditer</button>
-    <button class="tab" onclick="goPage('serena')" id="tab-serena">✨ Serena IA</button>
-    <button class="tab" onclick="goPage('stats')" id="tab-stats">📊 Progrès</button>
-    <button class="tab" onclick="goPage('settings')" id="tab-settings">⚙️ Réglages</button>
+    <button class="tab active" id="tab-journal">📓 Journal</button>
+    <button class="tab" id="tab-breath">🌬️ Respiration</button>
+    <button class="tab" id="tab-serene">☯️ Sérénité</button>
+    <button class="tab" id="tab-stats">📊 Progrès</button>
+    <button class="tab" id="tab-chat">✨ Serena IA</button>
+    <button class="tab" id="tab-settings">⚙️ Réglages</button>
   </div>
 
-  <!-- ====== JOURNAL ====== -->
+  <!-- JOURNAL -->
   <div class="page active" id="page-journal">
-    <div class="quote-card">
+    <div class="q-card">
       <p class="q-text" id="qText">Le calme est une superforce.</p>
       <p class="q-auth" id="qAuth">— Anonyme</p>
-      <button class="q-refresh" onclick="newQuote()">✦ Nouvelle</button>
+      <button class="q-new" id="qNew">✦ Nouvelle</button>
     </div>
     <div class="day-row" id="dayNav"></div>
     <p class="day-date" id="dayDate"></p>
-
     <div class="card">
-      <div class="card-hd"><div class="c-icon ci-m">🌅</div><div><div class="c-title">Rituel du matin</div><div class="c-sub">Poser l'intention · 5 min</div></div></div>
-      <ul class="task-list" id="morningTasks">
-        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Respiration consciente</span><span class="t-sub">4-4-6 · 5 cycles · avant le téléphone</span></div></li>
-        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Écriture libre (3 min)</span><span class="t-sub">"Comment je veux me sentir aujourd'hui ?"</span></div></li>
-        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Téléphone hors de portée</span><span class="t-sub">Ces 5 minutes sont à toi</span></div></li>
+      <div class="card-hd"><div class="card-icon" style="background:#fef3e8">🌅</div><div><div class="card-title">Rituel du matin</div><div class="card-sub">5 min · Poser l'intention</div></div></div>
+      <ul class="task-list" id="mTasks">
+        <li class="task"><div class="chk"></div><div><span class="task-lbl">Respiration 4-4-6</span><span class="task-sub">5 cycles avant le téléphone</span></div></li>
+        <li class="task"><div class="chk"></div><div><span class="task-lbl">Écriture libre (3 min)</span><span class="task-sub">"Comment je veux me sentir aujourd'hui ?"</span></div></li>
+        <li class="task"><div class="chk"></div><div><span class="task-lbl">Téléphone hors de portée</span><span class="task-sub">Ces 5 minutes sont à toi</span></div></li>
       </ul>
       <div class="divider"></div>
-      <label class="fl">Mon intention du jour</label>
-      <textarea id="morningNote" rows="2" placeholder="Aujourd'hui, je choisis de…"></textarea>
+      <label class="f-lbl">Mon intention du jour</label>
+      <textarea id="tMorning" rows="2" placeholder="Aujourd'hui, je choisis de…"></textarea>
     </div>
-
     <div class="card">
-      <div class="card-hd"><div class="c-icon ci-d">☀️</div><div><div class="c-title">Micro-pauses</div><div class="c-sub">Couper le flux · 5-10 min</div></div></div>
-      <ul class="task-list" id="dayTasks">
-        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Règle des 5 sens</span><span class="t-sub">5 vues · 4 sons · 3 touchers · 2 odeurs · 1 goût</span></div></li>
-        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Pause "rien" (5 min)</span><span class="t-sub">Sans écran, sans tâche — juste être</span></div></li>
-        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Eau & mouvement</span><span class="t-sub">Un verre d'eau + 5 min de marche consciente</span></div></li>
+      <div class="card-hd"><div class="card-icon" style="background:#eef3ee">☀️</div><div><div class="card-title">Micro-pauses</div><div class="card-sub">5-10 min · Couper le flux</div></div></div>
+      <ul class="task-list" id="dTasks">
+        <li class="task"><div class="chk"></div><div><span class="task-lbl">Règle des 5 sens</span><span class="task-sub">5 vues · 4 sons · 3 touchers · 2 odeurs · 1 goût</span></div></li>
+        <li class="task"><div class="chk"></div><div><span class="task-lbl">Pause "rien" (5 min)</span><span class="task-sub">Sans écran, sans tâche</span></div></li>
+        <li class="task"><div class="chk"></div><div><span class="task-lbl">Eau + mouvement</span><span class="task-sub">Un verre d'eau et 5 min de marche</span></div></li>
       </ul>
     </div>
-
     <div class="card">
-      <div class="card-hd"><div class="c-icon ci-e">🌙</div><div><div class="c-title">Rituel du soir</div><div class="c-sub">Déposer la journée · 10 min</div></div></div>
-      <ul class="task-list" id="eveningTasks">
-        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Carnet du soir</span><span class="t-sub">3 choses traversées + 1 gratitude</span></div></li>
-        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Geste de clôture</span><span class="t-sub">Un mot ou dessin pour "fermer" la journée</span></div></li>
-        <li class="task-item" onclick="toggleTask(this)"><div class="chk"></div><div><span class="t-lbl">Écrans off 30 min avant de dormir</span><span class="t-sub">Laisser le cerveau se déposer</span></div></li>
+      <div class="card-hd"><div class="card-icon" style="background:#f0eaf5">🌙</div><div><div class="card-title">Rituel du soir</div><div class="card-sub">10 min · Déposer la journée</div></div></div>
+      <ul class="task-list" id="eTasks">
+        <li class="task"><div class="chk"></div><div><span class="task-lbl">Carnet du soir</span><span class="task-sub">3 choses traversées + 1 gratitude</span></div></li>
+        <li class="task"><div class="chk"></div><div><span class="task-lbl">Geste de clôture</span><span class="task-sub">Un mot pour "fermer" la journée</span></div></li>
+        <li class="task"><div class="chk"></div><div><span class="task-lbl">Écrans off 30 min avant de dormir</span><span class="task-sub">Laisser le cerveau se déposer</span></div></li>
       </ul>
       <div class="divider"></div>
-      <label class="fl">3 choses traversées aujourd'hui</label>
-      <textarea id="eveningNote" rows="3" placeholder="1. …&#10;2. …&#10;3. …"></textarea>
-      <label class="fl">Ma gratitude du jour 🌿</label>
-      <textarea id="gratitudeNote" rows="2" placeholder="Aujourd'hui, je suis reconnaissant(e) pour…"></textarea>
-      <label class="fl">Mon mot de clôture</label>
-      <textarea id="closingNote" rows="1" placeholder="Le mot qui résume ma journée…"></textarea>
+      <label class="f-lbl">3 choses traversées aujourd'hui</label>
+      <textarea id="tEvening" rows="3" placeholder="1. …&#10;2. …&#10;3. …"></textarea>
+      <label class="f-lbl">Ma gratitude du jour 🌿</label>
+      <textarea id="tGratitude" rows="2" placeholder="Aujourd'hui, je suis reconnaissant(e) pour…"></textarea>
+      <label class="f-lbl">Mon mot de clôture</label>
+      <textarea id="tClosing" rows="1" placeholder="Le mot qui résume ma journée…"></textarea>
     </div>
-
     <div class="card">
-      <div class="card-hd"><div class="c-icon ci-mood">🌸</div><div><div class="c-title">Mon état du jour</div><div class="c-sub">Regard bienveillant</div></div></div>
-      <label class="fl">Comment je me suis senti(e) ?</label>
-      <div class="mood-row">
-        <button class="mood-btn" onclick="selMood(this)">😮‍💨 Submergé(e)</button>
-        <button class="mood-btn" onclick="selMood(this)">😐 Neutre</button>
-        <button class="mood-btn" onclick="selMood(this)">🌤 En progrès</button>
-        <button class="mood-btn" onclick="selMood(this)">😌 Apaisé(e)</button>
-        <button class="mood-btn" onclick="selMood(this)">🌸 Bien</button>
+      <div class="card-hd"><div class="card-icon" style="background:#fdecea">🌸</div><div><div class="card-title">Mon état du jour</div><div class="card-sub">Un regard bienveillant</div></div></div>
+      <label class="f-lbl">Comment je me suis senti(e) ?</label>
+      <div class="mood-row" id="moodRow">
+        <button class="mood-btn">😮‍💨 Submergé(e)</button>
+        <button class="mood-btn">😐 Neutre</button>
+        <button class="mood-btn">🌤 En progrès</button>
+        <button class="mood-btn">😌 Apaisé(e)</button>
+        <button class="mood-btn">🌸 Bien</button>
       </div>
-      <div class="sld-top"><span>Niveau de stress</span><span id="stressVal">5</span></div>
-      <input type="range" min="1" max="10" value="5" id="stressSlider" oninput="document.getElementById('stressVal').textContent=this.value">
-      <div class="sld-lbls"><span>Très calme</span><span>Très stressé(e)</span></div>
+      <div class="sl-top"><span>Niveau de stress</span><span id="slVal">5</span></div>
+      <input type="range" min="1" max="10" value="5" id="stressSlider">
+      <div class="sl-labs"><span>Très calme</span><span>Très stressé(e)</span></div>
     </div>
-    <button class="save-btn" onclick="saveDay()">✦ Sauvegarder ma journée</button>
+    <button class="save-btn" id="saveBtn">✦ Sauvegarder ma journée</button>
   </div>
 
-  <!-- ====== BREATHING ====== -->
+  <!-- BREATHING -->
   <div class="page" id="page-breath">
     <div class="card" style="margin-top:6px;">
-      <div class="card-hd"><div class="c-icon ci-br">🌬️</div><div><div class="c-title">Respiration guidée</div><div class="c-sub">Choisir une technique</div></div></div>
-      <div class="br-selector">
-        <button class="br-opt sel" onclick="selBreath(this,'446')" data-k="446"><span class="br-name">4-4-6</span><span class="br-desc">Anti-stress doux</span></button>
-        <button class="br-opt" onclick="selBreath(this,'478')" data-k="478"><span class="br-name">4-7-8</span><span class="br-desc">Apaisement profond</span></button>
-        <button class="br-opt" onclick="selBreath(this,'box')" data-k="box"><span class="br-name">Box 4×4</span><span class="br-desc">Focus & ancrage</span></button>
-        <button class="br-opt" onclick="selBreath(this,'coh')" data-k="coh"><span class="br-name">Cohérence 5-5</span><span class="br-desc">Cardiaque</span></button>
+      <div class="card-hd"><div class="card-icon" style="background:#e8f4fd">🌬️</div><div><div class="card-title">Respiration guidée</div><div class="card-sub">Choisir une technique</div></div></div>
+      <div class="br-sel" id="brSel">
+        <button class="br-opt on" data-k="446"><span class="bn">4-4-6</span><span class="bd">Anti-stress</span></button>
+        <button class="br-opt" data-k="478"><span class="bn">4-7-8</span><span class="bd">Apaisement</span></button>
+        <button class="br-opt" data-k="box"><span class="bn">Box 4×4</span><span class="bd">Focus</span></button>
+        <button class="br-opt" data-k="coh"><span class="bn">Cohérence</span><span class="bd">5-5</span></button>
       </div>
       <div class="br-arena">
         <div class="br-wrap"><div class="br-ring"></div><div class="br-circle" id="brCircle"><span class="br-count" id="brCount">—</span></div></div>
         <div class="br-phase" id="brPhase">Prêt(e) ?</div>
         <div class="br-btns">
-          <button class="br-btn primary" id="brStart" onclick="toggleBreath()">▶ Commencer</button>
-          <button class="br-btn sec" onclick="resetBreath()">↺ Reset</button>
+          <button class="br-btn p" id="brStart">▶ Commencer</button>
+          <button class="br-btn s" id="brReset">↺ Reset</button>
         </div>
-        <div class="br-cycles" id="brCycles"></div>
-      </div>
-      <div class="divider"></div>
-      <label class="fl">Sons d'ambiance</label>
-      <div class="br-ambient">
-        <button class="amb-btn" onclick="toggleAmb(this,'rain')" data-sound="rain">🌧 Pluie</button>
-        <button class="amb-btn" onclick="toggleAmb(this,'forest')" data-sound="forest">🌲 Forêt</button>
-        <button class="amb-btn" onclick="toggleAmb(this,'waves')" data-sound="waves">🌊 Vagues</button>
-        <button class="amb-btn" onclick="toggleAmb(this,'bowl')" data-sound="bowl">🔔 Bol tibétain</button>
-        <button class="amb-btn" onclick="toggleAmb(this,'white')" data-sound="white">〰️ Bruit blanc</button>
+        <div class="br-cyc" id="brCyc"></div>
       </div>
     </div>
   </div>
 
-  <!-- ====== MEDITATE ====== -->
-  <div class="page" id="page-meditate">
-    <div class="card" style="margin-top:6px;">
-      <div class="card-hd"><div class="c-icon ci-med">🧘</div><div><div class="c-title">Méditations guidées</div><div class="c-sub">Choisir une session</div></div></div>
-      <div class="med-list" id="medList"></div>
-      <div class="divider"></div>
-      <div class="med-timer">
-        <div class="med-timer-display" id="medTimerDisplay">00:00</div>
-        <div class="med-timer-label" id="medTimerLabel">Sélectionne une méditation</div>
-        <div class="med-progress"><div class="med-progress-fill" id="medProgressFill" style="width:0%"></div></div>
+  <!-- SÉRÉNITÉ -->
+  <div class="page" id="page-serene">
+    <div class="serene-hero" style="margin-top:6px;">
+      <div class="serene-hero-title">Rester calme dans le chaos ☯️</div>
+      <div class="serene-hero-sub">Conseils & pratiques pour ta paix intérieure au quotidien</div>
+    </div>
+    <div class="sos-banner">
+      <div class="sos-title">🆘 Besoin d'aide rapide ?</div>
+      <div class="sos-text">Quand tout s'emballe, utilise ces techniques express en 60 secondes.</div>
+      <div class="sos-grid">
+        <div class="sos-item" onclick="document.getElementById('tab-breath').click()"><span class="sos-icon">🌬️</span><span class="sos-lbl">Respirer</span></div>
+        <div class="sos-item" id="sosFive"><span class="sos-icon">✋</span><span class="sos-lbl">5-4-3-2-1</span></div>
+        <div class="sos-item" id="sosGround"><span class="sos-icon">🌿</span><span class="sos-lbl">Ancrage</span></div>
+        <div class="sos-item" onclick="document.getElementById('tab-chat').click()"><span class="sos-icon">✨</span><span class="sos-lbl">Parler à Serena</span></div>
       </div>
     </div>
+    <div class="serene-cats" id="sereneCats"></div>
+    <div id="tipsList"></div>
   </div>
 
-  <!-- ====== SERENA IA ====== -->
-  <div class="page" id="page-serena">
-    <div class="card" style="margin-top:6px;">
-      <div class="card-hd"><div class="c-icon ci-ai">✨</div><div><div class="c-title">Serena IA</div><div class="c-sub">Soutien émotionnel · IA bienveillante</div></div></div>
-      <div class="chat-history" id="chatHistory">
-        <div class="msg ai">
-          <div class="msg-avatar">🌿</div>
-          <div class="msg-bubble">Bonjour, je suis Serena. Je suis ici pour t'accompagner avec bienveillance. Comment te sens-tu aujourd'hui ?</div>
-        </div>
-      </div>
-      <div class="chat-input-row">
-        <textarea class="chat-input" id="chatInput" placeholder="Dis-moi ce qui t'habite…" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
-        <button class="chat-send" id="chatSend" onclick="sendChat()">➤</button>
-      </div>
-      <p style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5;">Serena IA utilise l'API Claude. Tes messages ne sont pas stockés entre sessions. Pour une aide en crise, contacte le 3114 (France).</p>
-    </div>
-  </div>
-
-  <!-- ====== STATS ====== -->
+  <!-- STATS -->
   <div class="page" id="page-stats">
     <div class="stats-grid" style="margin-top:6px;">
-      <div class="stat-card"><span class="stat-num" id="sSt">0</span><span class="stat-lbl">🔥 Jours consécutifs</span></div>
-      <div class="stat-card"><span class="stat-num" id="sTot">0</span><span class="stat-lbl">📓 Entrées totales</span></div>
-      <div class="stat-card"><span class="stat-num" id="sComp">0%</span><span class="stat-lbl">✅ Taux routine</span></div>
-      <div class="stat-card"><span class="stat-num" id="sStress">—</span><span class="stat-lbl">💆 Stress moyen</span></div>
-    </div>
-    <div class="card" id="insightCard" style="display:none;">
-      <div class="card-hd"><div class="c-icon ci-ai">💡</div><div><div class="c-title">Insight de la semaine</div><div class="c-sub">Basé sur tes données</div></div></div>
-      <div id="insightList"></div>
+      <div class="stat-card"><span class="stat-n" id="stStreak">0</span><span class="stat-l">🔥 Jours consécutifs</span></div>
+      <div class="stat-card"><span class="stat-n" id="stTotal">0</span><span class="stat-l">📓 Entrées totales</span></div>
+      <div class="stat-card"><span class="stat-n" id="stComp">0%</span><span class="stat-l">✅ Taux de routine</span></div>
+      <div class="stat-card"><span class="stat-n" id="stStress">—</span><span class="stat-l">💆 Stress moyen</span></div>
     </div>
     <div class="card">
-      <div class="card-hd"><div class="c-icon ci-st">📊</div><div><div class="c-title">Rituels accomplis</div><div class="c-sub">Cette semaine</div></div></div>
+      <div class="card-hd"><div class="card-icon" style="background:#fdf8e8">📊</div><div><div class="card-title">Rituels accomplis</div><div class="card-sub">Cette semaine</div></div></div>
       <div class="bar-chart" id="barChart"></div>
-      <div style="display:flex;justify-content:space-between;margin-top:6px;" id="barLabels"></div>
+      <div style="display:flex;" id="barLabels"></div>
     </div>
     <div class="card">
-      <div class="card-hd"><div class="c-icon ci-mood">💆</div><div><div class="c-title">Évolution du stress</div><div class="c-sub">7 derniers jours</div></div></div>
-      <div id="stressHist"></div>
+      <div class="card-hd"><div class="card-icon" style="background:#fdecea">💆</div><div><div class="card-title">Évolution du stress</div><div class="card-sub">7 derniers jours</div></div></div>
+      <div id="stressHistory"></div>
     </div>
     <div class="card">
-      <div class="card-hd"><div class="c-icon ci-e">🌸</div><div><div class="c-title">Dernières gratitudes</div><div class="c-sub">Pour se souvenir du beau</div></div></div>
+      <div class="card-hd"><div class="card-icon" style="background:#f0eaf5">🌸</div><div><div class="card-title">Dernières gratitudes</div></div></div>
       <div id="gratList"></div>
     </div>
   </div>
 
-  <!-- ====== SETTINGS ====== -->
+  <!-- CHAT -->
+  <div class="page" id="page-chat">
+    <div class="card" style="margin-top:6px;">
+      <div class="card-hd"><div class="card-icon" style="background:#eef3ee">✨</div><div><div class="card-title">Serena IA</div><div class="card-sub">Soutien émotionnel bienveillant</div></div></div>
+      <div class="chat-msgs" id="chatMsgs"></div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chatInput" type="text" placeholder="Comment tu te sens ?">
+        <button class="chat-send" id="chatSend">→</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
   <div class="page" id="page-settings">
     <div class="card" style="margin-top:6px;">
-
-      <div style="margin-bottom:20px;">
-        <span class="sg-title">Thème visuel</span>
-        <div class="theme-row">
-          <div class="theme-opt sel" onclick="setTheme('light',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#f5f0e8,#8a9e8a)"></div><span class="t-name">Doux</span></div>
-          <div class="theme-opt" onclick="setTheme('dark',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#1a1714,#7a9a7a)"></div><span class="t-name">Sombre</span></div>
-          <div class="theme-opt" onclick="setTheme('nature',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#eef4ee,#4a7a4a)"></div><span class="t-name">Nature</span></div>
-          <div class="theme-opt" onclick="setTheme('minimal',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#fafafa,#111)"></div><span class="t-name">Minimal</span></div>
-          <div class="theme-opt" onclick="setTheme('coachdivin',this)"><div class="t-swatch" style="background:linear-gradient(135deg,#4a1428,#c9a96e)"></div><span class="t-name">Divin</span></div>
+      <div style="margin-bottom:22px;">
+        <span class="sg-title">Ambiance visuelle</span>
+        <div class="theme-row" id="themeRow"></div>
+      </div>
+      <div class="divider"></div>
+      <div style="margin-bottom:22px;">
+        <span class="sg-title">Mode d'affichage</span>
+        <div style="display:flex;gap:8px;">
+          <button class="lang-btn" id="modeLight">☀️ Clair</button>
+          <button class="lang-btn" id="modeDark">🌙 Sombre</button>
         </div>
       </div>
-
       <div class="divider"></div>
-
-      <div style="margin-bottom:20px;">
+      <div style="margin-bottom:22px;">
         <span class="sg-title">Mon profil</span>
-        <div class="profile-row" id="profRow">
-          <div class="prof-opt" onclick="setProfile('parent',this)" data-p="parent"><span class="p-icon">👶</span><span class="p-name">Parent</span><span class="p-desc">Routines courtes</span></div>
-          <div class="prof-opt" onclick="setProfile('pro',this)" data-p="pro"><span class="p-icon">💼</span><span class="p-name">Pro</span><span class="p-desc">Anti-burnout</span></div>
-          <div class="prof-opt" onclick="setProfile('student',this)" data-p="student"><span class="p-icon">🎓</span><span class="p-name">Étudiant(e)</span><span class="p-desc">Stress d'examens</span></div>
-          <div class="prof-opt" onclick="setProfile('self',this)" data-p="self"><span class="p-icon">🌱</span><span class="p-name">Exploration</span><span class="p-desc">Connaissance de soi</span></div>
+        <div class="profile-row" id="profileRow">
+          <div class="pr-opt" data-p="parent"><span class="pr-icon">👶</span><span class="pr-name">Parent</span><span class="pr-desc">Routines courtes</span></div>
+          <div class="pr-opt" data-p="pro"><span class="pr-icon">💼</span><span class="pr-name">Pro</span><span class="pr-desc">Anti-burnout</span></div>
+          <div class="pr-opt" data-p="student"><span class="pr-icon">🎓</span><span class="pr-name">Étudiant(e)</span><span class="pr-desc">Stress d'examens</span></div>
+          <div class="pr-opt" data-p="self"><span class="pr-icon">🌱</span><span class="pr-name">Exploration</span><span class="pr-desc">Connaissance de soi</span></div>
         </div>
       </div>
-
       <div class="divider"></div>
-
-      <div style="margin-bottom:20px;">
+      <div style="margin-bottom:22px;">
         <span class="sg-title">Langue</span>
-        <div class="lang-row">
-          <button class="lang-btn sel" onclick="setLang('fr',this)">🇫🇷 Français</button>
-          <button class="lang-btn" onclick="setLang('en',this)">🇬🇧 English</button>
-          <button class="lang-btn" onclick="setLang('es',this)">🇪🇸 Español</button>
+        <div class="lang-row" id="langRow">
+          <button class="lang-btn on">🇫🇷 Français</button>
+          <button class="lang-btn">🇬🇧 English</button>
+          <button class="lang-btn">🇪🇸 Español</button>
         </div>
       </div>
-
       <div class="divider"></div>
-
-      <div style="margin-bottom:20px;">
-        <span class="sg-title">Notifications</span>
-        <div class="notif-row"><span class="notif-label">🌅 Rappel matin</span><button class="toggle" id="tgMorning" onclick="toggleNotif(this,'morning')"></button></div>
-        <div class="notif-row"><span class="notif-label">☀️ Rappel journée</span><button class="toggle" id="tgDay" onclick="toggleNotif(this,'day')"></button></div>
-        <div class="notif-row"><span class="notif-label">🌙 Rappel soir</span><button class="toggle" id="tgEvening" onclick="toggleNotif(this,'evening')"></button></div>
-        <div class="notif-time">
-          <div class="nt-slot"><div class="nt-lbl">Heure matin</div><input type="time" id="tMorning" value="08:00" onchange="saveNotifTime()"></div>
-          <div class="nt-slot"><div class="nt-lbl">Heure journée</div><input type="time" id="tDay" value="13:00" onchange="saveNotifTime()"></div>
-          <div class="nt-slot"><div class="nt-lbl">Heure soir</div><input type="time" id="tEvening" value="21:00" onchange="saveNotifTime()"></div>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
       <div>
         <span class="sg-title">Données</span>
-        <button class="export-btn" onclick="exportJSON()">⬇️ Exporter mes données (JSON)</button>
-        <button class="export-btn" onclick="exportSummary()">📄 Résumé de semaine (texte)</button>
-        <button class="reset-btn" onclick="confirmReset()">🗑️ Réinitialiser toutes les données</button>
+        <button class="exp-btn" id="expJson">⬇️ Exporter mes données (JSON)</button>
+        <button class="exp-btn" id="expTxt">📄 Résumé de semaine (texte)</button>
+        <button class="rst-btn" id="rstBtn">🗑️ Réinitialiser</button>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- Bottom Nav -->
+<!-- bottom nav -->
 <nav class="bottom-nav" id="bottomNav" style="display:none;">
-  <button class="nav-item active" onclick="goPage('journal')" id="nav-journal"><span class="n-icon">📓</span><span class="n-lbl">Journal</span></button>
-  <button class="nav-item" onclick="goPage('breath')" id="nav-breath"><span class="n-icon">🌬️</span><span class="n-lbl">Respirer</span></button>
-  <button class="nav-item" onclick="goPage('meditate')" id="nav-meditate"><span class="n-icon">🧘</span><span class="n-lbl">Méditer</span></button>
-  <button class="nav-item" onclick="goPage('serena')" id="nav-serena"><span class="n-icon">✨</span><span class="n-lbl">Serena IA</span></button>
-  <button class="nav-item" onclick="goPage('stats')" id="nav-stats"><span class="n-icon">📊</span><span class="n-lbl">Progrès</span></button>
+  <button class="nav-item active" id="nav-journal"><span class="nav-icon">📓</span><span class="nav-lbl">Journal</span></button>
+  <button class="nav-item" id="nav-breath"><span class="nav-icon">🌬️</span><span class="nav-lbl">Respirer</span></button>
+  <button class="nav-item" id="nav-serene"><span class="nav-icon">☯️</span><span class="nav-lbl">Sérénité</span></button>
+  <button class="nav-item" id="nav-stats"><span class="nav-icon">📊</span><span class="nav-lbl">Progrès</span></button>
+  <button class="nav-item" id="nav-chat"><span class="nav-icon">✨</span><span class="nav-lbl">IA</span></button>
 </nav>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// ==================== DATA ====================
-const DAYS = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-let db = JSON.parse(localStorage.getItem('serena_db') || '{}');
-let cfg = JSON.parse(localStorage.getItem('serena_cfg') || '{"theme":"light","lang":"fr","profile":"self","notifs":{}}');
-let currentDay = (() => { let d=new Date().getDay(); return d===0?6:d-1; })();
-let obStep=0, obAns={};
-let chatHistory = [];
+// ── DATA ──────────────────────────────────────────────────
+const DAYS=['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+let db={}, cfg={theme:'coachdivin',lang:'fr',profile:'self',firstName:'',darkMode:false};
+try{db=JSON.parse(localStorage.getItem('serena_db')||'{}');}catch(e){}
+try{var s=localStorage.getItem('serena_cfg');if(s)cfg=Object.assign(cfg,JSON.parse(s));}catch(e){}
+function saveDb(){try{localStorage.setItem('serena_db',JSON.stringify(db));}catch(e){}}
+function saveCfg(){try{localStorage.setItem('serena_cfg',JSON.stringify(cfg));}catch(e){}}
+var currentDay=(function(){var d=new Date().getDay();return d===0?6:d-1;})();
 
-// ==================== QUOTES (300) ====================
-const QUOTES = [
-  // --- FRANÇAIS : Paix & calme ---
+// ── THEME ─────────────────────────────────────────────────
+var THEME_COLORS={light:'#6b4f3a',dark:'#242018',nature:'#3a6a3a',minimal:'#111',coachdivin:'#4a1428',ocean:'#0a3a5a',sunset:'#7a2a1a'};
+var THEME_DEFS=[
+  {k:'light',g:'#f5f0e8,#8a9e8a',n:'Doux'},
+  {k:'dark',g:'#1a1714,#7a9a7a',n:'Sombre'},
+  {k:'nature',g:'#eef4ee,#4a7a4a',n:'Nature'},
+  {k:'minimal',g:'#fafafa,#333',n:'Minimal'},
+  {k:'coachdivin',g:'#4a1428,#c9a96e',n:'Divin'},
+  {k:'ocean',g:'#0a3a5a,#3a7a9a',n:'Océan'},
+  {k:'sunset',g:'#7a2a1a,#d4844a',n:'Coucher'}
+];
+
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t||'coachdivin');
+  var m=document.getElementById('metaTheme');
+  if(m)m.content=THEME_COLORS[t]||'#4a1428';
+  // update quick theme button
+  var td=THEME_DEFS.find(function(x){return x.k===t;});
+  var btn=document.getElementById('btnThemePicker');
+  if(btn&&td)btn.style.background='linear-gradient(135deg,'+td.g+')';
+}
+
+function setDarkMode(on){
+  cfg.darkMode=on;
+  if(on){
+    document.documentElement.setAttribute('data-theme','dark');
+    cfg._savedTheme=cfg.theme;
+  } else {
+    applyTheme(cfg._savedTheme||cfg.theme||'coachdivin');
+  }
+  saveCfg();
+  updateDarkModeButtons();
+}
+
+function updateDarkModeButtons(){
+  var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  document.querySelectorAll('.tp-dm-btn, #modeLight, #modeDark').forEach(function(b){b.classList.remove('on');});
+  if(isDark){
+    document.querySelectorAll('#tpDark, #modeDark').forEach(function(b){b.classList.add('on');});
+  } else {
+    document.querySelectorAll('#tpLight, #modeLight').forEach(function(b){b.classList.add('on');});
+  }
+}
+
+// ── QUOTES ────────────────────────────────────────────────
+var QUOTES=[
   {t:"Le calme est une superforce.",a:"Anonyme"},
   {t:"La paix vient de l'intérieur. Ne la cherche pas à l'extérieur.",a:"Bouddha"},
   {t:"Dans le silence, tu trouveras ce dont tu as besoin.",a:"Anonyme"},
@@ -832,869 +621,735 @@ const QUOTES = [
   {t:"La tranquillité est le nouveau luxe.",a:"Anonyme"},
   {t:"Sois comme l'eau : calme en surface, puissante en profondeur.",a:"Anonyme"},
   {t:"La paix intérieure commence au moment où tu choisis de ne pas laisser une personne ou un événement contrôler tes émotions.",a:"Pema Chödrön"},
-  // --- FRANÇAIS : Présence & moment ---
   {t:"Le moment présent est le seul endroit où la vie existe.",a:"Eckhart Tolle"},
   {t:"Hier est passé, demain n'est pas encore là. Aujourd'hui est un cadeau.",a:"Anonyme"},
   {t:"Sois ici. Maintenant. C'est tout ce qui compte.",a:"Ram Dass"},
   {t:"Chaque instant vécu pleinement est une victoire sur l'anxiété.",a:"Anonyme"},
   {t:"Ne vis pas dans le passé, ne rêve pas du futur. Concentre ton esprit sur le moment présent.",a:"Bouddha"},
-  {t:"La vie n'est pas dans les grandes choses. Elle est dans les petites choses vécues pleinement.",a:"Anonyme"},
-  {t:"Chaque respiration est un nouveau commencement.",a:"Anonyme"},
-  {t:"Le présent est une fenêtre ouverte. Regarde par elle sans te précipiter vers la suivante.",a:"Anonyme"},
-  {t:"Fais ce que tu fais avec tout ton être. C'est ça, la pleine conscience.",a:"Thich Nhat Hanh"},
-  {t:"Ce que tu vis maintenant deviendra un souvenir que tu chériras.",a:"Anonyme"},
-  // --- FRANÇAIS : Résilience & force ---
   {t:"Tu n'as pas à contrôler tes pensées. Tu dois juste arrêter de les laisser te contrôler.",a:"Dan Millman"},
-  {t:"Les difficultés préparent des gens ordinaires à une destinée extraordinaire.",a:"C.S. Lewis"},
-  {t:"Ce qui ne te tue pas te rend plus fort.",a:"Friedrich Nietzsche"},
-  {t:"La résistance révèle ta force. La douleur révèle ta profondeur.",a:"Anonyme"},
   {t:"Tu as survécu à 100% de tes pires journées.",a:"Anonyme"},
   {t:"Les tempêtes font grandir les arbres aux racines profondes.",a:"Anonyme"},
-  {t:"La cicatrice est la preuve que la blessure a guéri.",a:"Anonyme"},
-  {t:"Tombe sept fois, relève-toi huit.",a:"Proverbe japonais"},
-  {t:"Le courage n'est pas l'absence de peur, c'est avancer malgré elle.",a:"Nelson Mandela"},
-  {t:"Tu es plus fort que tu ne le penses.",a:"Winnie the Pooh"},
-  // --- FRANÇAIS : Gratitude ---
   {t:"La gratitude transforme ce que nous avons en suffisance.",a:"Melody Beattie"},
-  {t:"Un cœur reconnaissant est un cœur heureux.",a:"Anonyme"},
   {t:"Cherche le beau dans chaque journée, même si tu dois le chercher longtemps.",a:"Anonyme"},
-  {t:"La gratitude est la mémoire du cœur.",a:"Jean-Baptiste Massieu"},
-  {t:"Commence chaque journée avec une pensée reconnaissante.",a:"Anonyme"},
-  {t:"Ce que tu apprécies s'apprécie.",a:"Anonyme"},
-  {t:"Il y a toujours quelque chose pour lequel être reconnaissant.",a:"Anonyme"},
-  {t:"La gratitude est la plus belle des fleurs qui jaillissent de l'âme.",a:"Henry Ward Beecher"},
-  {t:"Merci est l'une des plus belles prières.",a:"Anonyme"},
-  {t:"Compte tes bénédictions, pas tes problèmes.",a:"Anonyme"},
-  // --- FRANÇAIS : Prendre soin de soi ---
   {t:"Prendre soin de soi n'est pas un luxe, c'est une survie.",a:"Audre Lorde"},
   {t:"Le repos n'est pas une récompense. C'est une nécessité.",a:"Anonyme"},
   {t:"Tu ne peux pas verser depuis une tasse vide.",a:"Anonyme"},
-  {t:"Aimer les autres commence par s'aimer soi-même.",a:"Anonyme"},
-  {t:"Prends soin de ton jardin intérieur avant de t'occuper du monde extérieur.",a:"Voltaire"},
-  {t:"Le bien-être n'est pas une destination, c'est un mode de vie.",a:"Anonyme"},
-  {t:"Dormir, manger, bouger, respirer. Ces quatre choses changent tout.",a:"Anonyme"},
-  {t:"Ton corps mérite autant d'amour que ton âme.",a:"Anonyme"},
-  {t:"La santé est la plus grande des richesses.",a:"Virgile"},
-  {t:"Écoute ton corps. Il te parle avant que ta tête comprenne.",a:"Anonyme"},
-  // --- FRANÇAIS : Croissance personnelle ---
   {t:"Chaque matin est une nouvelle chance de recommencer.",a:"Anonyme"},
-  {t:"Chaque jour est une page vierge. Tu tiens le crayon.",a:"Anonyme"},
   {t:"Ta valeur ne diminue pas parce que quelqu'un ne voit pas ta lumière.",a:"Anonyme"},
-  {t:"La meilleure version de toi-même t'attend de l'autre côté de ta zone de confort.",a:"Anonyme"},
-  {t:"Ce que tu penses de toi-même est bien plus important que ce que les autres pensent de toi.",a:"Sénèque"},
-  {t:"Chaque expert a un jour été un débutant.",a:"Anonyme"},
-  {t:"Le changement est douloureux. Mais rester coincé là où tu n'appartiens pas l'est encore plus.",a:"Anonyme"},
-  {t:"Progresse chaque jour, même d'un millimètre.",a:"Anonyme"},
-  {t:"Deviens la personne que tu avais besoin quand tu étais plus jeune.",a:"Anonyme"},
-  {t:"Ce n'est pas qui tu es qui te retient, c'est qui tu penses ne pas être.",a:"Denis Waitley"},
-  // --- FRANÇAIS : Lâcher prise ---
   {t:"Lâcher prise ne veut pas dire abandonner. Cela veut dire avancer.",a:"Anonyme"},
-  {t:"Certaines choses méritent d'être lâchées, pas portées.",a:"Anonyme"},
   {t:"Tu ne peux pas contrôler tout ce qui t'arrive, mais tu peux contrôler ta réaction.",a:"Epictète"},
-  {t:"L'acceptation est le début de la transformation.",a:"Anonyme"},
-  {t:"Ce qui est fait est fait. Ce qui compte, c'est maintenant.",a:"Anonyme"},
-  {t:"Libère-toi de ce qui te pèse. Tu n'en as plus besoin.",a:"Anonyme"},
-  {t:"La paix commence là où les attentes s'arrêtent.",a:"Anonyme"},
-  {t:"Résiste moins. Accepte plus. Vis mieux.",a:"Anonyme"},
-  {t:"Le pardon est un cadeau que tu te fais à toi-même.",a:"Anonyme"},
-  {t:"Parfois, la chose la plus courageuse est de laisser partir.",a:"Anonyme"},
-  // --- FRANÇAIS : Amour & connexion ---
   {t:"La bienveillance est un langage que les sourds peuvent entendre et les aveugles peuvent voir.",a:"Mark Twain"},
-  {t:"Là où tu te sens aimé, tu es chez toi.",a:"Anonyme"},
-  {t:"L'amour commence par un sourire, grandit avec un baiser et finit avec une larme.",a:"Anonyme"},
-  {t:"La gentillesse ne coûte rien mais vaut tout.",a:"Anonyme"},
-  {t:"Traite les autres comme tu veux être traité.",a:"Règle d'or"},
-  {t:"Un seul ami sincère vaut plus que mille connaissances.",a:"Anonyme"},
-  {t:"Celui qui donne reçoit.",a:"Anonyme"},
-  {t:"La compassion est la signature de l'âme humaine.",a:"Anonyme"},
-  {t:"Aide les autres sans attendre de retour. La vie s'en chargera.",a:"Anonyme"},
-  {t:"Sois la raison pour laquelle quelqu'un croit encore en la bonté des gens.",a:"Anonyme"},
-  // --- FRANÇAIS : Confiance & intuition ---
-  {t:"Fais confiance au processus, même quand tu ne vois pas la destination.",a:"Anonyme"},
-  {t:"Ton instinct sait ce que ta tête n'a pas encore compris.",a:"Anonyme"},
-  {t:"Crois en toi plus fort que les doutes.",a:"Anonyme"},
-  {t:"La foi, c'est avancer dans le noir en sachant que la lumière viendra.",a:"Anonyme"},
-  {t:"Tu as tout ce qu'il te faut pour aujourd'hui.",a:"Anonyme"},
-  {t:"Fais confiance à ton voyage, même si tu ne comprends pas le chemin.",a:"Anonyme"},
-  {t:"Ta vie a un sens, même dans les chapitres difficiles.",a:"Anonyme"},
-  {t:"Chaque pièce du puzzle a sa place. La tienne aussi.",a:"Anonyme"},
-  {t:"Le doute coupe plus de rêves que l'échec.",a:"Suzy Kassem"},
-  {t:"Tu es exactement là où tu dois être.",a:"Anonyme"},
-  // --- FRANÇAIS : Simplicité & légèreté ---
-  {t:"La vie est simple. C'est nous qui la compliquons.",a:"Confucius"},
-  {t:"Simplifie. Puis simplifie encore.",a:"Henry David Thoreau"},
-  {t:"La légèreté est une forme de sagesse.",a:"Anonyme"},
-  {t:"Less is more.",a:"Ludwig Mies van der Rohe"},
-  {t:"Désencombre ta vie pour laisser entrer ce qui compte.",a:"Anonyme"},
-  {t:"L'art d'être heureux réside dans le pouvoir de trouver de la joie dans les choses ordinaires.",a:"Henry Ward Beecher"},
-  {t:"Le bonheur est fait de petits riens vécus intensément.",a:"Anonyme"},
-  {t:"Prends le temps de regarder les étoiles. Elles ont quelque chose à te dire.",a:"Anonyme"},
-  {t:"Un coucher de soleil ne dure que quelques minutes. Regarde-le.",a:"Anonyme"},
-  {t:"Le bonheur n'est pas au bout du chemin. Il est le chemin.",a:"Anonyme"},
-  // --- ANGLAIS : Mindfulness & peace ---
-  {t:"Almost everything will work again if you unplug it for a few minutes.",a:"Anne Lamott",l:"en"},
-  {t:"Slow down and everything you are chasing will come around and catch you.",a:"John De Paola",l:"en"},
-  {t:"Peace is not the absence of chaos, but the presence of calm within it.",a:"Anonyme",l:"en"},
-  {t:"Be still and know that I am God.",a:"Psalm 46:10",l:"en"},
-  {t:"You can't stop the waves, but you can learn to surf.",a:"Jon Kabat-Zinn",l:"en"},
-  {t:"In the midst of movement and chaos, keep stillness inside of you.",a:"Deepak Chopra",l:"en"},
-  {t:"Breathe. Let go. And remind yourself that this very moment is the only one you know you have for sure.",a:"Oprah Winfrey",l:"en"},
-  {t:"The quieter you become, the more you are able to hear.",a:"Rumi",l:"en"},
-  {t:"Peace begins with a smile.",a:"Mother Teresa",l:"en"},
-  {t:"Nothing can disturb your peace of mind unless you allow it to.",a:"Roy T. Bennett",l:"en"},
-  // --- ANGLAIS : Resilience ---
-  {t:"Fall seven times, stand up eight.",a:"Japanese Proverb",l:"en"},
-  {t:"She stood in the storm, and when the wind did not blow her away, she adjusted her sails.",a:"Elizabeth Edwards",l:"en"},
-  {t:"The oak fought the wind and was broken, the willow bent when it must and survived.",a:"Robert Jordan",l:"en"},
-  {t:"Rock bottom became the solid foundation on which I rebuilt my life.",a:"J.K. Rowling",l:"en"},
-  {t:"You are braver than you believe, stronger than you seem.",a:"A.A. Milne",l:"en"},
-  {t:"It always seems impossible until it's done.",a:"Nelson Mandela",l:"en"},
-  {t:"Hard times never last, but hard people do.",a:"Robert H. Schuller",l:"en"},
-  {t:"The human capacity for burden is like bamboo — far more flexible than you'd ever believe at first glance.",a:"Jodi Picoult",l:"en"},
-  {t:"Turn your wounds into wisdom.",a:"Oprah Winfrey",l:"en"},
-  {t:"Every storm runs out of rain.",a:"Maya Angelou",l:"en"},
-  // --- ANGLAIS : Self-care & growth ---
-  {t:"You yourself, as much as anybody in the entire universe, deserve your love and affection.",a:"Bouddha",l:"en"},
-  {t:"To love oneself is the beginning of a lifelong romance.",a:"Oscar Wilde",l:"en"},
-  {t:"Growth is painful. Change is painful. But nothing is as painful as staying stuck somewhere you don't belong.",a:"Mandy Hale",l:"en"},
-  {t:"Be the change you wish to see in the world.",a:"Mahatma Gandhi",l:"en"},
-  {t:"What lies behind us and what lies before us are tiny matters compared to what lies within us.",a:"Ralph Waldo Emerson",l:"en"},
-  {t:"The only journey is the one within.",a:"Rainer Maria Rilke",l:"en"},
-  {t:"Your life is your message to the world. Make sure it's inspiring.",a:"Lorrin L. Lee",l:"en"},
-  {t:"Self-care is how you take your power back.",a:"Lalah Delia",l:"en"},
-  {t:"Do something today that your future self will thank you for.",a:"Sean Patrick Flanery",l:"en"},
-  {t:"You are enough just as you are.",a:"Megan Markle",l:"en"},
-  // --- ANGLAIS : Gratitude & joy ---
-  {t:"Joy is not in things; it is in us.",a:"Richard Wagner",l:"en"},
-  {t:"Gratitude is not only the greatest of virtues, but the parent of all the others.",a:"Cicéron",l:"en"},
-  {t:"The more grateful I am, the more beauty I see.",a:"Mary Davis",l:"en"},
-  {t:"Happiness is not something ready made. It comes from your own actions.",a:"Dalaï Lama",l:"en"},
-  {t:"Count your blessings, not your problems.",a:"Anonyme",l:"en"},
-  {t:"When you focus on the good, the good gets better.",a:"Abraham Hicks",l:"en"},
-  {t:"Start each day with a grateful heart.",a:"Anonyme",l:"en"},
-  {t:"Joy is what happens when we allow ourselves to recognize how good things really are.",a:"Marianne Williamson",l:"en"},
-  {t:"A grateful mind is a great mind which eventually attracts to itself great things.",a:"Platon",l:"en"},
-  {t:"Enjoy the little things, for one day you may look back and realize they were the big things.",a:"Robert Brault",l:"en"},
-  // --- ANGLAIS : Letting go ---
-  {t:"Let go of what no longer serves you.",a:"Anonyme",l:"en"},
-  {t:"Some people believe holding on and hanging in there are signs of great strength. However, there are times when it takes much more strength to know when to let go.",a:"Ann Landers",l:"en"},
-  {t:"The truth is, unless you let go, unless you forgive yourself, unless you forgive the situation, unless you realize that the situation is over, you cannot move forward.",a:"Steve Maraboli",l:"en"},
-  {t:"Breathe and let be.",a:"Jon Kabat-Zinn",l:"en"},
-  {t:"Release the need to know how. Trust that the how will show up.",a:"Anonyme",l:"en"},
-  {t:"When I let go of what I am, I become what I might be.",a:"Lao Tzu",l:"en"},
-  {t:"Accept what is, let go of what was, have faith in what will be.",a:"Sonia Ricotti",l:"en"},
-  {t:"You don't have to see the whole staircase, just take the first step.",a:"Martin Luther King Jr.",l:"en"},
-  {t:"Surrender to what is. Let go of what was. Have faith in what will be.",a:"Anonyme",l:"en"},
-  {t:"Not all storms come to disrupt your life, some come to clear your path.",a:"Anonyme",l:"en"},
-  // --- ANGLAIS : Courage & trust ---
-  {t:"Courage is not the absence of fear, but the triumph over it.",a:"Nelson Mandela",l:"en"},
-  {t:"Believe you can and you're halfway there.",a:"Theodore Roosevelt",l:"en"},
-  {t:"Everything you've ever wanted is on the other side of fear.",a:"George Addair",l:"en"},
-  {t:"Trust yourself. You know more than you think you do.",a:"Benjamin Spock",l:"en"},
-  {t:"You are capable of more than you know.",a:"E.O. Wilson",l:"en"},
-  {t:"Stars can't shine without darkness.",a:"Anonyme",l:"en"},
-  {t:"The secret of getting ahead is getting started.",a:"Mark Twain",l:"en"},
-  {t:"Doubt kills more dreams than failure ever will.",a:"Suzy Kassem",l:"en"},
-  {t:"With the new day comes new strength and new thoughts.",a:"Eleanor Roosevelt",l:"en"},
-  {t:"You have within you right now, everything you need to deal with whatever the world can throw at you.",a:"Brian Tracy",l:"en"},
-  // --- ANGLAIS : Simple wisdom ---
-  {t:"This too shall pass.",a:"Proverbe persan",l:"en"},
-  {t:"Less is more.",a:"Ludwig Mies van der Rohe",l:"en"},
-  {t:"The present moment always will have been.",a:"Anonyme",l:"en"},
-  {t:"Wherever you are, be all there.",a:"Jim Elliot",l:"en"},
-  {t:"Life is not measured by the number of breaths we take, but by the moments that take our breath away.",a:"Maya Angelou",l:"en"},
-  {t:"We are what we repeatedly do. Excellence, then, is not an act, but a habit.",a:"Aristote",l:"en"},
-  {t:"In every walk with nature, one receives far more than he seeks.",a:"John Muir",l:"en"},
-  {t:"The soul always knows what to do to heal itself. The challenge is to silence the mind.",a:"Caroline Myss",l:"en"},
-  {t:"Do what you can, with what you have, where you are.",a:"Theodore Roosevelt",l:"en"},
-  {t:"Act as if what you do makes a difference. It does.",a:"William James",l:"en"},
-  // --- ESPAGNOL : Paz y calma ---
-  {t:"La paz comienza con una sonrisa.",a:"Madre Teresa",l:"es"},
-  {t:"Dentro de ti hay un silencio que lo sana todo.",a:"Anónimo",l:"es"},
-  {t:"El que busca la paz, la encuentra.",a:"Anónimo",l:"es"},
-  {t:"Respira. Todo pasa.",a:"Anónimo",l:"es"},
-  {t:"La calma es la cuna de la sabiduría.",a:"Anónimo",l:"es"},
-  {t:"En el silencio habita la respuesta que buscas.",a:"Anónimo",l:"es"},
-  {t:"El alma que ama en paz, todo lo tiene.",a:"San Juan de la Cruz",l:"es"},
-  {t:"Aprende a estar en silencio. Deja que tu mente tranquila te escuche.",a:"Pitágoras",l:"es"},
-  {t:"La serenidad no es ausencia de tormenta. Es la paz en medio de ella.",a:"Anónimo",l:"es"},
-  {t:"Nada turba, nada espanta. Todo pasa.",a:"Santa Teresa de Ávila",l:"es"},
-  // --- ESPAGNOL : Fuerza y crecimiento ---
-  {t:"Cae siete veces, levántate ocho.",a:"Proverbio japonés",l:"es"},
-  {t:"Las dificultades preparan a personas comunes para destinos extraordinarios.",a:"C.S. Lewis",l:"es"},
-  {t:"Sé el cambio que deseas ver en el mundo.",a:"Mahatma Gandhi",l:"es"},
-  {t:"El único modo de hacer un gran trabajo es amar lo que haces.",a:"Steve Jobs",l:"es"},
-  {t:"La vida no se mide por los momentos, sino por los momentos que te quitan el aliento.",a:"Anónimo",l:"es"},
-  {t:"Tu actitud determina tu dirección.",a:"Anónimo",l:"es"},
-  {t:"El éxito es la suma de pequeños esfuerzos repetidos cada día.",a:"Robert Collier",l:"es"},
-  {t:"No esperes el momento perfecto. Toma el momento y hazlo perfecto.",a:"Anónimo",l:"es"},
-  {t:"Haz lo que puedas, con lo que tengas, donde estés.",a:"Theodore Roosevelt",l:"es"},
-  {t:"Cada día es una segunda oportunidad.",a:"Anónimo",l:"es"},
-  // --- ESPAGNOL : Gratitud y alegría ---
-  {t:"La gratitud convierte lo que tenemos en suficiente.",a:"Anónimo",l:"es"},
-  {t:"Agradece lo pequeño y lo grande llegará solo.",a:"Anónimo",l:"es"},
-  {t:"Hay flores por doquier, para quien quiera verlas.",a:"Henri Matisse",l:"es"},
-  {t:"La alegría no está en las cosas, está en nosotros.",a:"Richard Wagner",l:"es"},
-  {t:"Un corazón agradecido es un corazón feliz.",a:"Anónimo",l:"es"},
-  {t:"Celebra cada pequeña victoria.",a:"Anónimo",l:"es"},
-  {t:"La felicidad no es un destino, es una forma de viajar.",a:"Anónimo",l:"es"},
-  {t:"Encuentra belleza en cada día.",a:"Anónimo",l:"es"},
-  {t:"La vida es bella cuando la miras con agradecimiento.",a:"Anónimo",l:"es"},
-  {t:"Lo que aprecias, se aprecia.",a:"Anónimo",l:"es"},
-  // --- ESPAGNOL : Amor propio ---
-  {t:"Ámate a ti mismo primero y todo lo demás encajará.",a:"Lucille Ball",l:"es"},
-  {t:"Cuídate como cuidas a quienes amas.",a:"Anónimo",l:"es"},
-  {t:"Tu relación más importante es la que tienes contigo mismo.",a:"Anónimo",l:"es"},
-  {t:"Eres suficiente, exactamente como eres.",a:"Anónimo",l:"es"},
-  {t:"No puedes servir desde una copa vacía.",a:"Anónimo",l:"es"},
-  {t:"El descanso no es una recompensa. Es una necesidad.",a:"Anónimo",l:"es"},
-  {t:"Trátate con la misma bondad que le darías a un amigo.",a:"Anónimo",l:"es"},
-  {t:"Tu cuerpo merece amor, no castigo.",a:"Anónimo",l:"es"},
-  {t:"Mereces la amabilidad que das a los demás.",a:"Anónimo",l:"es"},
-  {t:"Cuidarte no es egoísmo. Es supervivencia.",a:"Audre Lorde",l:"es"},
-  // --- PHILOSOPHES & sages ---
   {t:"Connais-toi toi-même.",a:"Socrate"},
-  {t:"La vie doit être vécue et non calculée.",a:"Dostoïevski"},
-  {t:"L'homme est la mesure de toutes choses.",a:"Protagoras"},
-  {t:"Il n'y a pas de vent favorable pour celui qui ne sait pas où il va.",a:"Sénèque"},
-  {t:"Ce n'est pas parce que les choses sont difficiles que nous n'osons pas, c'est parce que nous n'osons pas qu'elles sont difficiles.",a:"Sénèque"},
-  {t:"La vie est courte, l'art est long.",a:"Hippocrate"},
-  {t:"Le bonheur est la récompense de la vertu.",a:"Aristote"},
   {t:"L'imagination est plus importante que la connaissance.",a:"Albert Einstein"},
-  {t:"Tout ce que je sais, c'est que je ne sais rien.",a:"Socrate"},
   {t:"Vis comme si tu devais mourir demain. Apprends comme si tu devais vivre toujours.",a:"Mahatma Gandhi"},
-  // --- Poètes & écrivains ---
-  {t:"La vie est une fleur dont l'amour est le miel.",a:"Victor Hugo"},
-  {t:"Aimer, ce n'est pas se regarder l'un l'autre, c'est regarder ensemble dans la même direction.",a:"Antoine de Saint-Exupéry"},
   {t:"On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux.",a:"Antoine de Saint-Exupéry"},
-  {t:"Je suis un être humain en cours de construction.",a:"Anonyme"},
-  {t:"La poésie est la vérité habillée d'une image.",a:"William Shakespeare"},
-  {t:"Deux chemins divergeaient dans un bois. J'ai pris celui que peu de gens empruntaient.",a:"Robert Frost"},
-  {t:"Tu n'as pas à être parfait pour commencer, mais tu dois commencer pour être parfait.",a:"Zig Ziglar"},
-  {t:"Les mots ont le pouvoir de changer le monde.",a:"Anonyme"},
-  {t:"L'art de vivre consiste à savoir sacrifier une partie de sa vie pour en embellir le reste.",a:"Anatole France"},
-  {t:"Le voyage de mille lieues commence par un seul pas.",a:"Lao Tzu"},
-  // --- Spirituel & universel ---
-  {t:"L'univers te soutient. Fais-lui confiance.",a:"Anonyme"},
-  {t:"Tu es une âme ayant une expérience humaine.",a:"Pierre Teilhard de Chardin"},
-  {t:"Tout est connecté. Tout a un sens.",a:"Anonyme"},
-  {t:"La prière est parler à Dieu. La méditation est l'écouter.",a:"Anonyme"},
-  {t:"Il y a une lumière en toi qui ne peut jamais s'éteindre.",a:"Anonyme"},
-  {t:"Tu es fait de la même matière que les étoiles.",a:"Carl Sagan"},
-  {t:"Chaque âme est venue sur terre pour apprendre quelque chose.",a:"Anonyme"},
-  {t:"La vie est un cadeau. Ouvre-le avec soin.",a:"Anonyme"},
-  {t:"Dieu ne donne jamais plus que ce que tu peux porter.",a:"Anonyme"},
-  {t:"La lumière est toujours plus forte que l'obscurité.",a:"Anonyme"},
-  // --- Humour & légèreté ---
   {t:"Ne prenez pas la vie trop au sérieux, vous n'en sortirez pas vivant.",a:"Elbert Hubbard"},
   {t:"Le rire est le soleil qui chasse l'hiver du visage humain.",a:"Victor Hugo"},
-  {t:"Souris. Demain, ça pourrait être pire. Je rigole. Souris quand même.",a:"Anonyme"},
-  {t:"La vie est trop courte pour boire du mauvais café.",a:"Anonyme"},
-  {t:"Si plan A ne marche pas, souviens-toi : l'alphabet a encore 25 lettres.",a:"Anonyme"},
-  {t:"Chaque jour est une bonne journée si on choisit de le voir ainsi.",a:"Anonyme"},
-  {t:"Le meilleur moment pour planter un arbre, c'était il y a 20 ans. Le second meilleur moment, c'est maintenant.",a:"Proverbe chinois"},
-  {t:"Un problème sans solution est un problème mal posé.",a:"Albert Einstein"},
-  {t:"Parfois, la chose la plus productive que tu puisses faire, c'est te reposer.",a:"Anonyme"},
-  {t:"Rappelle-toi que tu es humain. Pas une machine. Pas un superhéros.",a:"Anonyme"},
-  // --- Corps & nature ---
-  {t:"Marche dans la nature et tu trouveras des réponses à des questions que tu n'avais pas encore posées.",a:"John Muir"},
   {t:"La nature est le meilleur thérapeute.",a:"Anonyme"},
-  {t:"Un corps en mouvement reste en mouvement.",a:"Newton (adapté)"},
-  {t:"Bois de l'eau. Dors. Bouge. Répète.",a:"Anonyme"},
-  {t:"Ton corps est ton temple. Prends-en soin.",a:"Anonyme"},
   {t:"Le soleil se lève chaque matin sans exception. Toi aussi, tu peux.",a:"Anonyme"},
-  {t:"La mer n'est pas une menace. C'est une invitation.",a:"Anonyme"},
-  {t:"Les saisons changent. Toi aussi.",a:"Anonyme"},
-  {t:"Écoute le vent. Il te raconte quelque chose.",a:"Anonyme"},
-  {t:"Chaque fleur a besoin de sa saison. La tienne viendra.",a:"Anonyme"},
-  // --- Travail & passion ---
-  {t:"Fais ce que tu aimes et tu n'auras pas l'impression de travailler un seul jour.",a:"Confucius"},
-  {t:"Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.",a:"Winston Churchill"},
-  {t:"L'excellence est une habitude.",a:"Aristote"},
-  {t:"Fais le avec passion ou pas du tout.",a:"Rosa Couchette Carey"},
-  {t:"Le talent gagne des matchs, mais le travail d'équipe remporte des championnats.",a:"Michael Jordan"},
-  {t:"Ce n'est pas le chemin qui est difficile, c'est le difficile qui est le chemin.",a:"Søren Kierkegaard"},
-  {t:"Le génie, c'est 1% d'inspiration et 99% de transpiration.",a:"Thomas Edison"},
-  {t:"Commence là où tu es. Utilise ce que tu as. Fais ce que tu peux.",a:"Arthur Ashe"},
-  {t:"La discipline, c'est choisir entre ce que tu veux maintenant et ce que tu veux le plus.",a:"Abraham Lincoln"},
-  {t:"Un rêve sans plan n'est qu'un souhait.",a:"Antoine de Saint-Exupéry"},
-  // --- Amitié & relations ---
-  {t:"Les amis sont la famille que l'on choisit.",a:"Edna Buchanan"},
-  {t:"Un vrai ami est celui qui entre quand tout le monde sort.",a:"Walter Winchell"},
-  {t:"La solitude est belle quand on choisit d'être seul.",a:"Honoré de Balzac"},
-  {t:"Entoure-toi de gens qui te tirent vers le haut.",a:"Anonyme"},
-  {t:"Ta tribu définit ton énergie. Choisis-la bien.",a:"Anonyme"},
-  {t:"La qualité de tes relations détermine la qualité de ta vie.",a:"Anonyme"},
-  {t:"Sois pour les autres ce que tu aurais aimé avoir pour toi.",a:"Anonyme"},
-  {t:"Une conversation sincère vaut mille messages.",a:"Anonyme"},
-  {t:"Le meilleur cadeau que tu puisses offrir à quelqu'un, c'est ta présence.",a:"Thich Nhat Hanh"},
-  {t:"Écoute pour comprendre, pas pour répondre.",a:"Stephen Covey"},
-  // --- Introspection ---
-  {t:"La vie que tu mènes est le reflet des pensées que tu cultives.",a:"Anonyme"},
-  {t:"Ce que tu résistes persiste. Ce que tu acceptes se transforme.",a:"Carl Jung"},
-  {t:"L'inconscient sait souvent ce que le conscient refuse de voir.",a:"Anonyme"},
-  {t:"Tes émotions sont des messagers, pas des ennemis.",a:"Anonyme"},
-  {t:"Le chemin intérieur est le plus long et le plus riche.",a:"Anonyme"},
-  {t:"On ne change pas ce qu'on refuse de voir.",a:"Anonyme"},
-  {t:"Observe tes pensées comme des nuages. Laisse-les passer.",a:"Anonyme"},
-  {t:"La guérison commence quand tu te permets de ressentir.",a:"Anonyme"},
-  {t:"Ce que tu fuis te suit. Ce que tu affrontes te libère.",a:"Carl Jung"},
-  {t:"Ton ombre n'est pas ton ennemi. C'est la partie de toi qui a besoin d'amour.",a:"Anonyme"},
-  {t:"Le vrai voyage de découverte ne consiste pas à chercher de nouveaux paysages, mais à avoir de nouveaux yeux.",a:"Marcel Proust"},
-  {t:"Celui qui regarde à l'extérieur rêve. Celui qui regarde à l'intérieur s'éveille.",a:"Carl Jung"},
-  {t:"La vie commence là où ta zone de confort s'arrête.",a:"Neale Donald Walsch"},
-  {t:"Chaque jour, à chaque point de vue, je vais de mieux en mieux.",a:"Émile Coué"},
-  {t:"Tu es le ciel. Tout le reste n'est que météo.",a:"Pema Chödrön"},
+  {t:"This too shall pass.",a:"Proverbe persan"},
+  {t:"Breathe and let be.",a:"Jon Kabat-Zinn"},
+  {t:"Peace is not the absence of chaos, but the presence of calm within it.",a:"Anonyme"},
+  {t:"You can't stop the waves, but you can learn to surf.",a:"Jon Kabat-Zinn"},
+  {t:"In the midst of movement and chaos, keep stillness inside of you.",a:"Deepak Chopra"},
+  {t:"The quieter you become, the more you are able to hear.",a:"Rumi"},
+  {t:"Fall seven times, stand up eight.",a:"Japanese Proverb"},
+  {t:"La paz comienza con una sonrisa.",a:"Madre Teresa"},
+  {t:"Respira. Todo pasa.",a:"Anónimo"},
+  {t:"La serenidad no es ausencia de tormenta. Es la paz en medio de ella.",a:"Anónimo"},
+  {t:"Cae siete veces, levántate ocho.",a:"Proverbio japonés"}
 ];
-let qIdx = Math.floor(Math.random()*QUOTES.length);
-function getLangQuotes(){ return QUOTES.filter(q => !q.l || q.l === cfg.lang || cfg.lang === 'all'); }
-function newQuote(){
-  const pool = getLangQuotes();
-  qIdx = (qIdx+1) % pool.length;
-  document.getElementById('qText').textContent = pool[qIdx].t;
-  document.getElementById('qAuth').textContent = '— ' + pool[qIdx].a;
+
+function getLangQuotes(){return QUOTES.filter(function(q){return !q.l||q.l===cfg.lang;});}
+var qIdx=0;
+function showQuote(){
+  var pool=getLangQuotes();
+  qIdx=Math.floor(Math.random()*pool.length);
+  document.getElementById('qText').textContent=pool[qIdx].t;
+  document.getElementById('qAuth').textContent='— '+pool[qIdx].a;
 }
-function initQuote(){
-  const pool = getLangQuotes();
-  qIdx = Math.floor(Math.random()*pool.length);
-  document.getElementById('qText').textContent = pool[qIdx].t;
-  document.getElementById('qAuth').textContent = '— ' + pool[qIdx].a;
+function nextQuote(){
+  var pool=getLangQuotes();
+  qIdx=(qIdx+1)%pool.length;
+  document.getElementById('qText').textContent=pool[qIdx].t;
+  document.getElementById('qAuth').textContent='— '+pool[qIdx].a;
 }
 
-// ==================== ONBOARDING ====================
-const OB_I18N = {
-  fr: {
-    tagline:'Ton espace de paix intérieure', themeLabel:'Ambiance visuelle',
-    namePlaceholder:"Comment t'appelles-tu ?", nameFloat:'Ton prénom',
-    q1:'Quel est ton plus grand défi en ce moment ?',
-    c1:'Trop de stress au quotidien', c2:'Difficultés à dormir / décompresser',
-    c3:'Manque de concentration', c4:'Émotions difficiles à gérer',
-    next1:'Continuer', greeting:(n)=>`Ravie de te rencontrer, ${n} ✨`,
+// ── TIPS DATA ─────────────────────────────────────────────
+var TIPS=[
+  {id:'529',cat:'immediat',emoji:'✋',title:'Technique 5-4-3-2-1',badge:'Ancrage · 60 sec',
+   text:'Quand l\'anxiété monte, ton cerveau a besoin d\'un ancrage concret dans le présent. Cette technique utilise tes 5 sens pour rompre la spirale.',
+   steps:['Nomme 5 choses que tu vois autour de toi','Identifie 4 sons que tu entends en ce moment','Touche 3 surfaces différentes et ressens leur texture','Perçois 2 odeurs dans ton environnement','Identifie 1 goût en bouche']},
+  {id:'anc',cat:'immediat',emoji:'🌿',title:'Ancrage corporel',badge:'Corps · 90 sec',
+   text:'Quand les pensées s\'emballent, reviens dans ton corps. La sensation physique ramène au présent plus vite que n\'importe quelle pensée.',
+   steps:['Pose tes deux pieds à plat sur le sol','Sens le poids de ton corps dans ta chaise','Pose une main sur ta poitrine, l\'autre sur ton ventre','Fais 3 respirations profondes en sentant le mouvement','Dis intérieurement : "Je suis ici, maintenant, en sécurité"']},
+  {id:'froid',cat:'immediat',emoji:'💧',title:'Choc thermique',badge:'Physiologie · 30 sec',
+   text:'L\'eau froide sur le visage ou les poignets active le réflexe de plongée et ralentit instantanément ton rythme cardiaque.',
+   steps:['Va aux toilettes ou à un point d\'eau','Fais couler de l\'eau froide','Passe tes poignets sous l\'eau 20 secondes','Ou aspergez ton visage délicatement','Respire pendant que l\'eau coule']},
+  {id:'box',cat:'immediat',emoji:'🌬️',title:'Respiration carrée',badge:'Respiration · 2 min',
+   text:'4 secondes d\'inspiration, 4 de rétention, 4 d\'expiration, 4 de rétention. Ce rythme régule ton système nerveux autonome en quelques cycles.',
+   steps:['Inspire par le nez en comptant jusqu\'à 4','Retiens ton souffle, compte jusqu\'à 4','Expire par la bouche, compte jusqu\'à 4','Retiens à vide, compte jusqu\'à 4','Répète 4 à 6 cycles']},
+  {id:'pause',cat:'quotidien',emoji:'⏸️',title:'La pause intentionnelle',badge:'Habitude · 5 min',
+   text:'Programmer 2-3 pauses non-négociables dans ta journée change tout. Pas une pause café avec téléphone — une vraie coupure sans stimulation.',
+   steps:['Bloque 5 min dans ton agenda (10h, 14h, 17h)','Pose ton téléphone face en bas','Regarde par la fenêtre ou ferme les yeux','Ne fais rien. Laisse ton esprit vagabonder','Remarque comment tu te sens après']},
+  {id:'matin',cat:'quotidien',emoji:'🌅',title:'Les 5 premières minutes',badge:'Routine · Matin',
+   text:'Ce que tu fais dans les 5 premières minutes après ton réveil conditionne ton état pour toute la journée. Protège ce temps.',
+   steps:['Ne touche pas ton téléphone avant 5 minutes','Bois un verre d\'eau avant tout','Fais 5 respirations profondes','Pose ton intention : "Aujourd\'hui, je choisis..."','Seulement ensuite, consulte tes messages']},
+  {id:'ecran',cat:'quotidien',emoji:'📵',title:'Hygiène numérique',badge:'Énergie · Quotidien',
+   text:'Chaque notification déclenche une micro-réaction de stress. Réduire les interruptions n\'est pas du luxe, c\'est de l\'hygiène mentale.',
+   steps:['Désactive toutes les notifications sauf les appels','Consulte tes messages à des heures fixes (10h, 13h, 17h)','Mets ton téléphone en "Ne pas déranger" dès 21h','Laisse ton téléphone dans une autre pièce pendant les repas','Créé une zone "sans téléphone" dans ta chambre']},
+  {id:'body',cat:'corps',emoji:'🚶',title:'Marche de décompression',badge:'Mouvement · 10 min',
+   text:'10 minutes de marche changent ta chimie cérébrale : moins de cortisol, plus de sérotonine. C\'est scientifiquement prouvé.',
+   steps:['Sors dehors si possible, sinon marche à l\'intérieur','Laisse ton téléphone, ou mets-le en mode avion','Marche à un rythme naturel, pas pressé','Remarque 3 détails de ton environnement','Laisse les pensées venir et passer sans t\'y accrocher']},
+  {id:'stretch',cat:'corps',emoji:'🧘',title:'Étirements anti-tension',badge:'Corps · 5 min',
+   text:'Le stress se stocke dans les muscles. Ces étirements ciblent les zones où la tension s\'accumule le plus : nuque, épaules, mâchoire.',
+   steps:['Roule les épaules en arrière 5 fois lentement','Penche doucement la tête de chaque côté, 30 sec','Ouvre grand la bouche, bâille, relâche la mâchoire','Entrecroise les doigts, étire les bras vers le plafond','Roule doucement le buste en avant, laisse pendre les bras']},
+  {id:'nature',cat:'corps',emoji:'🌳',title:'Bain de nature',badge:'Ressourcement · 20 min',
+   text:'Shinrin-yoku (bain de forêt) : 20 minutes dans la nature réduisent le cortisol de 12,4% et la fréquence cardiaque de 5,8%.',
+   steps:['Trouve un espace vert (parc, jardin, bois)','Laisse derrière toi tes préoccupations numériques','Marche lentement, sans destination précise','Engage tes sens : textures, odeurs, sons','Assieds-toi si possible et observez simplement']},
+  {id:'cogn',cat:'mental',emoji:'🧠',title:'Recadrage cognitif',badge:'Pensées · Mental',
+   text:'Nos pensées en cas de stress sont souvent exagérées. Questionner leur validité ne nie pas la réalité — ça la remet à sa juste mesure.',
+   steps:['Identifie la pensée anxiogène (ex: "Je vais échouer")','Demande-toi : quelle est la preuve réelle ?','Y a-t-il une autre façon de voir la situation ?','Que dirais-tu à un ami dans la même situation ?','Formule une pensée plus équilibrée et réaliste']},
+  {id:'limit',cat:'mental',emoji:'🛑',title:'Fixer ses limites',badge:'Énergie · Relationnel',
+   text:'Dire non à ce qui t\'épuise, c\'est dire oui à ce qui te nourrit. Les limites ne sont pas de l\'égoïsme, elles sont de la survie.',
+   steps:['Identifie une situation où tu te sens dépassé(e)','Nomme ce dont tu as besoin dans cette situation','Formule un "non" bienveillant : "Je ne peux pas, mais..."','Pratique devant le miroir si c\'est difficile','Rappelle-toi : une limite posée sert les deux parties']},
+  {id:'grat',cat:'mental',emoji:'🙏',title:'Pratique de gratitude',badge:'Cerveau · Soir',
+   text:'Écrire 3 gratitudes chaque soir recâble littéralement ton cerveau pour percevoir plus de positif. Après 21 jours, l\'effet est mesurable.',
+   steps:['Chaque soir, prends 3 minutes','Écris 3 choses spécifiques pour lesquelles tu es reconnaissant(e)','Sois précis : pas "la famille" mais "le câlin de ma fille ce matin"','Ressens la gratitude, ne la note pas mécaniquement','Continue 21 jours pour créer l\'habitude']},
+  {id:'social',cat:'lien',emoji:'💬',title:'Connexion authentique',badge:'Lien · Relationnel',
+   text:'Une conversation vraie de 15 minutes vaut plus que 2h de scroll. La connexion humaine est le meilleur antidote au stress chronique.',
+   steps:['Identifie une personne qui te ressource','Envoie-lui un message ou appelle-la','Partage quelque chose de vrai, pas juste la météo','Écoute vraiment, sans penser à ce que tu vas répondre','Remarque comment tu te sens après cet échange']},
+  {id:'aide',cat:'lien',emoji:'🤝',title:'Demander de l\'aide',badge:'Courage · Lien',
+   text:'Demander de l\'aide n\'est pas une faiblesse. C\'est la compétence la plus sous-estimée et la plus puissante pour traverser le chaos.',
+   steps:['Reconnais que tu as besoin d\'aide (ça prend du courage)','Identifie qui peut t\'aider concrètement','Formule une demande précise et délimitée','Accepte l\'aide offerte sans te sentir redevable','Remercie sincèrement — la vulnérabilité crée le lien']}
+];
+
+var TIP_CATS=[
+  {k:'all',label:'Tous'},
+  {k:'immediat',label:'⚡ Express'},
+  {k:'quotidien',label:'📅 Quotidien'},
+  {k:'corps',label:'🧘 Corps'},
+  {k:'mental',label:'🧠 Mental'},
+  {k:'lien',label:'💬 Liens'}
+];
+
+var currentTipCat='all';
+
+function initSerene(){
+  // SOS buttons
+  document.getElementById('sosFive').addEventListener('click',function(){
+    toast('✋ Nomme 5 choses que tu vois, 4 sons, 3 touchers, 2 odeurs, 1 goût');
+  });
+  document.getElementById('sosGround').addEventListener('click',function(){
+    toast('🌿 Pose les pieds au sol. Sens le poids de ton corps. Respire.');
+  });
+
+  // Categories
+  var cats=document.getElementById('sereneCats');
+  cats.innerHTML='';
+  TIP_CATS.forEach(function(c){
+    var b=document.createElement('button');
+    b.className='serene-cat'+(c.k===currentTipCat?' on':'');
+    b.textContent=c.label;
+    b.addEventListener('click',function(){
+      currentTipCat=c.k;
+      document.querySelectorAll('.serene-cat').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      renderTips();
+    });
+    cats.appendChild(b);
+  });
+  renderTips();
+}
+
+function renderTips(){
+  var list=document.getElementById('tipsList');
+  list.innerHTML='';
+  var filtered=currentTipCat==='all'?TIPS:TIPS.filter(function(t){return t.cat===currentTipCat;});
+  filtered.forEach(function(tip){
+    var card=document.createElement('div');
+    card.className='tip-card';
+    card.innerHTML=
+      '<div class="tip-header">'
+      +'<span class="tip-emoji">'+tip.emoji+'</span>'
+      +'<div class="tip-info"><div class="tip-title">'+tip.title+'</div><div class="tip-badge">'+tip.badge+'</div></div>'
+      +'<span class="tip-arrow">›</span>'
+      +'</div>'
+      +'<div class="tip-body">'
+      +'<p class="tip-text">'+tip.text+'</p>'
+      +'<ul class="tip-steps">'+tip.steps.map(function(s,i){return '<li class="tip-step"><span class="tip-step-n">'+(i+1)+'</span><span>'+s+'</span></li>';}).join('')+'</ul>'
+      +(tip.cat==='immediat'?'<button class="tip-try" onclick="document.getElementById(\'tab-breath\').click()">Essayer maintenant →</button>':'')
+      +'</div>';
+    card.addEventListener('click',function(){
+      card.classList.toggle('open');
+    });
+    list.appendChild(card);
+  });
+}
+
+// ── ONBOARDING ────────────────────────────────────────────
+var OB={
+  fr:{tag:'Ton espace de paix intérieure',th:'Ambiance visuelle',nf:'Ton prénom',
+    np:"Comment t'appelles-tu ?",q1:'Quel est ton plus grand défi en ce moment ?',
+    c:['😮‍💨 Trop de stress au quotidien','😴 Difficultés à dormir / décompresser','🌀 Manque de concentration','💭 Émotions difficiles à gérer'],
+    n1:'Continuer →',gr:function(n){return 'Ravie de te rencontrer, '+n+' ✨';},
     q2:'Qui es-tu dans ta vie quotidienne ?',
-    p1:'Parent débordé(e)', p2:'Professionnel(le) sous pression',
-    p3:'Étudiant(e) stressé(e)', p4:'En quête de moi-même',
+    p:['👶 Parent débordé(e)','💼 Professionnel(le) sous pression','🎓 Étudiant(e) stressé(e)','🌱 En quête de moi-même'],
     q3:"Ce qui t'aide le plus à te ressourcer ?",
-    m1:'La respiration & le calme', m2:"L'écriture & l'expression",
-    m3:'Le mouvement & le corps', m4:'Un peu de tout',
-    next2:'Commencer mon voyage',
-    th:['Doux','Sombre','Nature','Minimal','Divin']
-  },
-  en: {
-    tagline:'Your space for inner peace', themeLabel:'Visual theme',
-    namePlaceholder:"What's your name?", nameFloat:'Your name',
-    q1:'What is your biggest challenge right now?',
-    c1:'Too much daily stress', c2:'Trouble sleeping / unwinding',
-    c3:'Lack of focus', c4:'Difficult emotions to manage',
-    next1:'Continue', greeting:(n)=>`Lovely to meet you, ${n} ✨`,
-    q2:'Who are you in your daily life?',
-    p1:'Overwhelmed parent', p2:'Professional under pressure',
-    p3:'Stressed student', p4:'In search of myself',
-    q3:'What helps you recharge the most?',
-    m1:'Breathing & stillness', m2:'Writing & expression',
-    m3:'Movement & body', m4:'A bit of everything',
-    next2:'Begin my journey',
-    th:['Soft','Dark','Nature','Minimal','Divine']
-  },
-  es: {
-    tagline:'Tu espacio de paz interior', themeLabel:'Tema visual',
-    namePlaceholder:'¿Cómo te llamas?', nameFloat:'Tu nombre',
-    q1:'¿Cuál es tu mayor desafío ahora mismo?',
-    c1:'Demasiado estrés cotidiano', c2:'Dificultad para dormir / desconectar',
-    c3:'Falta de concentración', c4:'Emociones difíciles de gestionar',
-    next1:'Continuar', greeting:(n)=>`Encantada de conocerte, ${n} ✨`,
+    m:['🌬️ La respiration & le calme',"✍️ L'écriture & l'expression",'🚶 Le mouvement & le corps','✨ Un peu de tout'],
+    n2:'Commencer mon voyage ✦',
+    thn:['🌤 Doux','🌙 Sombre','🌿 Nature','◻ Minimal','✦ Divin','🌊 Océan','🌅 Coucher']},
+  en:{tag:'Your space for inner peace',th:'Visual theme',nf:'Your name',
+    np:"What's your name?",q1:'What is your biggest challenge right now?',
+    c:['😮‍💨 Too much stress','😴 Trouble sleeping','🌀 Lack of focus','💭 Difficult emotions'],
+    n1:'Continue →',gr:function(n){return 'Lovely to meet you, '+n+' ✨';},
+    q2:'Who are you in daily life?',
+    p:['👶 Overwhelmed parent','💼 Under pressure','🎓 Stressed student','🌱 In search of myself'],
+    q3:'What helps you recharge?',
+    m:['🌬️ Breathing & stillness','✍️ Writing & expression','🚶 Movement & body','✨ A bit of everything'],
+    n2:'Begin my journey ✦',
+    thn:['🌤 Soft','🌙 Dark','🌿 Nature','◻ Minimal','✦ Divine','🌊 Ocean','🌅 Sunset']},
+  es:{tag:'Tu espacio de paz interior',th:'Tema visual',nf:'Tu nombre',
+    np:'¿Cómo te llamas?',q1:'¿Cuál es tu mayor desafío ahora mismo?',
+    c:['😮‍💨 Demasiado estrés','😴 Dificultad para dormir','🌀 Falta de concentración','💭 Emociones difíciles'],
+    n1:'Continuar →',gr:function(n){return 'Encantada de conocerte, '+n+' ✨';},
     q2:'¿Quién eres en tu vida cotidiana?',
-    p1:'Padre/madre desbordado(a)', p2:'Profesional bajo presión',
-    p3:'Estudiante estresado(a)', p4:'En busca de mí mismo(a)',
-    q3:'¿Qué te ayuda más a recargar energías?',
-    m1:'La respiración & la calma', m2:'La escritura & la expresión',
-    m3:'El movimiento & el cuerpo', m4:'Un poco de todo',
-    next2:'Comenzar mi viaje',
-    th:['Suave','Oscuro','Natura','Mínimal','Divino']
-  }
+    p:['👶 Padre/madre desbordado(a)','💼 Profesional bajo presión','🎓 Estudiante estresado(a)','🌱 En busca de mí mismo(a)'],
+    q3:'¿Qué te ayuda más a recargar?',
+    m:['🌬️ Respiración & calma','✍️ Escritura & expresión','🚶 Movimiento & cuerpo','✨ Un poco de todo'],
+    n2:'Comenzar mi viaje ✦',
+    thn:['🌤 Suave','🌙 Oscuro','🌿 Natura','◻ Mínimal','✦ Divino','🌊 Océano','🌅 Atardecer']}
 };
 
-let obLang = 'fr', obTheme = 'light', obAns = {};
+var THEMES=THEME_DEFS;
+var CVALS=['stress','sleep','focus','emotion'];
+var PVALS=['parent','pro','student','self'];
+var MVALS=['breath','write','move','both'];
+var obLang=cfg.lang||'fr', obTheme=cfg.theme||'coachdivin';
+var obAns={challenge:null,profile:null,method:null};
 
-function obSetLang(lang, el) {
-  obLang = lang; cfg.lang = lang;
-  document.querySelectorAll('.ob-lang-btn').forEach(b => b.classList.remove('sel'));
-  el.classList.add('sel');
-  obTranslate();
-}
+function obRender(){
+  var i=OB[obLang];
+  var s=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
+  s('t-tag',i.tag);s('t-th',i.th);s('t-nf',i.nf);s('t-q1',i.q1);
+  s('t-q2',i.q2);s('t-q3',i.q3);
+  document.getElementById('obN1').textContent=i.n1;
+  document.getElementById('obN2').textContent=i.n2;
+  var ni=document.getElementById('ob-name');
+  if(ni)ni.placeholder=i.np;
 
-function obSetTheme(theme, el) {
-  obTheme = theme; cfg.theme = theme;
-  applyTheme(theme);
-  document.querySelectorAll('.ob-theme-btn').forEach(b => b.classList.remove('sel'));
-  el.classList.add('sel');
-}
-
-function obTranslate() {
-  const i = OB_I18N[obLang];
-  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
-  const setPlaceholder = (id, val) => { const el = document.getElementById(id); if(el) el.placeholder = val; };
-  set('obTagline', i.tagline); set('obThemeLabel', i.themeLabel);
-  set('obNameFloat', i.nameFloat);
-  setPlaceholder('obNameInput', i.namePlaceholder);
-  set('obQ1', i.q1);
-  set('obC1', i.c1); set('obC2', i.c2); set('obC3', i.c3); set('obC4', i.c4);
-  set('obNextLabel1', i.next1);
-  set('obQ2Label', i.q2);
-  set('obP1', i.p1); set('obP2', i.p2); set('obP3', i.p3); set('obP4', i.p4);
-  set('obQ3Label', i.q3);
-  set('obM1', i.m1); set('obM2', i.m2); set('obM3', i.m3); set('obM4', i.m4);
-  set('obNextLabel2', i.next2);
-  ['thDoux','thSombre','thNature','thMinimal','thDivin'].forEach((id, idx) => set(id, i.th[idx]));
-  const name = document.getElementById('obNameInput').value.trim();
-  if(name) set('obGreeting', i.greeting(name));
-}
-
-function obCheckPage1() {
-  const name = (document.getElementById('obNameInput').value || '').trim();
-  document.getElementById('obNext1').disabled = !(name.length >= 2 && obAns.challenge);
-}
-
-function selOb(el, k, v, page) {
-  el.closest('.ob-opts').querySelectorAll('.ob-opt').forEach(b => b.classList.remove('sel'));
-  el.classList.add('sel');
-  obAns[k] = v;
-  if (page === '1') obCheckPage1();
-  if (page === '2') {
-    document.getElementById('obNext2').disabled = !(obAns.profile && obAns.method);
-  }
-}
-
-function goObPage2() {
-  const name = (document.getElementById('obNameInput').value || '').trim();
-  cfg.firstName = name;
-  const i = OB_I18N[obLang];
-  document.getElementById('obGreeting').textContent = i.greeting(name);
-  document.getElementById('obPage1').classList.remove('active');
-  document.getElementById('obPage2').classList.add('active');
-  document.getElementById('obNext2').disabled = true;
-  obAns.profile = null; obAns.method = null;
-  document.querySelectorAll('#obPage2 .ob-opt').forEach(b => b.classList.remove('sel'));
-}
-
-function finishOb() {
-  cfg.profile = obAns.profile || 'self';
-  cfg.lang = obLang; cfg.theme = obTheme;
-  saveCfg(); db.onboarded = true; saveDb();
-  startApp();
-}
-
-function initObListeners() {
-  // Lang buttons
-  document.querySelectorAll('.ob-lang-btn').forEach(btn => {
-    btn.addEventListener('click', function() { obSetLang(this.dataset.lang, this); });
+  var lr=document.getElementById('ob-langs');
+  lr.innerHTML='';
+  [{k:'fr',l:'🇫🇷 Français'},{k:'en',l:'🇬🇧 English'},{k:'es',l:'🇪🇸 Español'}].forEach(function(x){
+    var b=document.createElement('button');
+    b.className='ob-lang'+(x.k===obLang?' on':'');
+    b.textContent=x.l; b.dataset.lang=x.k; lr.appendChild(b);
   });
-  // Theme buttons
-  document.querySelectorAll('.ob-theme-btn').forEach(btn => {
-    btn.addEventListener('click', function() { obSetTheme(this.dataset.theme, this); });
+  lr.onclick=function(e){
+    var b=e.target.closest?e.target.closest('[data-lang]'):e.target;
+    if(!b||!b.dataset||!b.dataset.lang)return;
+    obLang=b.dataset.lang;cfg.lang=obLang;saveCfg();obRender();
+  };
+
+  var tr=document.getElementById('ob-themes');
+  tr.innerHTML='';
+  THEMES.forEach(function(t,idx){
+    var b=document.createElement('button');
+    b.className='ob-th'+(t.k===obTheme?' on':'');
+    b.dataset.theme=t.k;
+    b.innerHTML='<div class="ob-th-sw" style="background:linear-gradient(135deg,'+t.g+')"></div><span class="ob-th-nm">'+i.thn[idx]+'</span>';
+    tr.appendChild(b);
   });
-  // Name input
-  const nameInput = document.getElementById('obNameInput');
-  if(nameInput) nameInput.addEventListener('input', obCheckPage1);
-  // Option buttons (challenge / profile / method)
-  document.querySelectorAll('.ob-opt').forEach(btn => {
-    btn.addEventListener('click', function() {
-      selOb(this, this.dataset.key, this.dataset.val, this.dataset.page);
-    });
+  tr.onclick=function(e){
+    var b=e.target.closest?e.target.closest('[data-theme]'):e.target;
+    if(!b||!b.dataset||!b.dataset.theme)return;
+    obTheme=b.dataset.theme;cfg.theme=obTheme;applyTheme(obTheme);saveCfg();obRender();
+  };
+
+  var o1=document.getElementById('ob-c');
+  o1.innerHTML='';
+  i.c.forEach(function(txt,idx){
+    var b=document.createElement('button');
+    b.className='ob-opt'+(obAns.challenge===CVALS[idx]?' on':'');
+    b.textContent=txt; b.dataset.c=CVALS[idx]; o1.appendChild(b);
   });
-  // Next buttons
-  const next1 = document.getElementById('obNext1');
-  if(next1) next1.addEventListener('click', goObPage2);
-  const next2 = document.getElementById('obNext2');
-  if(next2) next2.addEventListener('click', finishOb);
+  o1.onclick=function(e){
+    var b=e.target.closest('[data-c]');if(!b)return;
+    obAns.challenge=b.dataset.c;obCheckP1();obRender();
+  };
+
+  var o2=document.getElementById('ob-p');
+  o2.innerHTML='';
+  i.p.forEach(function(txt,idx){
+    var b=document.createElement('button');
+    b.className='ob-opt'+(obAns.profile===PVALS[idx]?' on':'');
+    b.textContent=txt; b.dataset.p=PVALS[idx]; o2.appendChild(b);
+  });
+  o2.onclick=function(e){
+    var b=e.target.closest('[data-p]');if(!b)return;
+    obAns.profile=b.dataset.p;
+    document.getElementById('obN2').disabled=!(obAns.profile&&obAns.method);
+    obRender();
+  };
+
+  var o3=document.getElementById('ob-m');
+  o3.innerHTML='';
+  i.m.forEach(function(txt,idx){
+    var b=document.createElement('button');
+    b.className='ob-opt'+(obAns.method===MVALS[idx]?' on':'');
+    b.textContent=txt; b.dataset.m=MVALS[idx]; o3.appendChild(b);
+  });
+  o3.onclick=function(e){
+    var b=e.target.closest('[data-m]');if(!b)return;
+    obAns.method=b.dataset.m;
+    document.getElementById('obN2').disabled=!(obAns.profile&&obAns.method);
+    obRender();
+  };
+
+  var name=(document.getElementById('ob-name')||{value:''}).value.trim()||cfg.firstName||'';
+  if(name)s('t-gr',i.gr(name));
 }
 
-// ==================== APP START ====================
-function startApp(){
-  document.getElementById('onboarding').classList.remove('active');
-  document.getElementById('app').classList.add('active');
-  document.getElementById('bottomNav').style.display='flex';
-  applyTheme(cfg.theme);
-  buildDayNav(); loadDay(currentDay);
-  buildMedList(); buildStats();
-  updateProfileUI(); updateLangUI();
-  loadNotifSettings();
-  initChat();
-  initQuote();
-  // Personalize top bar with first name
-  if(cfg.firstName){
-    const greeting = cfg.lang==='en' ? `Hi, ${cfg.firstName}` : cfg.lang==='es' ? `Hola, ${cfg.firstName}` : `Bonjour, ${cfg.firstName}`;
-    document.querySelector('.app-logo').textContent = greeting;
-  }
+function obCheckP1(){
+  var name=(document.getElementById('ob-name')||{value:''}).value.trim();
+  document.getElementById('obN1').disabled=!(name.length>=2&&obAns.challenge);
 }
 
-// ==================== THEME ====================
-const THEME_COLORS={light:'#6b4f3a',dark:'#242018',nature:'#2a5a2a',minimal:'#111',coachdivin:'#4a1428'};
-function applyTheme(t){
-  document.documentElement.setAttribute('data-theme',t);
-  document.getElementById('themeMetaColor').content=THEME_COLORS[t]||'#6b4f3a';
+function initOb(){
+  document.getElementById('ob-name').addEventListener('input',obCheckP1);
+  document.getElementById('obN1').addEventListener('click',function(){
+    if(this.disabled)return;
+    cfg.firstName=document.getElementById('ob-name').value.trim();
+    obAns.profile=null;obAns.method=null;
+    document.getElementById('obP1').classList.remove('active');
+    document.getElementById('obP2').classList.add('active');
+    document.getElementById('obN2').disabled=true;
+    obRender();
+  });
+  document.getElementById('obN2').addEventListener('click',function(){
+    if(this.disabled)return;
+    cfg.profile=obAns.profile||'self';cfg.lang=obLang;cfg.theme=obTheme;
+    db.onboarded=true;saveCfg();saveDb();startApp();
+  });
 }
-function setTheme(t,el){cfg.theme=t;saveCfg();applyTheme(t);document.querySelectorAll('.theme-opt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');toast('Thème appliqué 🎨');}
 
-// ==================== PROFILE ====================
-function setProfile(p,el){cfg.profile=p;saveCfg();document.querySelectorAll('.prof-opt').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');toast('Profil mis à jour ✦');}
-function updateProfileUI(){document.querySelectorAll('.prof-opt').forEach(e=>e.classList.toggle('sel',e.dataset.p===cfg.profile));}
-function setLang(l,el){cfg.lang=l;saveCfg();document.querySelectorAll('.lang-btn').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');toast('Langue mise à jour 🌍');}
-function updateLangUI(){document.querySelectorAll('.lang-btn').forEach(b=>{const map={fr:'Français',en:'English',es:'Español'};b.classList.toggle('sel',b.textContent.includes(map[cfg.lang]))});}
-
-// ==================== DAY NAV ====================
+// ── DAY NAV ───────────────────────────────────────────────
 function buildDayNav(){
-  const nav=document.getElementById('dayNav');nav.innerHTML='';
-  DAYS.forEach((d,i)=>{
-    const btn=document.createElement('button');
-    btn.className='day-btn'+(i===currentDay?' active':'')+(db[i]?' has-entry':'');
+  var nav=document.getElementById('dayNav');
+  nav.innerHTML='';
+  DAYS.forEach(function(d,i){
+    var btn=document.createElement('button');
+    btn.className='day-btn'+(i===currentDay?' active':'')+(db[i]?' has':'');
     btn.textContent=d;
-    btn.onclick=()=>{saveCurrentToMem();currentDay=i;loadDay(i);buildDayNav();};
+    btn.addEventListener('click',function(){saveDay(false);currentDay=i;loadDay(i);buildDayNav();});
     nav.appendChild(btn);
   });
-  const today=new Date(),offset=currentDay-(today.getDay()===0?6:today.getDay()-1);
-  const d=new Date(today);d.setDate(d.getDate()+offset);
-  document.getElementById('dayDate').textContent=d.toLocaleDateString('fr-FR',{weekday:'long',month:'long',day:'numeric'});
+  var opts={weekday:'long',month:'long',day:'numeric'};
+  var today=new Date();
+  var off=currentDay-(today.getDay()===0?6:today.getDay()-1);
+  var d=new Date(today);d.setDate(d.getDate()+off);
+  document.getElementById('dayDate').textContent=d.toLocaleDateString('fr-FR',opts);
 }
 
-// ==================== TASKS ====================
-function toggleTask(item){item.classList.toggle('done');}
+// ── TASKS ─────────────────────────────────────────────────
+function initTasks(){
+  ['mTasks','dTasks','eTasks'].forEach(function(id){
+    document.getElementById(id).querySelectorAll('.task').forEach(function(t){
+      t.addEventListener('click',function(){t.classList.toggle('done');});
+    });
+  });
+}
 
-// ==================== MOOD ====================
-function selMood(btn){document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+function getTasks(id){
+  return Array.from(document.getElementById(id).querySelectorAll('.task')).map(function(t){return t.classList.contains('done');});
+}
+function setTasks(id,arr){
+  if(!arr)return;
+  document.getElementById(id).querySelectorAll('.task').forEach(function(t,i){t.classList.toggle('done',!!arr[i]);});
+}
 
-// ==================== SAVE/LOAD ====================
-function saveCurrentToMem(){
-  const tasks=id=>[...document.getElementById(id).querySelectorAll('.task-item')].map(i=>i.classList.contains('done'));
-  const mood=document.querySelector('.mood-btn.sel');
+// ── MOOD ──────────────────────────────────────────────────
+function initMood(){
+  document.getElementById('moodRow').querySelectorAll('.mood-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.getElementById('moodRow').querySelectorAll('.mood-btn').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+    });
+  });
+  document.getElementById('stressSlider').addEventListener('input',function(){
+    document.getElementById('slVal').textContent=this.value;
+  });
+}
+
+// ── SAVE / LOAD ───────────────────────────────────────────
+function saveDay(showToast){
+  if(showToast===undefined)showToast=true;
+  var mood=document.querySelector('.mood-btn.on');
   db[currentDay]={
-    morningTasks:tasks('morningTasks'),dayTasks:tasks('dayTasks'),eveningTasks:tasks('eveningTasks'),
-    morningNote:document.getElementById('morningNote').value,
-    eveningNote:document.getElementById('eveningNote').value,
-    gratitudeNote:document.getElementById('gratitudeNote').value,
-    closingNote:document.getElementById('closingNote').value,
+    mTasks:getTasks('mTasks'),dTasks:getTasks('dTasks'),eTasks:getTasks('eTasks'),
+    morning:document.getElementById('tMorning').value,
+    evening:document.getElementById('tEvening').value,
+    gratitude:document.getElementById('tGratitude').value,
+    closing:document.getElementById('tClosing').value,
     stress:+document.getElementById('stressSlider').value,
-    mood:mood?mood.textContent:'',
-    savedAt:new Date().toISOString()
+    mood:mood?mood.textContent:'',savedAt:new Date().toISOString()
   };
+  saveDb();buildDayNav();buildStats();
+  if(showToast)toast('Journée sauvegardée 🌿');
 }
-function loadDay(i){
-  const d=db[i]||{};
-  const loadTasks=(id,saved)=>{document.getElementById(id).querySelectorAll('.task-item').forEach((item,idx)=>item.classList.toggle('done',!!(saved&&saved[idx])));};
-  loadTasks('morningTasks',d.morningTasks);loadTasks('dayTasks',d.dayTasks);loadTasks('eveningTasks',d.eveningTasks);
-  document.getElementById('morningNote').value=d.morningNote||'';
-  document.getElementById('eveningNote').value=d.eveningNote||'';
-  document.getElementById('gratitudeNote').value=d.gratitudeNote||'';
-  document.getElementById('closingNote').value=d.closingNote||'';
-  document.getElementById('stressSlider').value=d.stress||5;
-  document.getElementById('stressVal').textContent=d.stress||5;
-  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.toggle('sel',b.textContent===d.mood));
-}
-function saveDay(){saveCurrentToMem();saveDb();buildDayNav();buildStats();scheduleNotifs();toast('Journée sauvegardée 🌿');}
-function saveDb(){localStorage.setItem('serena_db',JSON.stringify(db));}
-function saveCfg(){localStorage.setItem('serena_cfg',JSON.stringify(cfg));}
 
-// ==================== BREATHING ====================
-const BREATHS={
+function loadDay(i){
+  var d=db[i]||{};
+  setTasks('mTasks',d.mTasks);setTasks('dTasks',d.dTasks);setTasks('eTasks',d.eTasks);
+  document.getElementById('tMorning').value=d.morning||'';
+  document.getElementById('tEvening').value=d.evening||'';
+  document.getElementById('tGratitude').value=d.gratitude||'';
+  document.getElementById('tClosing').value=d.closing||'';
+  document.getElementById('stressSlider').value=d.stress||5;
+  document.getElementById('slVal').textContent=d.stress||5;
+  document.getElementById('moodRow').querySelectorAll('.mood-btn').forEach(function(b){
+    b.classList.toggle('on',b.textContent===d.mood);
+  });
+}
+
+// ── BREATHING ─────────────────────────────────────────────
+var BREATHS={
   '446':{phases:['Inspire','Retiens','Expire'],times:[4,4,6]},
   '478':{phases:['Inspire','Retiens','Expire'],times:[4,7,8]},
   'box':{phases:['Inspire','Retiens','Expire','Retiens'],times:[4,4,4,4]},
   'coh':{phases:['Inspire','Expire'],times:[5,5]}
 };
-let bKey='446',bRunning=false,bTimer=null,bPhase=0,bCycles=0,bSec=0;
-function selBreath(el,k){document.querySelectorAll('.br-opt').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');bKey=k;resetBreath();}
-function toggleBreath(){if(bRunning){clearInterval(bTimer);bRunning=false;document.getElementById('brStart').textContent='▶ Reprendre';}else{bRunning=true;document.getElementById('brStart').textContent='⏸ Pause';runBPhase();}}
-function runBPhase(){
-  const b=BREATHS[bKey];bSec=b.times[bPhase];
-  document.getElementById('brPhase').textContent=b.phases[bPhase];
-  document.getElementById('brCount').textContent=bSec;
-  animBreath(b.phases[bPhase],b.times[bPhase]);
-  bTimer=setInterval(()=>{bSec--;document.getElementById('brCount').textContent=bSec;if(bSec<=0){clearInterval(bTimer);bPhase=(bPhase+1)%b.phases.length;if(bPhase===0){bCycles++;document.getElementById('brCycles').textContent=bCycles+' cycle'+(bCycles>1?'s':'')+' ✓';}if(bRunning)setTimeout(runBPhase,300);}},1000);
-}
-function animBreath(phase,dur){
-  const c=document.getElementById('brCircle');c.style.transition='none';
-  if(phase==='Inspire'){requestAnimationFrame(()=>{c.style.transition=`transform ${dur}s ease-in-out`;c.style.transform='scale(1)';});}
-  else if(phase==='Expire'){requestAnimationFrame(()=>{c.style.transition=`transform ${dur}s ease-in-out`;c.style.transform='scale(.55)';});}
-}
-function resetBreath(){clearInterval(bTimer);bRunning=false;bPhase=0;bCycles=0;bSec=0;document.getElementById('brStart').textContent='▶ Commencer';document.getElementById('brPhase').textContent='Prêt(e) ?';document.getElementById('brCount').textContent='—';document.getElementById('brCycles').textContent='';const c=document.getElementById('brCircle');c.style.transition='transform .4s';c.style.transform='scale(.6)';}
+var brKey='446',brRunning=false,brTimer=null,brPhaseIdx=0,brCycles=0,brSec=0;
 
-// ==================== AMBIENT SOUNDS (Web Audio) ====================
-let audioCtx=null,ambientNodes={},currentAmb=null;
-function getAudioCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-function createNoise(type){
-  const ctx=getAudioCtx(),buf=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate),data=buf.getChannelData(0);
-  for(let i=0;i<data.length;i++)data[i]=Math.random()*2-1;
-  const src=ctx.createBufferSource();src.buffer=buf;src.loop=true;
-  const gain=ctx.createGain();gain.gain.value=0.06;
-  if(type==='rain'){const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=1200;f.Q.value=0.5;src.connect(f);f.connect(gain);}
-  else if(type==='waves'){const f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=600;src.connect(f);const lfo=ctx.createOscillator();lfo.frequency.value=0.15;const lfoGain=ctx.createGain();lfoGain.gain.value=0.03;lfo.connect(lfoGain);lfoGain.connect(gain.gain);lfo.start();f.connect(gain);}
-  else if(type==='white'){src.connect(gain);}
-  else if(type==='forest'){const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=800;f.Q.value=2;src.connect(f);f.connect(gain);}
-  else if(type==='bowl'){
-    // Sine tone for bowl
-    const osc=ctx.createOscillator();osc.frequency.value=432;osc.type='sine';
-    const g=ctx.createGain();g.gain.value=0.12;
-    const osc2=ctx.createOscillator();osc2.frequency.value=864;osc2.type='sine';
-    const g2=ctx.createGain();g2.gain.value=0.04;
-    osc.connect(g);osc2.connect(g2);g.connect(ctx.destination);g2.connect(ctx.destination);
-    osc.start();osc2.start();
-    return {stop:()=>{try{osc.stop();osc2.stop();}catch(e){}}};
-  }
-  gain.connect(ctx.destination);src.start();
-  return {stop:()=>{try{src.stop();}catch(e){}}};
-}
-function toggleAmb(btn,type){
-  if(btn.classList.contains('playing')){if(ambientNodes[type]){ambientNodes[type].stop();delete ambientNodes[type];}btn.classList.remove('playing');return;}
-  if(currentAmb){const old=document.querySelector('.amb-btn.playing');if(old)old.classList.remove('playing');if(ambientNodes[currentAmb]){ambientNodes[currentAmb].stop();delete ambientNodes[currentAmb];}}
-  try{ambientNodes[type]=createNoise(type);btn.classList.add('playing');currentAmb=type;}catch(e){toast('Son non disponible sur cet appareil');}
-}
-
-// ==================== MEDITATION ====================
-const MEDITATIONS=[
-  {id:'body',icon:'🌿',title:'Scan corporel',desc:'Relâcher les tensions',dur:300},
-  {id:'gratitude',icon:'🙏',title:'Méditation gratitude',desc:'Ouvrir le cœur',dur:240},
-  {id:'breath',icon:'🌬️',title:'Pleine conscience',desc:'Ancrage dans le présent',dur:180},
-  {id:'sleep',icon:'😴',title:'Préparation au sommeil',desc:'Laisser aller la journée',dur:600},
-  {id:'stress',icon:'💆',title:'Anti-stress rapide',desc:'Calmer le système nerveux',dur:120},
-  {id:'morning',icon:'🌅',title:'Éveil en douceur',desc:'Accueillir la journée',dur:180},
-];
-const MED_SCRIPTS={
-  body:"Installe-toi confortablement. Ferme les yeux. Commence par remarquer ton souffle... Sens ton corps en contact avec le sol ou le siège... Porte ton attention à tes pieds. Remarque toutes les sensations... Remonte doucement vers tes chevilles, tes mollets... Sens tes genoux, tes cuisses se relâcher... Laisse le bas du dos s'alourdir... Remarque si des tensions sont présentes dans ton ventre... Relâche tes épaules en expirant... Laisse tes bras tomber lourdement... Détends ta mâchoire, ton front... Tu es en sécurité. Tu peux lâcher.",
-  gratitude:"Ferme les yeux. Pose une main sur ton cœur... Pense à quelque chose de simple qui t'a apporté de la joie aujourd'hui... Peut-être une lumière, un sourire, une saveur... Laisse ce sentiment de gratitude se déposer dans ta poitrine... Maintenant pense à une personne pour qui tu ressens de l'amour... Envoie-lui mentalement de la chaleur... Enfin, dirige cette bienveillance vers toi-même. Tu mérites ta propre gratitude.",
-  breath:"Assieds-toi confortablement. Sens ton souffle naturel... Ne le contrôle pas, observe-le juste... Remarque l'air qui entre par tes narines... La légère pause entre l'inspiration et l'expiration... L'air qui ressort, plus chaud... Si ton esprit part, reviens simplement à ce souffle... Tu n'as rien à faire. Juste être ici, maintenant.",
-  sleep:"Allonge-toi. Laisse ton corps s'enfoncer dans le matelas... Imagine une lumière dorée et douce qui entre dans ta tête et descend lentement... Elle détend ton front, tes yeux, ta bouche... Elle coule dans ta gorge, tes épaules... Dans ta poitrine, ton ventre... Dans tes bras, tes mains... Dans tes jambes, tes pieds... Ton corps est lourd, chaud, en sécurité. La journée est terminée. Tu peux te reposer.",
-  stress:"Sens tes pieds sur le sol. Appuie-les fermement... Inspire profondément par le nez en comptant jusqu'à 4... Retiens 2 secondes... Expire lentement par la bouche sur 6 secondes... Encore... Sens ton corps se stabiliser... Tu es ancré(e). Le stress n'est qu'une vague — elle arrive, et elle repart.",
-  morning:"Bienvenue dans cette nouvelle journée... Commence par trois respirations profondes... En inspirant, accueille les possibilités de ce jour... En expirant, relâche tout ce qui reste d'hier... Pose une intention simple pour aujourd'hui — une émotion, une qualité à incarner... Porte cette intention avec toi comme une boussole intérieure.",
-};
-let medTimer=null,medRunning=false,medDur=0,medElapsed=0,medCurrent=null;
-function buildMedList(){
-  const list=document.getElementById('medList');list.innerHTML='';
-  MEDITATIONS.forEach(m=>{
-    const d=document.createElement('div');d.className='med-item';d.dataset.id=m.id;
-    d.innerHTML=`<div class="med-icon">${m.icon}</div><div class="med-info"><div class="med-title">${m.title}</div><div class="med-dur">${Math.floor(m.dur/60)} min · ${m.desc}</div></div><button class="med-play" onclick="startMed('${m.id}',${m.dur},this)">▶</button>`;
-    list.appendChild(d);
+function initBreath(){
+  document.getElementById('brSel').querySelectorAll('.br-opt').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.getElementById('brSel').querySelectorAll('.br-opt').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');brKey=b.dataset.k;resetBreath();
+    });
   });
+  document.getElementById('brStart').addEventListener('click',toggleBreath);
+  document.getElementById('brReset').addEventListener('click',resetBreath);
 }
-function startMed(id,dur,btn){
-  if(medRunning){clearInterval(medTimer);medRunning=false;}
-  document.querySelectorAll('.med-item').forEach(i=>i.classList.remove('active'));
-  btn.closest('.med-item').classList.add('active');
-  medDur=dur;medElapsed=0;medCurrent=id;medRunning=true;
-  const m=MEDITATIONS.find(x=>x.id===id);
-  document.getElementById('medTimerLabel').textContent=m.title;
-  btn.textContent='⏸';
-  btn.onclick=()=>{if(medRunning){clearInterval(medTimer);medRunning=false;btn.textContent='▶';btn.onclick=()=>resumeMed(btn);}};
-  runMedTimer(btn);
-  speakMed(id);
+
+function toggleBreath(){
+  if(brRunning){clearInterval(brTimer);brRunning=false;document.getElementById('brStart').textContent='▶ Reprendre';}
+  else{brRunning=true;document.getElementById('brStart').textContent='⏸ Pause';runBrPhase();}
 }
-function resumeMed(btn){medRunning=true;btn.textContent='⏸';runMedTimer(btn);}
-function runMedTimer(btn){
-  medTimer=setInterval(()=>{
-    medElapsed++;
-    const rem=medDur-medElapsed;
-    const mm=String(Math.floor(rem/60)).padStart(2,'0'),ss=String(rem%60).padStart(2,'0');
-    document.getElementById('medTimerDisplay').textContent=mm+':'+ss;
-    document.getElementById('medProgressFill').style.width=(medElapsed/medDur*100)+'%';
-    if(rem<=0){clearInterval(medTimer);medRunning=false;btn.textContent='▶';toast('Méditation terminée 🙏');}
+
+function runBrPhase(){
+  var b=BREATHS[brKey];
+  brSec=b.times[brPhaseIdx];
+  document.getElementById('brPhase').textContent=b.phases[brPhaseIdx];
+  document.getElementById('brCount').textContent=brSec;
+  var c=document.getElementById('brCircle');
+  c.style.transition='none';
+  requestAnimationFrame(function(){
+    c.style.transition='transform '+brSec+'s ease-in-out';
+    c.style.transform=b.phases[brPhaseIdx]==='Inspire'?'scale(1)':'scale(.55)';
+  });
+  brTimer=setInterval(function(){
+    brSec--;document.getElementById('brCount').textContent=brSec;
+    if(brSec<=0){
+      clearInterval(brTimer);
+      brPhaseIdx=(brPhaseIdx+1)%b.phases.length;
+      if(brPhaseIdx===0){brCycles++;document.getElementById('brCyc').textContent=brCycles+' cycle'+(brCycles>1?'s':'')+' ✓';}
+      if(brRunning)setTimeout(runBrPhase,300);
+    }
   },1000);
 }
-function speakMed(id){
-  if(!('speechSynthesis' in window))return;
-  window.speechSynthesis.cancel();
-  const script=MED_SCRIPTS[id];
-  const sentences=script.split('...');
-  let i=0;
-  function speakNext(){
-    if(i>=sentences.length||!medRunning)return;
-    const u=new SpeechSynthesisUtterance(sentences[i].trim());
-    u.lang=cfg.lang==='en'?'en-US':cfg.lang==='es'?'es-ES':'fr-FR';
-    u.rate=0.85;u.pitch=0.95;u.volume=0.9;
-    u.onend=()=>{i++;setTimeout(speakNext,1200);};
-    window.speechSynthesis.speak(u);
-  }
-  speakNext();
+
+function resetBreath(){
+  clearInterval(brTimer);brRunning=false;brPhaseIdx=0;brCycles=0;brSec=0;
+  document.getElementById('brStart').textContent='▶ Commencer';
+  document.getElementById('brPhase').textContent='Prêt(e) ?';
+  document.getElementById('brCount').textContent='—';
+  document.getElementById('brCyc').textContent='';
+  var c=document.getElementById('brCircle');c.style.transition='transform .4s';c.style.transform='scale(.6)';
 }
 
-// ==================== SERENA AI CHAT ====================
-function initChat(){
-  chatHistory=[{role:'assistant',content:'Bonjour, je suis Serena. Je suis ici pour t\'accompagner avec bienveillance. Comment te sens-tu aujourd\'hui ?'}];
-}
-async function sendChat(){
-  const input=document.getElementById('chatInput');
-  const msg=input.value.trim();if(!msg)return;
-  input.value='';input.style.height='44px';
-  const btn=document.getElementById('chatSend');btn.disabled=true;
-  appendMsg('user',msg);
-  chatHistory.push({role:'user',content:msg});
-  const typing=appendTyping();
-  try{
-    const systemPrompt=`Tu es Serena, une IA de soutien émotionnel bienveillante et douce. Tu accompagnes des personnes qui cherchent la paix intérieure. Tu t'exprimes avec chaleur, empathie et douceur. Tu n'es pas thérapeute, mais tu offres un espace d'écoute et de soutien. Tu poses des questions douces et ouvertes. Tu évites le jargon. Tu es courte dans tes réponses (2-4 phrases max). Si quelqu'un exprime une détresse sérieuse, tu l'invites à consulter un professionnel ou le 3114. Le profil de l'utilisateur : ${cfg.profile}. Langue : ${cfg.lang}.`;
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system:systemPrompt,
-        messages:chatHistory.filter(m=>m.role!=='assistant'||chatHistory.indexOf(m)>0).map(m=>({role:m.role,content:m.content}))
-      })
-    });
-    const data=await res.json();
-    typing.remove();
-    const reply=data.content?.map(c=>c.text||'').join('')||'Je suis là pour toi. 🌿';
-    chatHistory.push({role:'assistant',content:reply});
-    appendMsg('ai',reply);
-  }catch(e){
-    typing.remove();
-    const fallback='Je t\'entends. Prends un souffle profond avec moi. 🌿';
-    appendMsg('ai',fallback);
-  }
-  btn.disabled=false;
-  const ch=document.getElementById('chatHistory');ch.scrollTop=ch.scrollHeight;
-}
-function appendMsg(role,text){
-  const ch=document.getElementById('chatHistory');
-  const div=document.createElement('div');div.className='msg '+role;
-  div.innerHTML=role==='ai'
-    ?`<div class="msg-avatar">🌿</div><div class="msg-bubble">${text}</div>`
-    :`<div class="msg-bubble">${text}</div>`;
-  ch.appendChild(div);ch.scrollTop=ch.scrollHeight;
-  return div;
-}
-function appendTyping(){
-  const ch=document.getElementById('chatHistory');
-  const div=document.createElement('div');div.className='msg ai';
-  div.innerHTML=`<div class="msg-avatar">🌿</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
-  ch.appendChild(div);ch.scrollTop=ch.scrollHeight;
-  return div;
-}
-
-// ==================== STATS ====================
+// ── STATS ─────────────────────────────────────────────────
 function buildStats(){
-  const entries=DAYS.map((_,i)=>db[i]).filter(Boolean);
-  document.getElementById('sTot').textContent=entries.length;
-  let streak=0;for(let i=currentDay;i>=0;i--){if(db[i])streak++;else break;}
-  document.getElementById('sSt').textContent=streak;
-  const rates=entries.map(d=>{const all=[...(d.morningTasks||[]),...(d.dayTasks||[]),...(d.eveningTasks||[])];return all.length?all.filter(Boolean).length/all.length:0;});
-  const avg=rates.length?Math.round(rates.reduce((a,b)=>a+b,0)/rates.length*100):0;
-  document.getElementById('sComp').textContent=avg+'%';
-  const st=entries.filter(d=>d.stress).map(d=>d.stress);
-  const avgSt=st.length?(st.reduce((a,b)=>a+b,0)/st.length).toFixed(1):'—';
-  document.getElementById('sStress').textContent=avgSt;
-
-  // Insights
-  buildInsights(entries,avg,avgSt,streak);
-
-  // Bar chart
-  const chart=document.getElementById('barChart'),lbls=document.getElementById('barLabels');
-  chart.innerHTML='';lbls.innerHTML='';
-  DAYS.forEach((d,i)=>{
-    const e=db[i];let pct=0;
-    if(e){const all=[...(e.morningTasks||[]),...(e.dayTasks||[]),...(e.eveningTasks||[])];pct=all.length?Math.round(all.filter(Boolean).length/all.length*100):0;}
-    const col=document.createElement('div');col.className='bar-col';
-    col.innerHTML=`<div class="bar-fill" style="height:${Math.max(3,pct*.72)}px;background:${i===currentDay?'var(--terra)':'var(--sage-l)'}"></div>`;
-    chart.appendChild(col);
-    const l=document.createElement('span');l.style.cssText='font-size:9px;color:var(--muted);flex:1;text-align:center;';l.textContent=d;lbls.appendChild(l);
+  var entries=DAYS.map(function(_,i){return db[i];}).filter(Boolean);
+  document.getElementById('stTotal').textContent=entries.length;
+  var streak=0;
+  for(var i=currentDay;i>=0;i--){if(db[i])streak++;else break;}
+  document.getElementById('stStreak').textContent=streak;
+  var rates=entries.map(function(d){
+    var a=(d.mTasks||[]).concat(d.dTasks||[]).concat(d.eTasks||[]);
+    return a.length?a.filter(Boolean).length/a.length:0;
   });
-
-  // Stress history
-  const sh=document.getElementById('stressHist');sh.innerHTML='';
-  DAYS.forEach((d,i)=>{const v=db[i]?.stress||0;const row=document.createElement('div');row.className='stress-line';row.innerHTML=`<span class="s-day">${d}</span><div class="s-bg"><div class="s-fill" style="width:${v?v*10:0}%"></div></div><span class="s-val">${v||'—'}</span>`;sh.appendChild(row);});
-
-  // Gratitude
-  const gl=document.getElementById('gratList');gl.innerHTML='';
-  DAYS.slice().reverse().forEach((_,ri)=>{const i=6-ri;const note=db[i]?.gratitudeNote;if(note?.trim()){const el=document.createElement('div');el.className='grat-item';el.innerHTML=`<div class="grat-day">${DAYS[i]}</div><div class="grat-text">${note}</div>`;gl.appendChild(el);}});
+  var avgRate=rates.length?Math.round(rates.reduce(function(a,b){return a+b;},0)/rates.length*100):0;
+  document.getElementById('stComp').textContent=avgRate+'%';
+  var stresses=entries.filter(function(d){return d.stress;}).map(function(d){return d.stress;});
+  var avgStress=stresses.length?(stresses.reduce(function(a,b){return a+b;},0)/stresses.length).toFixed(1):'—';
+  document.getElementById('stStress').textContent=avgStress;
+  var chart=document.getElementById('barChart'),labs=document.getElementById('barLabels');
+  chart.innerHTML='';labs.innerHTML='';
+  DAYS.forEach(function(d,i){
+    var e=db[i];var pct=0;
+    if(e){var a=[].concat(e.mTasks||[]).concat(e.dTasks||[]).concat(e.eTasks||[]);pct=a.length?Math.round(a.filter(Boolean).length/a.length*100):0;}
+    var col=document.createElement('div');col.className='bar-col';
+    col.innerHTML='<div class="bar-fill" style="height:'+Math.max(3,pct*.65)+'px;background:'+(i===currentDay?'var(--accent)':'var(--sage-l)')+'"></div>';
+    chart.appendChild(col);
+    var lbl=document.createElement('span');lbl.style.cssText='font-size:10px;color:var(--muted);flex:1;text-align:center;';lbl.textContent=d;labs.appendChild(lbl);
+  });
+  var sh=document.getElementById('stressHistory');sh.innerHTML='';
+  DAYS.forEach(function(d,i){
+    var v=(db[i]&&db[i].stress?db[i].stress:0);
+    var row=document.createElement('div');row.className='stress-row';
+    row.innerHTML='<span class="stress-day">'+d+'</span><div class="stress-bg"><div class="stress-fill" style="width:'+(v?v*10:0)+'%"></div></div><span class="stress-v">'+(v||'—')+'</span>';
+    sh.appendChild(row);
+  });
+  var gl=document.getElementById('gratList');gl.innerHTML='';
+  DAYS.slice().reverse().forEach(function(d,ri){
+    var note=(db[6-ri]&&db[6-ri].gratitude?db[6-ri].gratitude:null);
+    if(note&&note.trim()){
+      var el=document.createElement('div');el.style.cssText='padding:11px;background:var(--bg);border-radius:10px;margin-bottom:8px;';
+      el.innerHTML='<div style="font-size:10px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">'+d+'</div><div style="font-family:var(--fd);font-size:15px;color:var(--ink);line-height:1.5;">'+note+'</div>';
+      gl.appendChild(el);
+    }
+  });
   if(!gl.children.length)gl.innerHTML='<p style="font-size:13px;color:var(--muted);font-style:italic;">Tes gratitudes apparaîtront ici 🌿</p>';
 }
 
-function buildInsights(entries,avg,avgSt,streak){
-  const card=document.getElementById('insightCard'),list=document.getElementById('insightList');
-  list.innerHTML='';const insights=[];
-  if(streak>=3)insights.push({t:'🔥 Belle constance !',txt:`${streak} jours consécutifs — la régularité est la clé de la paix intérieure.`});
-  if(avg>=70)insights.push({t:'✅ Routines bien tenues',txt:`Tu complètes en moyenne ${avg}% de tes rituels. Continue sur cette lancée !`});
-  if(avg<30&&entries.length>2)insights.push({t:'💡 Commence petit',txt:'Essaie de ne cocher qu\'un seul rituel par jour pour créer l\'habitude.'});
-  const stVals=DAYS.map((_,i)=>db[i]?.stress).filter(Boolean);
-  if(stVals.length>=3){const trend=stVals[stVals.length-1]-stVals[0];if(trend<-1)insights.push({t:'📉 Stress en baisse',txt:`Ton stress a diminué de ${Math.abs(trend.toFixed(1))} points cette semaine. Quelque chose fonctionne !`});if(trend>2)insights.push({t:'⚠️ Semaine difficile',txt:'Ton stress semble avoir augmenté. Essaie une respiration guidée maintenant.'});}
-  if(insights.length>0){insights.forEach(ins=>{const el=document.createElement('div');el.className='insight';el.innerHTML=`<div class="insight-title">${ins.t}</div><div class="insight-text">${ins.txt}</div>`;list.appendChild(el);});card.style.display='block';}else{card.style.display='none';}
+// ── SETTINGS ──────────────────────────────────────────────
+function buildSettingsUI(){
+  var tr=document.getElementById('themeRow');tr.innerHTML='';
+  THEME_DEFS.forEach(function(t){
+    var d=document.createElement('div');d.className='th-opt'+(cfg.theme===t.k?' on':'');
+    d.innerHTML='<div class="th-sw" style="background:linear-gradient(135deg,'+t.g+')"></div><span class="th-nm">'+t.n+'</span>';
+    d.addEventListener('click',(function(tk,el){
+      return function(){
+        cfg.theme=tk;cfg.darkMode=false;saveCfg();applyTheme(tk);
+        document.querySelectorAll('.th-opt').forEach(function(x){x.classList.remove('on');});
+        el.classList.add('on');
+        updateDarkModeButtons();
+        updateThemePicker();
+        toast('Thème appliqué 🎨');
+      };
+    })(t.k,d));
+    tr.appendChild(d);
+  });
+
+  // Dark/Light mode buttons in settings
+  document.getElementById('modeLight').addEventListener('click',function(){
+    cfg.darkMode=false;applyTheme(cfg.theme||'coachdivin');saveCfg();updateDarkModeButtons();toast('Mode clair ☀️');
+  });
+  document.getElementById('modeDark').addEventListener('click',function(){
+    cfg.darkMode=true;cfg._savedTheme=cfg.theme;applyTheme('dark');saveCfg();updateDarkModeButtons();toast('Mode sombre 🌙');
+  });
+
+  document.getElementById('profileRow').querySelectorAll('.pr-opt').forEach(function(el){
+    el.classList.toggle('on',el.dataset.p===cfg.profile);
+    el.addEventListener('click',function(){
+      cfg.profile=el.dataset.p;saveCfg();
+      document.querySelectorAll('.pr-opt').forEach(function(x){x.classList.remove('on');});
+      el.classList.add('on');toast('Profil mis à jour ✦');
+    });
+  });
+  var langs=['fr','en','es'];
+  document.getElementById('langRow').querySelectorAll('.lang-btn').forEach(function(b,i){
+    b.classList.toggle('on',langs[i]===cfg.lang);
+    b.addEventListener('click',(function(li){
+      return function(){
+        cfg.lang=langs[li];saveCfg();
+        document.querySelectorAll('.lang-btn').forEach(function(x){x.classList.remove('on');});
+        b.classList.add('on');toast('Langue mise à jour 🌍');
+      };
+    })(i));
+  });
+  document.getElementById('expJson').addEventListener('click',function(){
+    var blob=new Blob([JSON.stringify({cfg:cfg,data:db},null,2)],{type:'application/json'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='serena-export.json';a.click();toast('Exporté ✓');
+  });
+  document.getElementById('expTxt').addEventListener('click',function(){
+    var txt='✦ SERENA — Résumé de semaine\n\n';
+    DAYS.forEach(function(d,i){var e=db[i];if(!e)return;txt+='═══ '+d+' ═══\n';if(e.morning)txt+='Intention: '+e.morning+'\n';if(e.gratitude)txt+='Gratitude: '+e.gratitude+'\n';if(e.mood)txt+='Humeur: '+e.mood+'\n';if(e.stress)txt+='Stress: '+e.stress+'/10\n';txt+='\n';});
+    var blob=new Blob([txt],{type:'text/plain'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='serena-semaine.txt';a.click();toast('Résumé exporté 📄');
+  });
+  document.getElementById('rstBtn').addEventListener('click',function(){
+    if(confirm('Réinitialiser toutes les données Serena ?')){try{localStorage.removeItem('serena_db');localStorage.removeItem('serena_cfg');}catch(e){}location.reload();}
+  });
+  updateDarkModeButtons();
 }
 
-// ==================== NOTIFICATIONS ====================
-function loadNotifSettings(){
-  const n=cfg.notifs||{};
-  ['morning','day','evening'].forEach(k=>{const tg=document.getElementById('tg'+k.charAt(0).toUpperCase()+k.slice(1));if(tg)tg.classList.toggle('on',!!n[k]);});
-  if(n.times){if(n.times.morning)document.getElementById('tMorning').value=n.times.morning;if(n.times.day)document.getElementById('tDay').value=n.times.day;if(n.times.evening)document.getElementById('tEvening').value=n.times.evening;}
-}
-function saveNotifTime(){cfg.notifs=cfg.notifs||{};cfg.notifs.times={morning:document.getElementById('tMorning').value,day:document.getElementById('tDay').value,evening:document.getElementById('tEvening').value};saveCfg();}
-async function toggleNotif(btn,key){
-  if(!('Notification' in window)){toast('Notifications non supportées sur ce navigateur');return;}
-  if(Notification.permission==='denied'){toast('Notifications bloquées — active-les dans les réglages du navigateur');return;}
-  if(Notification.permission!=='granted'){const p=await Notification.requestPermission();if(p!=='granted'){toast('Permission refusée');return;}}
-  btn.classList.toggle('on');
-  cfg.notifs=cfg.notifs||{};cfg.notifs[key]=btn.classList.contains('on');saveCfg();
-  toast(btn.classList.contains('on')?'Rappel activé 🔔':'Rappel désactivé');
-  scheduleNotifs();
-}
-function scheduleNotifs(){
-  if(!('serviceWorker' in navigator))return;
-  // Note: real push notifications require a backend. This schedules local Web Notifications via setTimeout for current session.
-  const n=cfg.notifs||{};
-  const msgs={morning:{title:'🌅 Rituel du matin',body:'Commence ta journée avec intention.'},day:{title:'☀️ Micro-pause',body:'Prends 5 minutes rien que pour toi.'},evening:{title:'🌙 Rituel du soir',body:'Il est temps de déposer ta journée.'}};
-  ['morning','day','evening'].forEach(k=>{
-    if(!n[k])return;
-    const times=n.times||{morning:'08:00',day:'13:00',evening:'21:00'};
-    const [h,m]=(times[k]||'08:00').split(':').map(Number);
-    const now=new Date(),target=new Date();
-    target.setHours(h,m,0,0);
-    if(target<=now)target.setDate(target.getDate()+1);
-    const delay=target-now;
-    setTimeout(()=>{if(Notification.permission==='granted'&&n[k])new Notification(msgs[k].title,{body:msgs[k].body,icon:'./icons/icon-192.png'});},delay);
+// ── THEME PICKER (quick) ───────────────────────────────────
+function buildThemePicker(){
+  var grid=document.getElementById('tpGrid');
+  grid.innerHTML='';
+  THEME_DEFS.forEach(function(t){
+    var item=document.createElement('div');
+    item.className='tp-item'+(cfg.theme===t.k&&!cfg.darkMode?' on':'');
+    item.innerHTML='<div class="tp-swatch" style="background:linear-gradient(135deg,'+t.g+')"></div><span class="tp-nm">'+t.n+'</span>';
+    item.addEventListener('click',function(){
+      cfg.theme=t.k;cfg.darkMode=false;saveCfg();applyTheme(t.k);
+      updateThemePicker();updateDarkModeButtons();
+      document.querySelectorAll('.th-opt').forEach(function(x){x.classList.remove('on');});
+      document.querySelectorAll('.th-opt')[THEME_DEFS.findIndex(function(x){return x.k===t.k;})].classList.add('on');
+      toast('Ambiance : '+t.n+' 🎨');
+    });
+    grid.appendChild(item);
   });
 }
 
-// ==================== EXPORT ====================
-function exportJSON(){const blob=new Blob([JSON.stringify({cfg,data:db},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='serena-export-'+new Date().toISOString().split('T')[0]+'.json';a.click();toast('Données exportées ✓');}
-function exportSummary(){
-  let txt='✦ SERENA — Résumé de semaine\n'+new Date().toLocaleDateString('fr-FR')+'\n\n';
-  DAYS.forEach((d,i)=>{const e=db[i];if(!e)return;txt+=`═══ ${d} ═══\n`;if(e.morningNote)txt+=`Intention : ${e.morningNote}\n`;if(e.gratitudeNote)txt+=`Gratitude : ${e.gratitudeNote}\n`;if(e.mood)txt+=`Humeur : ${e.mood}\n`;if(e.stress)txt+=`Stress : ${e.stress}/10\n`;txt+='\n';});
-  const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='serena-semaine.txt';a.click();toast('Résumé exporté 📄');
-}
-function confirmReset(){if(confirm('⚠️ Réinitialiser toutes les données Serena ? Cette action est irréversible.')){localStorage.removeItem('serena_db');localStorage.removeItem('serena_cfg');location.reload();}}
-
-// ==================== PAGE NAV ====================
-function goPage(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  const tab=document.getElementById('tab-'+page),nav=document.getElementById('nav-'+page);
-  if(tab)tab.classList.add('active');if(nav)nav.classList.add('active');
-  if(page==='stats')buildStats();
+function updateThemePicker(){
+  var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  document.querySelectorAll('.tp-item').forEach(function(item,i){
+    item.classList.toggle('on',THEME_DEFS[i].k===cfg.theme&&!isDark);
+  });
 }
 
-// ==================== TOAST ====================
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+function initThemePicker(){
+  buildThemePicker();
+  var btn=document.getElementById('btnThemePicker');
+  var panel=document.getElementById('themePicker');
+  var overlay=document.getElementById('themeOverlay');
 
-// ==================== PWA ====================
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBanner').classList.add('show');});
-function installPWA(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('installBanner').classList.remove('show');});}}
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    var open=panel.classList.contains('open');
+    panel.classList.toggle('open',!open);
+    overlay.classList.toggle('open',!open);
+  });
+  overlay.addEventListener('click',function(){
+    panel.classList.remove('open');
+    overlay.classList.remove('open');
+  });
+  document.getElementById('tpLight').addEventListener('click',function(){
+    cfg.darkMode=false;applyTheme(cfg.theme||'coachdivin');saveCfg();updateDarkModeButtons();updateThemePicker();toast('Mode clair ☀️');
+  });
+  document.getElementById('tpDark').addEventListener('click',function(){
+    cfg.darkMode=true;cfg._savedTheme=cfg.theme;applyTheme('dark');saveCfg();updateDarkModeButtons();updateThemePicker();toast('Mode sombre 🌙');
+  });
+}
 
-// ==================== INIT ====================
-(function(){
-  applyTheme(cfg.theme);
-  obLang = cfg.lang || 'fr';
-  obTheme = cfg.theme || 'light';
-
-  // Always wire up onboarding listeners (they're always in the DOM)
-  initObListeners();
-
-  if(db.onboarded){
-    startApp();
-  } else {
-    document.getElementById('onboarding').classList.add('active');
-    obTranslate();
+// ── AI CHAT ───────────────────────────────────────────────
+var chatHistory=[];
+function initChat(){
+  var msgs=document.getElementById('chatMsgs');
+  function addMsg(txt,role){var d=document.createElement('div');d.className='msg '+role;d.textContent=txt;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
+  var name=cfg.firstName?', '+cfg.firstName:'';
+  addMsg('Bonjour'+name+' 🌿 Je suis Serena. Comment te sens-tu en ce moment ?','ai');
+  function send(){
+    var inp=document.getElementById('chatInput');
+    var txt=inp.value.trim();
+    if(!txt)return;
+    addMsg(txt,'user');inp.value='';
+    chatHistory.push({role:'user',content:txt});
+    var thinking=document.createElement('div');
+    thinking.className='msg ai';thinking.textContent='…';
+    msgs.appendChild(thinking);msgs.scrollTop=msgs.scrollHeight;
+    var lang=cfg.lang==='en'?'English':cfg.lang==='es'?'espagnol':'français';
+    var sysPrompt='Tu es Serena, une IA de soutien émotionnel bienveillante. Réponds en '+lang+', avec empathie, en 2-3 phrases courtes. Si détresse grave, mentionne le 3114.';
+    fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system:sysPrompt,messages:chatHistory})
+    }).then(function(r){return r.json();}).then(function(data){
+      var reply=(data.content&&data.content[0]&&data.content[0].text)||'Je suis là pour toi 🌿';
+      thinking.textContent=reply;
+      chatHistory.push({role:'assistant',content:reply});
+      msgs.scrollTop=msgs.scrollHeight;
+    }).catch(function(){
+      thinking.textContent='Je suis là pour toi, même sans connexion 🌿';
+      msgs.scrollTop=msgs.scrollHeight;
+    });
   }
-})();
+  document.getElementById('chatSend').addEventListener('click',send);
+  document.getElementById('chatInput').addEventListener('keydown',function(e){if(e.key==='Enter')send();});
+}
+
+// ── PAGE NAV ──────────────────────────────────────────────
+function initNav(){
+  var pages=['journal','breath','serene','stats','chat','settings'];
+  pages.forEach(function(p){
+    var tab=document.getElementById('tab-'+p);
+    var nav=document.getElementById('nav-'+p);
+    var fn=function(){
+      document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+      document.querySelectorAll('.nav-item').forEach(function(x){x.classList.remove('active');});
+      document.getElementById('page-'+p).classList.add('active');
+      if(tab)tab.classList.add('active');
+      if(nav)nav.classList.add('active');
+      if(p==='stats')buildStats();
+    };
+    if(tab)tab.addEventListener('click',fn);
+    if(nav)nav.addEventListener('click',fn);
+  });
+  document.getElementById('btnSettings').addEventListener('click',function(){
+    document.getElementById('tab-settings').click();
+  });
+  document.getElementById('btnInstall').addEventListener('click',installPWA);
+  document.getElementById('btnInstallClose').addEventListener('click',function(){
+    document.getElementById('installBanner').classList.remove('show');
+  });
+}
+
+// ── TOAST ─────────────────────────────────────────────────
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2600);
+}
+
+// ── PWA ───────────────────────────────────────────────────
+var deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();deferredPrompt=e;
+  document.getElementById('installBanner').classList.add('show');
+});
+function installPWA(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(){
+      deferredPrompt=null;
+      document.getElementById('installBanner').classList.remove('show');
+    });
+  }
+}
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('./sw.js').catch(function(){});
+  });
+}
+
+// ── START APP ─────────────────────────────────────────────
+function startApp(){
+  document.getElementById('ob').classList.remove('active');
+  document.getElementById('app').classList.add('active');
+  document.getElementById('bottomNav').style.display='flex';
+  if(cfg.darkMode){
+    applyTheme('dark');
+  } else {
+    applyTheme(cfg.theme||'coachdivin');
+  }
+  var name=cfg.firstName;
+  if(name){
+    var greet=cfg.lang==='en'?'Hi, '+name:cfg.lang==='es'?'Hola, '+name:'Bonjour, '+name;
+    document.getElementById('topLogo').textContent=greet;
+  }
+  buildDayNav();loadDay(currentDay);
+  initTasks();initMood();initBreath();initChat();buildSettingsUI();buildStats();
+  initSerene();initThemePicker();initNav();
+  showQuote();
+  document.getElementById('saveBtn').addEventListener('click',function(){saveDay(true);});
+  document.getElementById('qNew').addEventListener('click',nextQuote);
+}
+
+// ── INIT ──────────────────────────────────────────────────
+applyTheme(cfg.darkMode?'dark':(cfg.theme||'coachdivin'));
+obLang=cfg.lang||'fr';
+obTheme=cfg.theme||'coachdivin';
+initOb();
+
+if(db.onboarded){
+  startApp();
+} else {
+  document.getElementById('ob').classList.add('active');
+  obRender();
+}
 </script>
 </body>
 </html>
